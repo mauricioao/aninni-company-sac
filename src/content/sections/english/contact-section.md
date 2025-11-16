@@ -1,32 +1,32 @@
 ---
-enable: true # Control the visibility of this section across all pages where it is used
-title: "Have Any Project on Your Mind?"
-description: "Great! We're excited to hear from you and let's start something"
+enable: true # Contrôle la visibilité de cette section sur toutes les pages où elle est utilisée
+title: "Un projet en tête ?"
+description: "Super ! Nous sommes impatients de vous écouter et de commencer quelque chose"
 
 # image: "/images/about-us/about-one.jpg"
-# imagePosition: "left" # Choose between "left" or "right"
+# imagePosition: "left" # Choisissez entre "left" ou "right"
 
 map:
   enable: true
-  position: "right" # Choose between "left" or "right"
-  title: "Map of New Work City"
-  url: https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed # Embed map iframe URL generated from https://www.maps.ie/create-google-map/
+  position: "right" # Choisissez entre "left" ou "right"
+  title: "Carte de New Work City"
+  url: https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=fr&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(Mon%20Nom%20d'Entreprise)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed
 
 # contactInformation:
-#   - title: "Headquarters"
+#   - title: "Siège social"
 #     icon: "/images/icons/svg/location-filled.svg"
 #     description: "27 Division St, New York, NY 10002, USA"
 #     button:
 #       # Refer to the `sharedButton` schema in `src/sections.schema.ts` for all available configuration options (e.g., enable, label, url, hoverEffect, variant, icon, tag, rel, class, target, etc.)
 #       enable: true
-#       label: "Get Direction"
+#       label: "Obtenir l'itinéraire"
 #       url: "/"
 #       # hoverEffect: "" # Optional: text-flip | creative-fill | magnetic | magnetic-text-flip
 #       # variant: "" # Optional: fill | outline | text | circle
 #       # rel: "" # Optional
 #       # target: "" # Optional
 #
-#   - title: "Email Address"
+#   - title: "Adresse e-mail"
 #     icon: "/images/icons/svg/message-filled.svg"
 #     description: |
 #       folex.agency@mail.com
@@ -34,14 +34,14 @@ map:
 #     button:
 #       # Refer to the `sharedButton` schema in `src/sections.schema.ts` for all available configuration options (e.g., enable, label, url, hoverEffect, variant, icon, tag, rel, class, target, etc.)
 #       enable: true
-#       label: "Send Message"
-#       url: "mailto:folex.agency@mail.com"
+#       label: "Envoyer un message"
+#       url: "mailto:folex.agency@m
 #       # hoverEffect: "" # Optional: text-flip | creative-fill | magnetic | magnetic-text-flip
 #       # variant: "" # Optional: fill | outline | text | circle
 #       # rel: "" # Optional
-#       # target: "" # Optional
+#       # target: "" # Optionalail.com"
 #
-#   - title: "Phone Number"
+#   - title: "Numéro de téléphone"
 #     icon: "/images/icons/svg/phone-filled.svg"
 #     description: |
 #       +1 800 123 654 987
@@ -49,141 +49,134 @@ map:
 #     button:
 #       # Refer to the `sharedButton` schema in `src/sections.schema.ts` for all available configuration options (e.g., enable, label, url, hoverEffect, variant, icon, tag, rel, class, target, etc.)
 #       enable: true
-#       label: "Call Anytime"
+#       label: "Appeler à tout moment"
 #       url: "tel:+1800123654987"
 #       # hoverEffect: "" # Optional: text-flip | creative-fill | magnetic | magnetic-text-flip
 #       # variant: "" # Optional: fill | outline | text | circle
 #       # rel: "" # Optional
 #       # target: "" # Optional
 
-# Check config.toml file for form action related settings
-# this is also used in the footer of the personal portfolio homepage
+# Vérifiez le fichier config.toml pour les paramètres liés au formulaire
+# ce formulaire est aussi utilisé dans le pied de page du portfolio personnel
 form:
-  emailSubject: "New form submission from folex website" # Customized email subject (applicable when anyone submit form, form submission may receive by email depend on provider)
+  emailSubject: "Nouvelle soumission de formulaire depuis le site folex" # Sujet personnalisé de l’email (valable à chaque soumission)
   submitButton:
-    # Refer to the `sharedButton` schema in `src/sections.schema.ts` for all available configuration options (e.g., enable, label, url, hoverEffect, variant, icon, tag, rel, class, target, etc.)
-    enable: true
-    label: "SEND MESSAGE"
-    # hoverEffect: "" # Optional: text-flip | creative-fill | magnetic | magnetic-text-flip
-    # variant: "" # Optional: fill | outline | text | circle
-    # rel: "" # Optional
-    # target: "" # Optional
-
-  # This note will show at the end of form
+    label: "ENVOYER LE MESSAGE"
+  # Cette note apparaîtra à la fin du formulaire
   # note: |
-  #   Your data is safe with us. We respect your privacy and never share your information. <br /> Read our [Privacy Policy](/privacy-policy/).
+  #   Vos données sont en sécurité avec nous. Nous respectons votre vie privée et ne partageons jamais vos informations. <br /> Lisez notre [Politique de confidentialité](/privacy-policy/).
   inputs:
     - label: ""
-      placeholder: "Full Name *"
-      name: "Full Name" # This is crucial. Its indicate under which name you want to receive this field data
+      placeholder: "Nom complet *"
+      name: "Nom complet" # Indique sous quel nom vous voulez recevoir cette donnée
       required: true
       halfWidth: true
       defaultValue: ""
     - label: ""
-      placeholder: "Email Address *"
-      name: "Email Address" # This is crucial. Its indicate under which name you want to receive this field data
+      placeholder: "Adresse e-mail *"
+      name: "Adresse e-mail" # Indique sous quel nom vous voulez recevoir cette donnée
       required: true
       type: "email"
       halfWidth: true
       defaultValue: ""
     - label: ""
-      placeholder: "Subject *"
-      name: "Subject" # This is crucial. Its indicate under which name you want to receive this field data
+      placeholder: "Sujet *"
+      name: "Sujet" # Indique sous quel nom vous voulez recevoir cette donnée
       required: false
       halfWidth: true
       dropdown:
-        type: "" # select | search - default is select
-        search: # if type is search then it will work
+        type: "" # select | search - par défaut select
+        search: # si type est search, il fonctionnera
           placeholder: ""
         items:
-          - label: "General Inquiry"
-            value: "General Inquiry"
+          - label: "Demande générale"
+            value: "Demande générale"
             selected: false
-          - label: "Partnership Opportunity"
-            value: "Partnership Opportunity"
+          - label: "Opportunité de partenariat"
+            value: "Opportunité de partenariat"
             selected: false
-          - label: "Investment Opportunity"
-            value: "Investment Opportunity"
+          - label: "Opportunité d'investissement"
+            value: "Opportunité d'investissement"
             selected: false
     - label: ""
-      placeholder: "Subject With Search *"
-      name: "Subject With Search" # This is crucial. Its indicate under which name you want to receive this field data
+      placeholder: "Sujet avec recherche *"
+      name: "Sujet avec recherche" # Indique sous quel nom vous voulez recevoir cette donnée
       required: false
       halfWidth: true
       dropdown:
-        type: "search" # select | search - default is select
-        search: # if type is search then it will work
-          placeholder: "Subject With Search"
+        type: "search" # select | search - par défaut select
+        search:
+          placeholder: "Sujet avec recherche"
         items:
-          - label: "General Inquiry"
-            value: "General Inquiry"
+          - label: "Demande générale"
+            value: "Demande générale"
             selected: false
-          - label: "Partnership Opportunity"
-            value: "Partnership Opportunity"
+          - label: "Opportunité de partenariat"
+            value: "Opportunité de partenariat"
             selected: false
-          - label: "Career Opportunity"
-            value: "Career Opportunity"
+          - label: "Opportunité de carrière"
+            value: "Opportunité de carrière"
             selected: false
-          - label: "Investment Opportunity"
-            value: "Investment Opportunity"
+          - label: "Opportunité d'investissement"
+            value: "Opportunité d'investissement"
             selected: false
-          - label: "Media Inquiry"
-            value: "Media Inquiry"
+          - label: "Demande média"
+            value: "Demande média"
             selected: false
     - label: ""
       tag: "textarea"
       defaultValue: ""
-      rows: "2" # Only work if tag is textarea
-      placeholder: "How can we help you *"
-      name: "Message" # This is crucial. Its indicate under which name you want to receive this field data
+      rows: "2"
+      placeholder: "Comment pouvons-nous vous aider *"
+      name: "Message" # Indique sous quel nom vous voulez recevoir cette donnée
       required: true
       halfWidth: false
-    - label: "Google Search" # only valid for type="checkbox" & type === "radio"
-      checked: false # only valid for type="checkbox" & type === "radio"
-      name: "User Source" # This is crucial. Its indicate under which name you want to receive this field data
+    - label: "Recherche Google"
+      checked: false
+      name: "Source Utilisateur"
       required: true
-      groupLabel: "How did you hear about us?" # Radio Inputs Label
-      group: "source" # when you add group then it will omit space between the same group radio input
+      groupLabel: "Comment avez-vous entendu parler de nous ?"
+      group: "source"
       type: "radio"
       halfWidth: true
       defaultValue: ""
-    - label: "Social Media" # only valid for type="checkbox" & type === "radio"
-      name: "User Source" # This is crucial. Its indicate under which name you want to receive this field data
+    - label: "Réseaux sociaux"
+      name: "Source Utilisateur"
       required: true
-      groupLabel: "" # Radio Inputs Label
-      group: "source" # when you add group then it will omit space between the same group radio input
+      groupLabel: ""
+      group: "source"
       type: "radio"
       halfWidth: true
       defaultValue: ""
-    # - label: "Referral" # only valid for type="checkbox" & type === "radio"
-    #   name: "User Source" # This is crucial. Its indicate under which name you want to receive this field data
+    # - label: "Parrainage"
+    #   name: "Source Utilisateur"
     #   required: true
-    #   groupLabel: "" # Radio Inputs Label
-    #   group: "source" # when you add group then it will omit space between the same group radio input
+    #   groupLabel: ""
+    #   group: "source"
     #   type: "radio"
     #   halfWidth: true
     #   defaultValue: ""
-    # - label: "Other" # only valid for type="checkbox" & type === "radio"
-    #   name: "User Source" # This is crucial. Its indicate under which name you want to receive this field data
+    # - label: "Autre"
+    #   name: "Source Utilisateur"
     #   required: true
-    #   groupLabel: "" # Radio Inputs Label
-    #   group: "source" # when you add group then it will omit space between the same group radio input
+    #   groupLabel: ""
+    #   group: "source"
     #   type: "radio"
     #   halfWidth: true
     #   defaultValue: ""
-    - label: "I agree to the terms and conditions and [privacy policy](/)." # only valid for type="checkbox" & type === "radio"
+    - label: "J'accepte les termes et conditions ainsi que la [politique de confidentialité](/)."
       id: "privacy-policy"
-      name: "Agreed Privacy" # This is crucial. Its indicate under which name you want to receive this field data
-      value: "Agreed" # Value that will be submit (applicable for type="checkbox" & type === "radio")
-      checked: false # only valid for type="checkbox" & type === "radio"
+      name: "Consentement confidentialité"
+      value: "Accepté"
+      checked: false
       required: true
       type: "checkbox"
       halfWidth: false
       defaultValue: ""
-    - note: success # info | warning | success | deprecated | hint
+    - note: success
       parentClass: "hidden text-sm message success"
-      content: We have received your message! We'll get back to you as soon as possible.
-    - note: deprecated # info | warning | success | deprecated | hint
+      content: "Nous avons bien reçu votre message ! Nous vous répondrons dès que possible."
+    - note: deprecated
       parentClass: "hidden text-sm message error"
-      content: Something went wrong! please use this mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) to submit a ticket!
+      content: "Une erreur est survenue ! Veuillez utiliser cet e-mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) pour soumettre un ticket !"
 ---

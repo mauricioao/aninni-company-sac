@@ -1,6 +1,6 @@
 ---
-title: "Politique de confidentialit "
-description: "Ceci est un exemple de description m ta"
+title: "Privacy Policy"
+metaDescription: "This is a example description"
 draft: false
 ---
 

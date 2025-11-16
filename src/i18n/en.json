@@ -1,21 +1,21 @@
 {
   "common": {
-    "viewDetails": "View Details",
-    "learnMoreAbout": "Learn more about",
-    "paginationPrevious": "Previous",
-    "paginationNext": "Next",
-    "paginationPortfolioPrev": "Previous Portfolio",
-    "paginationPortfolioNext": "Next Portfolio"
+    "viewDetails": "Voir les détails",
+    "learnMoreAbout": "En apprendre davantage sur",
+    "paginationPrevious": "Précédent",
+    "paginationNext": "Suivant",
+    "paginationPortfolioPrev": "Portfolio précédent",
+    "paginationPortfolioNext": "Portfolio suivant"
   },
   "headerOffcanvas": {
-    "description": "We are a digital agency that helps businesses create immersive experiences.",
-    "buttonLabel": "Let’s Talk With Us"
+    "description": "Nous sommes une agence numérique qui aide les entreprises à créer des expériences immersives.",
+    "buttonLabel": "Discutons ensemble"
   },
   "navigation": {
-    "buttonLabel": "Get Started"
+    "buttonLabel": "Commencer"
   },
   "footer": {
-    "copyright": "Copyright © {{ year }} by your company / Crafted with [Getastrothemes](https://getastrothemes.com/)",
-    "_comment": "We kindly appreciate it if you retain the theme copyright. Thank you for supporting Getastrothemes!"
+    "copyright": "Droits d’auteur © {{ year }} Folex / Réalisé avec [Getastrothemes](https://getastrothemes.com/)",
+    "_comment": "Nous vous serions reconnaissants de conserver le copyright du thème. Merci de soutenir Getastrothemes !"
   }
 }

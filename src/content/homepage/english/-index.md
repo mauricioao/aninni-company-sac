@@ -1,4 +1,4 @@
 ---
-title: "Home"
-metaDescription: "This is a example description"
+title: "Accueil - Startup Agency"
+metaDescription: "Ceci est une description d'exemple"
 ---

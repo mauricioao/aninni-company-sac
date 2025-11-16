@@ -2,7 +2,7 @@
   "headerPrimary": [
     {
       "enable": true,
-      "name": "Home",
+      "name": "Accueil",
       "url": "/"
     },
     {
@@ -12,12 +12,12 @@
     },
     {
       "enable": true,
-      "name": "Projects",
+      "name": "Projets",
       "url": "/#projects"
     },
     {
       "enable": true,
-      "name": "Pricing",
+      "name": "Tarifs",
       "url": "/#pricing"
     }
   ]
