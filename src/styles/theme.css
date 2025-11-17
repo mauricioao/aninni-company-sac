@@ -5,20 +5,20 @@
   --leading-inherit: inherit;
 
   /* Colors */
-  --color-primary: #0d0f01;
-  --color-secondary: #bcd4ff;
-  --color-accent: #e3ff04;
-  --color-accent-blue: #1601ac;
-  --color-body: #fff;
-  --color-body-dark: #070800;
-  --color-border-light: #e5e5e5;
-  --color-border-dark: #292525;
-  --color-theme-dark: #0e1118;
-  --color-theme-darker: #131312;
-  --color-theme-light: #f6f5f3;
-  --color-text-default: #2e2e2e;
-  --color-dark: #0a0c00;
-  --color-light: #f6f5f3;
+  --color-primary: #1d357b;
+  --color-secondary: #3162a5;
+  --color-accent: #2d73c6;
+  --color-body: #ffffff;
+  --color-body-dark: #13274c;
+  --color-border-light: #e0e7ef;
+  --color-border-dark: #2a3550;
+  --color-theme-dark: #1d357b;
+  --color-theme-darker: #13274c;
+  --color-theme-light: #f4f7ff;
+  --color-text-default: #2a3550;
+  --color-dark: #13274c;
+  --color-light: #f4f7ff;
+  --color-hover: #00b2ff;
 
   /* Screen */
   --breakpoint-*: initial;

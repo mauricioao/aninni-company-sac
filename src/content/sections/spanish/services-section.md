@@ -1,6 +1,6 @@
 ---
 enable: true
-title: "What We Can Do for Our Clients"
+title: "¿Qué podemos lograr juntos?"
 # sectionDirection: "horizontal" # horizontal | vertical
 
 options:

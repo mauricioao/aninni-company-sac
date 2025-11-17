@@ -1,20 +1,20 @@
 {
-  "name": "folex-lite-astro",
+  "name": "aninni-company-sac",
   "type": "module",
   "version": "1.0.0",
-  "description": "A highly customizable creative agency & personal portfolio business theme built with Tailwind CSS and Astro Js",
-  "author": "getastrothemes",
+  "description": "aninni company sac website",
+  "author": "mauricioa",
   "license": "SEE LICENSE IN LICENSE.md",
   "packageManager": "pnpm@8.15.5",
   "private": true,
   "keywords": [
     "astro",
-    "template",
+    "company website",
     "tailwindcss"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/getastrothemes/folex-lite-astro.git"
+    "url": "https://github.com/mauricioao/aninni-company-sac"
   },
   "engines": {
     "node": ">=18.20.8 <19 || >=20.3.0 <21 || >=22.0.0",

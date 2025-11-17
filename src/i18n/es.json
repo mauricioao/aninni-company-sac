@@ -1,21 +1,21 @@
 {
   "common": {
-    "viewDetails": "View Details",
-    "learnMoreAbout": "Learn more about",
-    "paginationPrevious": "Previous",
-    "paginationNext": "Next",
-    "paginationPortfolioPrev": "Previous Portfolio",
-    "paginationPortfolioNext": "Next Portfolio"
+    "viewDetails": "Ver detalles",
+    "learnMoreAbout": "Lee más sobre",
+    "paginationPrevious": "Anterior",
+    "paginationNext": "Siguiente",
+    "paginationPortfolioPrev": "Blog Anterior",
+    "paginationPortfolioNext": "Siguiente Blog"
   },
   "headerOffcanvas": {
-    "description": "We are a digital agency that helps businesses create immersive experiences.",
-    "buttonLabel": "Let’s Talk With Us"
+    "description": "Nuestro equipo está conformado por expertos con más de 20 años en la industria logística nacional e internacional, garantizando un manejo profesional, transparente y eficiente de tus productos desde el origen hasta el destino final.",
+    "buttonLabel": "Contáctanos"
   },
   "navigation": {
-    "buttonLabel": "Get Started"
+    "buttonLabel": "Empieza con nosotros"
   },
   "footer": {
-    "copyright": "Copyright © {{ year }} by your company / Crafted with [Getastrothemes](https://getastrothemes.com/)",
+    "copyright": "Copyright © {{ year }} by Aninni Company SAC / Crafted with [MauricioA](https://getastrothemes.com/)",
     "_comment": "We kindly appreciate it if you retain the theme copyright. Thank you for supporting Getastrothemes!"
   }
 }

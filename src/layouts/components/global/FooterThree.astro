@@ -50,7 +50,7 @@ const copyrightParts = splitProtectedText(copyrightText);
         {
           description && (
             <div
-              class="w-full max-w-lg text-lg"
+              class="w-full max-w-lg text-lg text-light"
               set:html={markdownify(description, true)}
             />
           )
@@ -58,9 +58,9 @@ const copyrightParts = splitProtectedText(copyrightText);
         <div class="space-y-4">
           {
             config.settings.copyright?.enable && (
-              <ul class="has-list has-list-slash prose-a:text-inherit flex flex-wrap gap-y-2">
+              <ul class="has-list has-list-slash prose-a:text-inherit flex flex-wrap gap-y-2 text-light">
                 {copyrightParts.map((value) => (
-                  <li class="prose-a:text-text-default/70 prose-a:hover:text-text-default">
+                  <li class="prose-a:text-text-default/70 prose-a:hover:text-light">
                     <span set:html={markdownify(value)} />
                   </li>
                 ))}
@@ -70,7 +70,7 @@ const copyrightParts = splitProtectedText(copyrightText);
 
           <SocialComponent
             size="lg"
-            layout="dark"
+            layout="dark-modern"
             class="gap-5"
             linkType="follow"
             list={social.main.filter((s) => s.enable)}
@@ -81,10 +81,10 @@ const copyrightParts = splitProtectedText(copyrightText);
     </div>
     <div
       class="font-secondary flex flex-wrap items-center justify-between gap-x-8 gap-y-6 pt-6 text-sm leading-loose font-semibold uppercase">
-      {address && <p set:html={markdownify(address)} />}
+      {address && <p class="text-light" set:html={markdownify(address)} />}
       <div class="md:text-end">
-        {phone && <p set:html={markdownify(phone)} />}
-        {email && <p set:html={markdownify(email)} />}
+        {phone && <p class="text-light" set:html={markdownify(phone)} />}
+        {email && <p class="text-light" set:html={markdownify(email)} />}
       </div>
     </div>
   </div>

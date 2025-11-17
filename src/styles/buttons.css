@@ -11,7 +11,7 @@
 }
 
 @utility btn-accent {
-  @apply bg-accent text-dark;
+  @apply bg-accent text-light;
 }
 
 @utility btn-primary {
@@ -51,9 +51,11 @@
     &.effect-color-dark {
       color: var(--color-light) !important;
     }
-    &.effect-color-light,
-    &.effect-color-accent {
+    &.effect-color-light{
       color: var(--color-dark) !important;
+    }
+    &.effect-color-accent {
+      color: var(--color-light) !important;
     }
   }
 }

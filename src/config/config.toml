@@ -1,15 +1,15 @@
 # Site Configuration
 [site]
-  title            = "Folex" # Shared title for SEO and OpenGraph
-  description      = "A highly customizable creative agency business theme built with Tailwind CSS and Astro Js" # Shared description for SEO and OpenGraph
-  tagline          = "Creative Agency & Personal Portfolio Business Theme"
-  taglineSeparator = "" # default is " - " 
+  title            = "Aninni Company SAC" # Shared title for SEO and OpenGraph
+  description      = "Aninni Company Website" # Shared description for SEO and OpenGraph
+  tagline          = "Agencia de Logística"
+  taglineSeparator = "" # default is " - "
   baseUrl          = "https://folex-lite-astro.vercel.app/" # Base URL for the site and used in OpenGraph meta tags.
-  logo             = "/images/logo.svg" # Path to the site's logo
-  logoAlternate    = "/images/logo-light.svg" # Path to the site's alternate logo
+  logo             = "/images/logos/LOGO ANINNI COMPANY01_SINFONDO.png" # Path to the site's logo
+  logoAlternate    = "/images/logos/LOGO ANINNI COMPANY01_LIGHT.png" # Path to the site's logo" # Path to the site's alternate logo
   logoText         = "" # Text displayed next to the logo
-  logoWidth        = "86px" # Width of the logo
-  logoHeight       = "24px" # Height of the logo
+  logoWidth        = "200px" # Width of the logo
+  logoHeight       = "38.28px" # Height of the logo
 
   # Add a trailing slash at the end of URLs (e.g., https://example.com/, https://example.com/contact/)
   # Note: Manually restart your server when you change this value
@@ -25,13 +25,9 @@
 # Specific SEO configurations that complement the general site settings.
 # -----------------------------------------------------------------------------------------------------------------------------------
 [seo]
-  author = "Getastrothemes"
+  author = "mauricioa"
   keywords = [
-    "free digital agency",
-    "free astro template",
-    "free astro theme",
-    "free astro agency template",
-    "free astro agency theme",
+    "logistics agency",
   ]
   robots = "index, follow" # Instructs search engines on how to crawl and index the pages.
 
@@ -80,21 +76,21 @@
     # Set `enable` to `true` for enabling the multilingual feature or `false` for disabling it.
     # Run `npm run remove-multilingual` for removing multilingual content files after disabling the feature.
     enable               = true
-    defaultLanguage      = "en"
+    defaultLanguage      = "es"
     disableLanguages     = [] # List of languages to disable (eg: ["fr", "es"])
     showDefaultLangInUrl = false # Show default language in URL (eg: https://getastrothemes.com/en/)
 
   # Global Contact Information
   [settings.contactInfo]
-    address = "27 Division St, New York, <br /> NY 10002, USA"
-    email   = "[folex.agency@mail.com](mailto:folex.agency@mail.com)"
-    phone   = "[+1 800 123 654 987](tel:+1800123654987)"
+    address = "Lima, Perú"
+    email   = "[aninni@email.com](mailto:aninni@email.com)"
+    phone   = "[+51 918380045](tel:+51918380045)"
 
   # Header Offcanvas Configuration
   # Update social links in `src/config/social.json`
   [settings.headerOffcanvas]
     enable      = true
-    logo        = "/images/logo-light.svg"
+    logo        = "/images/logos/LOGO ANINNI COMPANY01_LIGHT.png"
     description = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the description in different languages or directly add value here if you are not using internationalization feature. This is also used in footer of personal-portfolio homepage
 
     # Call To Action Button
@@ -115,7 +111,7 @@
 # -----------------------------------------------------------------------------------------------------------------------------------
 [opengraph]
   image       = "/images/og-image.jpg" # Image used in OpenGraph previews
-  ogLocale    = "en_US" # Locale setting for OpenGraph
+  ogLocale    = "es_PE" # Locale setting for OpenGraph
   ogType      = "website" # Type of content for OpenGraph protocol
   twitter     = "" # Twitter handle for Twitter Card meta tags
   twitterCard = "summary_large_image" # Type of Twitter Card to use in social sharing
