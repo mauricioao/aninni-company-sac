@@ -5,7 +5,7 @@
   "description": "aninni company sac website",
   "author": "mauricioa",
   "license": "SEE LICENSE IN LICENSE.md",
-  "packageManager": "pnpm@8.15.5",
+  "packageManager": "yarn@1.22.22",
   "private": true,
   "keywords": [
     "astro",
