@@ -1,0 +1,116 @@
+---
+import { FaWhatsapp } from "react-icons/fa";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+
+const config = parseTomlToJson();
+
+const { phone } = config.settings.contactInfo;
+// Extract number from markdown link if present, e.g., "[+51 918380045](tel:+51918380045)" -> "51918380045"
+// Or just use a default if not found.
+const phoneNumber = "51918380045"; // Defaulting to the one seen in config for now, can be dynamic later
+const whatsappUrl = `https://wa.me/${phoneNumber}`;
+---
+
+<a
+  href={whatsappUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="whatsapp-btn fixed right-6 bottom-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform duration-300 hover:scale-110"
+  aria-label="Chat on WhatsApp">
+  <FaWhatsapp className="h-8 w-8" />
+  <span
+    id="notification-badge"
+    class="absolute -top-1 -right-1 flex hidden h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+    1
+  </span>
+</a>
+
+<script>
+  const btn = document.querySelector(".whatsapp-btn");
+  const badge = document.getElementById("notification-badge");
+
+  if (btn && badge) {
+    const animations = ["pulse", "notification", "shine"];
+    const randomAnim =
+      animations[Math.floor(Math.random() * animations.length)];
+
+    // randomAnim = "shine"; // Debugging
+
+    if (randomAnim === "pulse") {
+      btn.classList.add("animate-pulse-custom");
+    } else if (randomAnim === "notification") {
+      const count = Math.floor(Math.random() * 3) + 1;
+      badge.textContent = count.toString();
+      badge.classList.remove("hidden");
+      btn.classList.add("animate-bounce-custom"); // Gentle bounce to draw attention
+    } else if (randomAnim === "shine") {
+      btn.classList.add("animate-shine");
+    }
+  }
+</script>
+
+<style>
+  /* Pulse Animation */
+  @keyframes pulse-custom {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+
+  .animate-pulse-custom {
+    animation: pulse-custom 2s infinite;
+  }
+
+  /* Shine Animation */
+  @keyframes shine {
+    0% {
+      left: -100%;
+      transition-property: left;
+    }
+    100% {
+      left: 100%;
+      transition-property: left;
+    }
+  }
+
+  .animate-shine {
+    overflow: hidden;
+  }
+
+  .animate-shine::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 100%
+    );
+    transform: skewX(-25deg);
+    animation: shine 3s infinite;
+  }
+
+  /* Gentle Bounce for Notification */
+  @keyframes bounce-custom {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .animate-bounce-custom {
+    animation: bounce-custom 2s infinite;
+  }
+</style>

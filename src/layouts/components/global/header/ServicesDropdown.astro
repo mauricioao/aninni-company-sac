@@ -1,0 +1,36 @@
+---
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import type { NavigationLink } from "@/types";
+
+interface Props {
+  items: NavigationLink[];
+}
+
+const { items } = Astro.props;
+---
+
+<div
+  class="hs-dropdown-menu nav-dropdown-list !top-full !mt-2 !w-80 !p-0 transition-all duration-300 ease-in-out before:absolute before:start-0 before:-top-2 before:h-2 before:w-full"
+  aria-labelledby="hs-dropdown-hover-event">
+  <div
+    class="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-700">
+    {
+      items.map((group) => (
+        <div class="flex flex-col p-4">
+          <span class="mb-2 text-xs font-bold tracking-wide text-neutral-500 uppercase dark:text-neutral-400">
+            {group.name}
+          </span>
+          <div class="flex flex-col gap-1">
+            {group.children?.map((child) => (
+              <a
+                class="nav-dropdown-link hover:!text-accent dark:hover:!text-accent !px-0 !py-1 hover:!bg-transparent"
+                href={getLocaleUrlCTM(child.url || "#", Astro.currentLocale)}>
+                {child.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>

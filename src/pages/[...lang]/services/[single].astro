@@ -1,0 +1,47 @@
+---
+import Base from "@/layouts/Base.astro";
+import extractSlug from "@/lib/utils/extractSlug";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import { getCollectionCTM } from "@/lib/customContentLoader.astro";
+import ServicesSingle from "@/layouts/components/ServicesSingle.astro";
+import Breadcrumbs from "@/components/widgets/Breadcrumbs.astro";
+import { supportedLanguages } from "@/lib/utils/i18nUtils";
+
+export async function getStaticPaths() {
+  const paths = await Promise.all(
+    supportedLanguages.map(async (lang) => {
+      const config = parseTomlToJson();
+      const { defaultLanguage, showDefaultLangInUrl } =
+        config.settings.multilingual;
+
+      let services = await getCollectionCTM(
+        "services",
+        lang.languageCode,
+      );
+
+      return services.map((service) => ({
+        params: {
+          lang:
+            lang.languageCode === defaultLanguage && !showDefaultLangInUrl
+              ? undefined
+              : lang.languageCode,
+          single: extractSlug(service).split("/").pop(),
+        },
+        props: {
+          service,
+        },
+      }));
+    }),
+  );
+
+  return paths.flat();
+}
+
+const { service } = Astro.props;
+---
+
+<Base {...service.data}>
+  <Breadcrumbs breadcrumbExcludedPaths={["Services"]} />
+  <ServicesSingle content={service} />
+</Base>

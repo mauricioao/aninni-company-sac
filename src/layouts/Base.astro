@@ -8,6 +8,7 @@ import type { JSONLDProps } from "@/lib/utils/JsonLdGenerator";
 // import HelperButtons from "@/components/utilities/HelperButtons.astro";
 // import BreakpointIndicator from "@/components/widgets/BreakpointIndicator.astro";
 import FooterThree from "@/components/global/FooterThree.astro";
+import WhatsAppButton from "@/components/WhatsAppButton.astro";
 
 interface Props extends JSONLDProps {
   className?: string;
@@ -148,5 +149,6 @@ className = fitToScreen
       });
     </script>
     <!-- <BreakpointIndicator /> -->
+    <WhatsAppButton />
   </body>
 </html>

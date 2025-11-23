@@ -162,7 +162,9 @@ const noteStyles = {
             rows={input.rows || "4"}
             name={input.name || input.label || "Please set name value"}
             placeholder={input.placeholder || "Please set placeholder"}
-            class="form-input"
+            placeholder={input.placeholder || "Please set placeholder"}
+            class="form-input border-current bg-transparent text-inherit placeholder:text-inherit/60 focus:border-yellow-400 focus:ring-yellow-400"
+            {...(input.required && { required: true })}
             {...(input.required && { required: true })}
             set:html={input.defaultValue || ""}
           />
@@ -184,7 +186,9 @@ const noteStyles = {
                   }
                   id={input.id || genIdFromLabel(input.label || "example-id")}
                   class:list={[
-                    input.type === "radio" ? "form-radio" : "form-checkbox",
+                    input.type === "radio"
+                      ? "form-radio"
+                      : "form-checkbox checked:!bg-primary checked:!border-primary !border !border-white !bg-white text-black focus:ring-offset-black",
                   ]}
                   {...(input.required && { required: true })}
                 />
@@ -211,7 +215,9 @@ const noteStyles = {
               id={input.id || genIdFromLabel(input.label || "example-id")}
               placeholder={input.placeholder || "Please set placeholder"}
               class:list={[
-                input.type === "radio" ? "form-radio" : "form-checkbox",
+                input.type === "radio"
+                  ? "form-radio"
+                  : "form-checkbox checked:!bg-primary checked:!border-primary !border !border-white !bg-white text-black focus:ring-offset-black",
               ]}
               {...(input.required && { required: true })}
             />
@@ -242,7 +248,9 @@ const noteStyles = {
             type={input.type || "text"}
             name={input.name || input.label || "Please set name value"}
             placeholder={input.placeholder || "Please set placeholder"}
-            class="form-input"
+            placeholder={input.placeholder || "Please set placeholder"}
+            class="form-input border-current bg-transparent text-inherit placeholder:text-inherit/60 focus:border-yellow-400 focus:ring-yellow-400"
+            {...(input.required && { required: true })}
             {...(input.required && { required: true })}
           />
         )}
@@ -272,6 +280,17 @@ const noteStyles = {
     )
   }
 </form>
+<style>
+  .form-check-label :global(a) {
+    color: white;
+    text-decoration-color: white;
+    @apply underline underline-offset-4 transition-colors duration-300;
+  }
+  .form-check-label :global(a:hover) {
+    color: #facc15; /* yellow-400 */
+    text-decoration-color: #facc15;
+  }
+</style>
 
 <script>
   import "@preline/select";

@@ -34,15 +34,15 @@ const copyrightParts = splitProtectedText(copyrightText);
 
 <footer
   id="footer-with-contact"
-  class:list={["bg-accent", !footerSpaceTop && "mt-0"]}>
+  class:list={["bg-black", !footerSpaceTop && "mt-0"]}>
   <div class="container pb-8 md:pb-16">
     <div
-      class="grid grid-cols-1 gap-y-10 border-b-2 border-black py-16 md:py-24 lg:grid-cols-2 lg:gap-x-20 xl:gap-x-10">
+      class="grid grid-cols-1 gap-y-10 border-b-2 border-white/80 py-16 md:py-24 lg:grid-cols-2 lg:gap-x-20 xl:gap-x-10">
       <div class="space-y-10">
         {
           title && (
             <h2
-              class="text-display-6 xs:text-display-5 md:text-display-4"
+              class="text-display-6 xs:text-display-5 md:text-display-4 text-white"
               set:html={markdownify(title)}
             />
           )
@@ -50,7 +50,7 @@ const copyrightParts = splitProtectedText(copyrightText);
         {
           description && (
             <div
-              class="w-full max-w-lg text-lg text-light"
+              class="text-light w-full max-w-lg text-lg"
               set:html={markdownify(description, true)}
             />
           )
@@ -58,9 +58,9 @@ const copyrightParts = splitProtectedText(copyrightText);
         <div class="space-y-4">
           {
             config.settings.copyright?.enable && (
-              <ul class="has-list has-list-slash prose-a:text-inherit flex flex-wrap gap-y-2 text-light">
+              <ul class="has-list has-list-slash prose-a:text-inherit text-light flex flex-wrap gap-y-2 [&>li>span::after]:!bg-white">
                 {copyrightParts.map((value) => (
-                  <li class="prose-a:text-text-default/70 prose-a:hover:text-light">
+                  <li class="prose-a:text-white prose-a:hover:text-yellow-400 prose-a:transition-colors prose-a:duration-300">
                     <span set:html={markdownify(value)} />
                   </li>
                 ))}
@@ -77,7 +77,7 @@ const copyrightParts = splitProtectedText(copyrightText);
           />
         </div>
       </div>
-      <ContactForm form={form} />
+      <ContactForm form={form} class="text-white" />
     </div>
     <div
       class="font-secondary flex flex-wrap items-center justify-between gap-x-8 gap-y-6 pt-6 text-sm leading-loose font-semibold uppercase">
