@@ -1,15 +1,21 @@
 ---
 import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
 
-const { src, alt } = Astro.props;
+const { src, imageSrc, alt, imageAlt } = Astro.props;
+const finalSrc = src || imageSrc;
+const finalAlt = alt || imageAlt || "Service Image";
 ---
 
 <div class="image-list-component my-8">
-  <OptimizedImage
-    src={src}
-    alt={alt}
-    width={800}
-    height={450}
-    class="w-full rounded-lg object-cover"
-  />
+  {
+    finalSrc && (
+      <OptimizedImage
+        src={finalSrc}
+        alt={finalAlt}
+        width={800}
+        height={450}
+        class="w-full rounded-lg object-cover"
+      />
+    )
+  }
 </div>
