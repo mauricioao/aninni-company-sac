@@ -131,7 +131,7 @@ const noteStyles = {
         {input.dropdown ? (
           <div id="validation-target">
             <select
-              {...(input.id && { id: input.id })}
+              id={input.id || undefined}
               data-name={input.name || input.label || "Please set name value"}
               data-hs-select={JSON.stringify(
                 getPrelineSelectConfig({
@@ -144,7 +144,7 @@ const noteStyles = {
               <option value="">Choose</option>
               {input.dropdown?.items?.map((option) => (
                 <option
-                  {...(option.selected && { selected: true })}
+                  selected={option.selected ? true : undefined}
                   value={option.value}>
                   {option.label}
                 </option>
@@ -163,7 +163,7 @@ const noteStyles = {
             name={input.name || input.label || "Please set name value"}
             placeholder={input.placeholder || "Please set placeholder"}
             class="form-input border-current bg-transparent text-inherit placeholder:text-inherit/60 focus:border-yellow-400 focus:ring-yellow-400"
-            {...(input.required && { required: true })}
+            required={input.required ? true : undefined}
             set:html={input.defaultValue || ""}
           />
         ) : input.items ? (
@@ -188,7 +188,8 @@ const noteStyles = {
                       ? "form-radio"
                       : "form-checkbox checked:!bg-primary checked:!border-primary !border !border-white !bg-white text-black focus:ring-offset-black",
                   ]}
-                  {...(input.required && { required: true })}
+                  ]}
+                  required={input.required ? true : undefined}
                 />
                 <label
                   for={input.id || genIdFromLabel(input.label || "example-id")}
@@ -217,7 +218,8 @@ const noteStyles = {
                   ? "form-radio"
                   : "form-checkbox checked:!bg-primary checked:!border-primary !border !border-white !bg-white text-black focus:ring-offset-black",
               ]}
-              {...(input.required && { required: true })}
+              ]}
+              required={input.required ? true : undefined}
             />
             <label
               for={input.id || genIdFromLabel(input.label || "example-id")}
@@ -240,14 +242,12 @@ const noteStyles = {
           />
         ) : (
           <input
-            {...(input.defaultValue && {
-              value: input.defaultValue,
-            })}
+            value={input.defaultValue || undefined}
             type={input.type || "text"}
             name={input.name || input.label || "Please set name value"}
             placeholder={input.placeholder || "Please set placeholder"}
             class="form-input border-current bg-transparent text-inherit placeholder:text-inherit/60 focus:border-yellow-400 focus:ring-yellow-400"
-            {...(input.required && { required: true })}
+            required={input.required ? true : undefined}
           />
         )}
       </div>
