@@ -2,13 +2,8 @@
   "headerPrimary": [
     {
       "enable": true,
-      "name": "Inicio",
-      "url": "/"
-    },
-    {
-      "enable": true,
       "name": "Servicios",
-      "url": "#",
+      "url": "/services",
       "children": [
         {
           "name": "LOGÍSTICA",
@@ -62,13 +57,13 @@
     },
     {
       "enable": true,
-      "name": "Proyectos",
-      "url": "/#projects"
+      "name": "Sobre nosotros",
+      "url": "/about"
     },
     {
       "enable": true,
-      "name": "Sobre nosotros",
-      "url": "/#pricing"
+      "name": "Proyectos",
+      "url": "/#projects"
     }
   ]
 }

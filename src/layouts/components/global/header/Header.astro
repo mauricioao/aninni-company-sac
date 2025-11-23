@@ -68,6 +68,7 @@ const {
           <div class="hidden gap-3.5 max-lg:ms-auto max-lg:me-4 lg:flex lg:items-center">
             {navigationButton.enable && (
               <CustomButton
+                id="header-cta-btn"
                 variant="fill"
                 label={t("navigation.buttonLabel")}
                 hoverEffect="creative-fill"
@@ -165,6 +166,34 @@ const {
 
     window.addEventListener("load", () => {
       setTimeout(() => stickyHeader(), 0);
+
+      // Handle "Empieza con nosotros" button click (Desktop and Mobile)
+      const ctaBtns = [
+        document.getElementById("header-cta-btn"),
+        document.getElementById("mobile-cta-btn"),
+      ];
+
+      ctaBtns.forEach((btn) => {
+        if (btn) {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const contactForm = document.getElementById("contact-form");
+            if (contactForm) {
+              contactForm.scrollIntoView({ behavior: "smooth" });
+              // Focus the first input field
+              const firstInput = contactForm.querySelector(
+                "input:not([type='hidden']), textarea, select",
+              ) as HTMLElement;
+              if (firstInput) {
+                // Add a small delay to ensure smooth scroll finishes or at least starts
+                setTimeout(() => {
+                  firstInput.focus();
+                }, 500);
+              }
+            }
+          });
+        }
+      });
     });
   </script>
 </div>

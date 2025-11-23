@@ -1,0 +1,188 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { generatePaths, getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+
+export function getStaticPaths() {
+  return generatePaths();
+}
+
+import languages from "@/config/language.json";
+
+const { lang } = Astro.params;
+const services = await getCollection("services");
+
+// Get content directory for current language
+const currentLangConfig = languages.find((l) => l.languageCode === lang);
+const contentDir = currentLangConfig?.contentDir || "spanish";
+
+// Load menu for current language to filter services
+let menu;
+try {
+  if (lang === "en") {
+    menu = await import("@/config/menu.en.json");
+  } else {
+    menu = await import("@/config/menu.es.json");
+  }
+} catch (e) {
+  console.error("Error loading menu:", e);
+  menu = await import("@/config/menu.es.json");
+}
+
+// Extract services grouped by menu structure
+const servicesMenu = menu.headerPrimary.find(
+  (item: any) => item.url === "/services" || item.name === "Servicios",
+) as any;
+
+type ServiceEntry = (typeof services)[number];
+interface MenuGroup {
+  name: string;
+  services: ServiceEntry[];
+}
+
+const menuGroups: MenuGroup[] = [];
+
+if (servicesMenu && servicesMenu.children) {
+  servicesMenu.children.forEach((category: any) => {
+    const group: MenuGroup = {
+      name: category.name,
+      services: [],
+    };
+
+    if (category.children) {
+      category.children.forEach((item: any) => {
+        if (item.url && item.url.includes("/services/")) {
+          const slug = item.url.split("/services/")[1];
+          // Find the service in the collection that matches this slug
+          const service = services.find((s) => {
+            const [sLang, ...sSlugParts] = s.slug.split("/");
+            const sSlug = sSlugParts.join("/");
+            return sLang === contentDir && sSlug === slug;
+          });
+
+          if (service) {
+            group.services.push(service);
+          }
+        }
+      });
+    }
+
+    if (group.services.length > 0) {
+      menuGroups.push(group);
+    }
+  });
+}
+const formatCategoryName = (name: string) => {
+  // If the name is all uppercase, convert to Title Case
+  if (name === name.toUpperCase()) {
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  }
+  return name;
+};
+---
+
+<Base
+  title="Nuestros Servicios"
+  description="Explora nuestra gama completa de servicios diseñados para potenciar tu negocio.">
+  <section
+    class="relative h-[40vh] min-h-[300px] w-full overflow-hidden bg-black">
+    <div class="absolute inset-0 z-0 opacity-50">
+      <div class="absolute inset-0 bg-linear-to-t from-black to-transparent">
+      </div>
+    </div>
+    <div class="relative z-10 container flex h-full flex-col justify-center">
+      <h1 class="text-4xl font-bold text-white md:text-6xl">
+        Nuestros Servicios
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/80">
+        Soluciones integrales adaptadas a las necesidades de tu empresa.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24">
+    <div class="container space-y-20">
+      {
+        menuGroups.map((group) => (
+          <div class="space-y-8">
+            <div class="flex items-center gap-4">
+              <h2 class="text-3xl font-bold text-white capitalize dark:text-black">
+                {formatCategoryName(group.name)}
+              </h2>
+              <div class="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+            </div>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {group.services.map((service) => (
+                <a
+                  href={getLocaleUrlCTM(
+                    `/services/${service.slug.split("/").pop()}`,
+                    Astro.currentLocale,
+                  )}
+                  class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-200">
+                  <div class="relative aspect-video overflow-hidden">
+                    {service.data.image && (
+                      <OptimizedImage
+                        src={service.data.image}
+                        alt={service.data.title}
+                        width={600}
+                        height={400}
+                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    )}
+                    <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40" />
+                  </div>
+
+                  <div class="flex flex-1 flex-col p-8">
+                    <div class="mb-6 flex items-center gap-4">
+                      {service.data.icon && (
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-400/10 text-yellow-400 transition-colors group-hover:bg-yellow-400 group-hover:text-black">
+                          <OptimizedImage
+                            src={service.data.icon}
+                            alt=""
+                            width={28}
+                            height={28}
+                            class="h-7 w-7"
+                            inlineSvg={true}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    <h3 class="mb-3 text-2xl font-bold text-black transition-colors group-hover:text-neutral-700">
+                      {service.data.title}
+                    </h3>
+
+                    <p class="mb-6 line-clamp-2 text-sm leading-relaxed font-medium text-neutral-600">
+                      {service.data.description}
+                    </p>
+
+                    <div class="mt-auto flex items-center text-sm font-bold tracking-wider text-yellow-600 uppercase transition-colors group-hover:text-yellow-500">
+                      Ver detalles
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="ml-2 transition-transform duration-300 group-hover:translate-x-2">
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>

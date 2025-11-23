@@ -6,7 +6,8 @@ const finalSrc = src || imageSrc;
 const finalAlt = alt || imageAlt || "Service Image";
 ---
 
-<div class="image-list-component my-8">
+<div
+  class="image-list-component my-8 transition-transform duration-300 hover:scale-[1.02]">
   {
     finalSrc && (
       <OptimizedImage
@@ -14,7 +15,7 @@ const finalAlt = alt || imageAlt || "Service Image";
         alt={finalAlt}
         width={800}
         height={450}
-        class="w-full rounded-lg object-cover"
+        class="w-full rounded-2xl object-cover shadow-lg shadow-yellow-400/10"
       />
     )
   }

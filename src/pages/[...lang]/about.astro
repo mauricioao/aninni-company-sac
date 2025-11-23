@@ -1,0 +1,264 @@
+---
+import Base from "@/layouts/Base.astro";
+import { generatePaths } from "@/lib/utils/i18nUtils";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+
+export function getStaticPaths() {
+  return generatePaths();
+}
+
+const { lang } = Astro.params;
+
+// Team members data
+const teamMembers = [
+  {
+    name: "Carlos Mendoza",
+    title: "CEO & Fundador",
+    bio: "Con más de 15 años de experiencia en logística y transporte, Carlos lidera la visión estratégica de Aninni Company SAC.",
+    image: "/images/team/ceo-placeholder.jpg",
+  },
+  {
+    name: "María Torres",
+    title: "Administradora de Operaciones",
+    bio: "Experta en optimización de procesos logísticos, María asegura la excelencia operativa en cada proyecto.",
+    image: "/images/team/admin1-placeholder.jpg",
+  },
+  {
+    name: "Jorge Ramírez",
+    title: "Administrador de Logística",
+    bio: "Especialista en gestión de flotas y planificación de rutas, Jorge coordina nuestras operaciones de transporte.",
+    image: "/images/team/admin2-placeholder.jpg",
+  },
+];
+---
+
+<Base
+  title="Sobre Nosotros"
+  description="Conoce más sobre Aninni Company SAC, nuestra misión, visión y el equipo que hace posible nuestros servicios de logística.">
+  <!-- Hero Section -->
+  <section
+    class="relative h-[40vh] min-h-[300px] w-full overflow-hidden bg-black">
+    <div class="absolute inset-0 z-0 opacity-50">
+      <div class="absolute inset-0 bg-linear-to-t from-black to-transparent">
+      </div>
+    </div>
+    <div class="relative z-10 container flex h-full flex-col justify-center">
+      <h1 class="text-4xl font-bold text-white md:text-6xl">Sobre Nosotros</h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/80">
+        Transformando la logística en Perú con tecnología y compromiso.
+      </p>
+    </div>
+  </section>
+
+  <!-- Company Presentation Section -->
+  <section class="py-16 md:py-24">
+    <div class="container">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+        <!-- Image -->
+        <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+          <img
+            src="/images/about/company-placeholder.jpg"
+            alt="Aninni Company SAC Operations"
+            class="h-full w-full object-cover"
+          />
+        </div>
+
+        <!-- Content -->
+        <div class="flex flex-col justify-center space-y-6">
+          <h2 class="text-3xl font-bold text-black md:text-4xl">
+            Líderes en Soluciones Logísticas Integrales
+          </h2>
+          <p class="text-lg leading-relaxed font-medium text-black">
+            Aninni Company SAC es una empresa peruana especializada en brindar
+            soluciones logísticas de vanguardia. Con años de experiencia en el
+            mercado, nos hemos consolidado como un socio confiable para empresas
+            que buscan optimizar sus operaciones de almacenamiento, transporte y
+            distribución.
+          </p>
+          <p class="text-lg leading-relaxed font-medium text-black">
+            Nuestro enfoque combina tecnología de punta, como sistemas WMS
+            (Warehouse Management System), con un equipo altamente capacitado
+            que entiende las necesidades específicas de cada cliente. Desde el
+            almacenaje hasta la última milla, pasando por proyectos mineros y
+            fulfillment, ofrecemos servicios personalizados que impulsan el
+            crecimiento de tu negocio.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-4">
+            <div class="flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-yellow-400">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span class="font-bold text-black">Tecnología Avanzada</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-yellow-400">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span class="font-bold text-black">Equipo Experto</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-yellow-400">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span class="font-bold text-black">
+                Soluciones Personalizadas
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision Section -->
+  <section class="bg-blue-950 py-16 md:py-24">
+    <div class="container">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <!-- Mission Card -->
+        <div
+          class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white p-8 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-200 md:p-10">
+          <div
+            class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400 transition-colors group-hover:bg-yellow-400 group-hover:text-black">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h3 class="mb-4 text-2xl font-bold text-black md:text-3xl">
+            Nuestra Misión
+          </h3>
+          <p class="text-base leading-relaxed text-neutral-600 md:text-lg">
+            Proporcionar soluciones logísticas integrales de clase mundial,
+            combinando tecnología de vanguardia con un servicio personalizado
+            que supere las expectativas de nuestros clientes. Nos comprometemos
+            a ser el socio estratégico que impulse la eficiencia operativa y el
+            crecimiento sostenible de cada negocio que confía en nosotros.
+          </p>
+        </div>
+
+        <!-- Vision Card -->
+        <div
+          class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white p-8 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-200 md:p-10">
+          <div
+            class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400 transition-colors group-hover:bg-yellow-400 group-hover:text-black">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </div>
+          <h3 class="mb-4 text-2xl font-bold text-black md:text-3xl">
+            Nuestra Visión
+          </h3>
+          <p class="text-base leading-relaxed text-neutral-600 md:text-lg">
+            Ser reconocidos como el líder en soluciones logísticas en Perú,
+            destacando por nuestra innovación tecnológica, excelencia operativa
+            y compromiso con la sostenibilidad. Aspiramos a expandir nuestros
+            servicios a nivel regional, siendo la primera opción para empresas
+            que buscan transformar sus operaciones logísticas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="py-16 md:py-24">
+    <div class="container">
+      <div class="mb-12 text-center">
+        <h2 class="text-3xl font-bold text-black md:text-4xl dark:text-white">
+          Nuestro Equipo
+        </h2>
+        <p class="mt-4 text-lg text-neutral-600 dark:text-neutral-400">
+          Conoce a los profesionales que lideran Aninni Company SAC
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        {
+          teamMembers.map((member) => (
+            <div class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-200">
+              <div class="relative aspect-square overflow-hidden bg-neutral-200">
+                <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-300 to-neutral-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="80"
+                    height="80"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="text-neutral-500">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </div>
+              </div>
+
+              <div class="flex flex-1 flex-col p-6">
+                <h3 class="mb-2 text-xl font-bold text-black">{member.name}</h3>
+                <p class="mb-4 text-sm font-semibold tracking-wider text-yellow-600 uppercase">
+                  {member.title}
+                </p>
+                <p class="text-sm leading-relaxed text-neutral-600">
+                  {member.bio}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
