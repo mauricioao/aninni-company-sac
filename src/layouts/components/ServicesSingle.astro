@@ -2,6 +2,7 @@
 import { render } from "astro:content";
 import OptimizedImage from "./utilities/OptimizedImage.astro";
 
+import ImageList from "@/components/ImageList.astro";
 import ImageItem from "@/components/ImageItem.astro";
 
 const {
@@ -33,7 +34,7 @@ const { Content } = await render(Astro.props.content);
         {
           Content && (
             <div class="prose-styles content has-video-modal [&_.image-list-component]:xl:-ms-31.5 [&_.image-list-component]:xl:w-6xl">
-              <Content components={{ ImageItem }} />
+              <Content components={{ ImageItem, ImageList }} />
             </div>
           )
         }
