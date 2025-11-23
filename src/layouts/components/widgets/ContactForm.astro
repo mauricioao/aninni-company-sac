@@ -162,9 +162,7 @@ const noteStyles = {
             rows={input.rows || "4"}
             name={input.name || input.label || "Please set name value"}
             placeholder={input.placeholder || "Please set placeholder"}
-            placeholder={input.placeholder || "Please set placeholder"}
             class="form-input border-current bg-transparent text-inherit placeholder:text-inherit/60 focus:border-yellow-400 focus:ring-yellow-400"
-            {...(input.required && { required: true })}
             {...(input.required && { required: true })}
             set:html={input.defaultValue || ""}
           />
