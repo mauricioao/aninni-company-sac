@@ -4,7 +4,7 @@ import { parseTomlToJson } from "@/lib/utils/tomlUtils";
 
 const config = parseTomlToJson();
 
-const { phone } = config.settings.contactInfo;
+// const { phone } = config.settings.contactInfo;
 // Extract number from markdown link if present, e.g., "[+51 918380045](tel:+51918380045)" -> "51918380045"
 // Or just use a default if not found.
 const phoneNumber = "51918380045"; // Defaulting to the one seen in config for now, can be dynamic later

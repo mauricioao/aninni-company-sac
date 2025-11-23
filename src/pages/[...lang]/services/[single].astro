@@ -1,7 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import extractSlug from "@/lib/utils/extractSlug";
-import { getEntryCTM } from "@/lib/customContentLoader.astro";
+// import { getEntryCTM } from "@/lib/customContentLoader.astro";
 import { parseTomlToJson } from "@/lib/utils/tomlUtils";
 import { getCollectionCTM } from "@/lib/customContentLoader.astro";
 import ServicesSingle from "@/layouts/components/ServicesSingle.astro";
@@ -15,10 +15,7 @@ export async function getStaticPaths() {
       const { defaultLanguage, showDefaultLangInUrl } =
         config.settings.multilingual;
 
-      let services = await getCollectionCTM(
-        "services",
-        lang.languageCode,
-      );
+      let services = await getCollectionCTM("services", lang.languageCode);
 
       return services.map((service) => ({
         params: {

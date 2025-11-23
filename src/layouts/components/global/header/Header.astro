@@ -5,16 +5,16 @@ import { parseTomlToJson } from "@/lib/utils/tomlUtils";
 import { useTranslations } from "@/lib/utils/i18nUtils";
 import NavbarToggler from "@/layouts/components/global/header/NavbarToggler.astro";
 import HeaderOffcanvasContent from "@/components/widgets/HeaderOffcanvasContent.astro";
-import LanguageSwitcher from "@/layouts/components/global/header/LanguageSwitcher.astro";
+// import LanguageSwitcher from "@/layouts/components/global/header/LanguageSwitcher.astro";
 import Navbar from "./Navbar.astro";
 import CustomButton from "@/components/CustomButton.astro";
 
 const config = parseTomlToJson();
 const t = await useTranslations(Astro.currentLocale as string);
 
-const isCategoryFilteredPage = ["/category/", "/tag/"].some((path) =>
-  Astro.url.pathname.includes(`/${config.settings.blogFolder}${path}`),
-);
+// const isCategoryFilteredPage = ["/category/", "/tag/"].some((path) =>
+//   Astro.url.pathname.includes(`/${config.settings.blogFolder}${path}`),
+// );
 
 const {
   site: { logoAlternate },
