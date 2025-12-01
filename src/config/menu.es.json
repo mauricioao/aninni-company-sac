@@ -63,7 +63,7 @@
     {
       "enable": true,
       "name": "Proyectos",
-      "url": "/#projects"
+      "url": "/projects"
     }
   ]
 }

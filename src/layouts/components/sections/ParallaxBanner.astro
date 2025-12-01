@@ -1,0 +1,69 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt?: string;
+}
+
+const { src, alt = "Banner Image" } = Astro.props;
+---
+
+<section class="parallax-container relative w-full h-[300px] overflow-hidden flex items-center justify-center mt-20">
+  <div class="parallax-bg absolute top-0 left-0 w-full h-[150%] will-change-transform">
+    <Image
+      src={src}
+      alt={alt}
+      class="w-full h-full object-cover"
+      width={1920}
+      quality="high"
+    />
+  </div>
+  <div class="absolute inset-0 bg-black/20 z-10"></div>
+</section>
+
+<script>
+  const parallaxContainers = document.querySelectorAll('.parallax-container');
+
+  const handleScroll = () => {
+    parallaxContainers.forEach(container => {
+      const bg = container.querySelector('.parallax-bg') as HTMLElement;
+      if (!bg) return;
+
+      const rect = container.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const containerHeight = rect.height;
+      
+      // Calculate intersection ratio
+      // 0 when top of container enters bottom of viewport
+      // 1 when bottom of container leaves top of viewport
+      // We want to map this range to the image translation
+      
+      const totalScrollDistance = windowHeight + containerHeight;
+      const currentScrollPosition = windowHeight - rect.top;
+      
+      let progress = currentScrollPosition / totalScrollDistance;
+      
+      // Clamp progress between 0 and 1
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Image height is 150% of container, so we can move it by 50% of container height
+      // We want to move from 0 (top aligned) to -50% (bottom aligned)
+      // Actually, since h is 150%, the image height is 1.5 * 300 = 450px.
+      // We want to translate from 0 to -(450 - 300) = -150px.
+      
+      // However, to ensure we don't see empty space, we need to be careful.
+      // If we start at 0 and go to -150px.
+      
+      const moveRange = bg.offsetHeight - containerHeight;
+      const translateY = -1 * progress * moveRange;
+
+      bg.style.transform = `translateY(${translateY}px)`;
+    });
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('resize', handleScroll);
+  // Initial calculation
+  handleScroll();
+</script>

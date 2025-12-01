@@ -1,0 +1,20 @@
+---
+import Base from "@/layouts/Base.astro";
+import { generatePaths } from "@/lib/utils/i18nUtils";
+import ProjectGallery from "@/components/sections/ProjectGallery.astro";
+
+export function getStaticPaths() {
+  return generatePaths();
+}
+---
+
+<Base
+  title="Proyectos"
+  metaTitle="Nuestros Proyectos | Aninni Company"
+  description="Explora nuestra galería de proyectos destacados."
+  headerPosition="fixed"
+  hasHeaderDarkBackground={true}
+  footerSpaceTop={false}
+>
+  <ProjectGallery />
+</Base>
