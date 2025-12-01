@@ -3,7 +3,7 @@ import Base from "@/layouts/Base.astro";
 import { getCollection } from "astro:content";
 import { generatePaths, getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
-import { markdownify } from "@/lib/utils/textConverter";
+
 
 export function getStaticPaths() {
   return generatePaths();

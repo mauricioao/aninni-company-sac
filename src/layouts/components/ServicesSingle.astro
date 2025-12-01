@@ -1,13 +1,13 @@
 ---
 import { render } from "astro:content";
-import OptimizedImage from "./utilities/OptimizedImage.astro";
+
 import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 
 import ImageList from "@/components/ImageList.astro";
 import ImageItem from "@/components/ImageItem.astro";
 
 const {
-  data: { title, image },
+  data: { title },
 } = Astro.props.content;
 
 const { Content } = await render(Astro.props.content);
