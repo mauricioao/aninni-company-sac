@@ -1,0 +1,209 @@
+---
+import Base from "@/layouts/Base.astro";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+import { getCollectionCTM } from "@/lib/customContentLoader.astro";
+import { supportedLanguages, getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import extractSlug from "@/lib/utils/extractSlug";
+
+export async function getStaticPaths() {
+  const paths = await Promise.all(
+    supportedLanguages.map(async (lang) => {
+      const config = parseTomlToJson();
+      const { defaultLanguage, showDefaultLangInUrl } = config.settings.multilingual;
+
+      let products = await getCollectionCTM("products", lang.languageCode);
+
+      return products.map((product) => ({
+        params: {
+          lang:
+            lang.languageCode === defaultLanguage && !showDefaultLangInUrl
+              ? undefined
+              : lang.languageCode,
+          slug: extractSlug(product).split("/").pop(),
+        },
+        props: { 
+            product,
+            lang: lang.languageCode 
+        },
+      }));
+    }),
+  );
+
+  return paths.flat();
+}
+
+const { product, lang } = Astro.props;
+const { Content } = await product.render();
+---
+
+<Base
+  title={product.data.title}
+  description={product.data.description}
+  image={product.data.image}>
+  
+  <!-- Header -->
+  <section class="relative h-[50vh] min-h-[400px] w-full overflow-hidden bg-black">
+    {product.data.image && (
+        <div class="absolute inset-0 z-0">
+         <OptimizedImage
+            src={product.data.image}
+            alt={product.data.title}
+            width={1920}
+            height={1080}
+            class="h-full w-full object-cover opacity-60"
+         />
+        </div>
+    )}
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent">
+      </div>
+    </div>
+    <div class="relative z-10 container flex h-full flex-col justify-end pb-16">
+      <h1 class="text-4xl font-bold text-white md:text-6xl max-w-4xl">
+        {product.data.title}
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/90 font-medium">
+        {product.data.description}
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content with Sidebar -->
+  <section class="py-12 bg-white text-neutral-900">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row gap-12 pt-4">
+        
+        <!-- Sidebar -->
+        <aside class="w-full lg:w-64 shrink-0 space-y-10">
+            <!-- Search -->
+            <div class="relative group">
+                <input id="product-search" type="text" placeholder="Search products..." class="w-full pl-5 pr-12 py-3 rounded-full border border-neutral-200 bg-neutral-100/50 outline-none transition-all duration-300 focus:bg-white focus:border-neutral-300 focus:shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:bg-white text-sm text-neutral-900 placeholder:text-neutral-400" />
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-neutral-800 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <div class="flex justify-between items-center mb-4 cursor-pointer group">
+                    <h3 class="font-bold text-sm uppercase tracking-wide text-neutral-900">Categorías</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-neutral-500 group-hover:text-black transition-colors">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                    </svg>
+                </div>
+                <div class="space-y-3 pl-1">
+                    <a href={getLocaleUrlCTM("/products/repuestos", lang)} class:list={["flex items-center gap-3 text-sm transition-colors", product.slug.includes("repuestos") ? "text-black font-medium" : "text-neutral-500 hover:text-black"]}>
+                        <div class:list={["w-4 h-4 border rounded relative flex items-center justify-center", product.slug.includes("repuestos") ? "border-black bg-black" : "border-neutral-300"]}>
+                            {product.slug.includes("repuestos") && <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>}
+                        </div>
+                        Repuestos
+                    </a>
+                    <a href={getLocaleUrlCTM("/products/otros", lang)} class:list={["flex items-center gap-3 text-sm transition-colors", product.slug.includes("otros") ? "text-black font-medium" : "text-neutral-500 hover:text-black"]}>
+                        <div class:list={["w-4 h-4 border rounded relative flex items-center justify-center", product.slug.includes("otros") ? "border-black bg-black" : "border-neutral-300"]}>
+                            {product.slug.includes("otros") && <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>}
+                        </div>
+                        Otros Productos
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Product Grid Area -->
+        <main class="flex-1">
+             <!-- Content Description -->
+            <div class="prose prose-lg max-w-none mb-10 text-neutral-600">
+                <Content />
+            </div>
+
+            {product.data.items && product.data.items.length > 0 ? (
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10" id="product-grid">
+                    {product.data.items.map((item) => (
+                        <div class="group cursor-pointer product-card" data-name={item.name.toLowerCase()}>
+                            <!-- Image Container -->
+                            <div class="relative w-full aspect-4/3 bg-neutral-100 rounded-2xl mb-4 overflow-hidden flex items-center justify-center p-6 border border-transparent group-hover:border-neutral-200 transition-colors">
+                                {item.image ? (
+                                     <OptimizedImage
+                                        src={item.image}
+                                        alt={item.name}
+                                        width={300}
+                                        height={300}
+                                        class="w-auto h-full max-h-[160px] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+                                     />
+                                ) : (
+                                    <div class="w-20 h-20 text-neutral-300">
+                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                                          <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                                        </svg>
+                                    </div>
+                                )}
+                                
+                                <!-- Tag (Bottom Right of Image Area) -->
+                                {item.tag && (
+                                    <span class="absolute bottom-4 right-4 text-xs font-medium text-neutral-500 lowercase tracking-wide">
+                                        {item.tag}
+                                    </span>
+                                )}
+                            </div>
+                            
+                            <!-- Content -->
+                            <div>
+                                <h3 class="font-bold text-base md:text-lg text-neutral-900 leading-tight">
+                                    {item.name}
+                                </h3>
+                                <p class="text-sm text-neutral-500 mt-1 line-clamp-2">
+                                    {item.description}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                    <div id="no-results" class="hidden col-span-full py-10 text-center text-neutral-500">
+                        No se encontraron productos que coincidan con tu búsqueda.
+                    </div>
+                </div>
+            ) : (
+                <div class="text-center py-20">
+                    <p class="text-neutral-500 text-lg">No Items Found.</p>
+                </div>
+            )}
+        </main>
+
+      </div>
+    </div>
+  </section>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('product-search');
+    const productCards = document.querySelectorAll('.product-card');
+    const noResultsMsg = document.getElementById('no-results');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        let hasVisibleItems = false;
+
+        productCards.forEach((card) => {
+          const name = card.dataset.name || '';
+          if (name.includes(searchTerm)) {
+            card.style.display = 'block'; // Ensure block display for grid items
+            hasVisibleItems = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (noResultsMsg) {
+            if (hasVisibleItems) {
+                noResultsMsg.classList.add('hidden');
+            } else {
+                noResultsMsg.classList.remove('hidden');
+            }
+        }
+      });
+    }
+  });
+</script>
+</Base>

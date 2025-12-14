@@ -70,6 +70,24 @@ const portfolioCollection = defineCollection({
   ),
 });
 
+
+// Products Collection
+const productsCollection = defineCollection({
+  schema: page.merge(
+    z.object({
+        items: z.array(
+          z.object({
+            name: z.string(),
+            image: z.string().optional(),
+            description: z.string().optional(),
+            price: z.string().optional(),
+            tag: z.string().optional(),
+          })
+        ).optional()
+    })
+  ),
+});
+
 // Export collections
 export const collections = {
   // To prevent, getEntry (Content fetching API) throws error when collection does not exist, we specify a default collection along with the schema of each required collection
@@ -77,6 +95,7 @@ export const collections = {
   services: serviceCollection,
   [portfolioFolder]: portfolioCollection,
   portfolio: portfolioCollection,
+  products: productsCollection,
 
   pages: pagesCollection,
   sections: defineCollection({}),

@@ -1,0 +1,437 @@
+---
+import { Image } from "astro:assets";
+import img1 from "@/assets/images/gallery/1.jpg";
+import img2 from "@/assets/images/gallery/2.jpg";
+import img3 from "@/assets/images/gallery/3.jpg";
+import img4 from "@/assets/images/gallery/4.jpg";
+import img5 from "@/assets/images/gallery/5.jpg";
+import img6 from "@/assets/images/gallery/6.jpg";
+import img7 from "@/assets/images/gallery/7.jpg";
+import img8 from "@/assets/images/gallery/8.jpg";
+
+// Grid items configuration to match the bento-style layout
+// We will have 8 items. Let's arrange them in a cool grid.
+const galleryItems = [
+  { img: img1, title: "Smart Warehousing", span: "md:col-span-2 md:row-span-1" },
+  { img: img2, title: "Next-Gen Transport", span: "md:col-span-1 md:row-span-1" },
+  { img: img3, title: "Digital Customs & Advisory", span: "md:col-span-1 md:row-span-1" },
+  { img: img4, title: "Future Freight Projects", span: "md:col-span-2 md:row-span-1" },
+  { img: img5, title: "Global Network", span: "md:col-span-1 md:row-span-1" },
+  { img: img6, title: "Automated Logistics", span: "md:col-span-1 md:row-span-1" },
+  { img: img7, title: "Sustainable Shipping", span: "md:col-span-1 md:row-span-1" },
+  { img: img8, title: "Tech Integration", span: "md:col-span-1 md:row-span-1" },
+];
+---
+
+<section class="modern-gallery">
+  <div class="container mx-auto px-4 py-20">
+    <div class="header-content mb-16 animate-fade-in-up">
+      <span class="subtitle">CUTTING-EDGE GALLERY</span>
+      <h1 class="title">
+        OUR GLOBAL FOOTPRINT <span class="divider">—</span><br />
+        <span class="highlight">The Future of Logistics.</span>
+      </h1>
+    </div>
+
+    <div class="bento-grid">
+      {
+        galleryItems.map((item, index) => (
+          <div 
+            class={`grid-item group ${item.span}`} 
+            data-index={index}
+            style={`animation-delay: ${index * 100}ms`}
+          >
+             <div class="card-inner">
+                <Image
+                  src={item.img}
+                  alt={item.title}
+                  class="gallery-image"
+                  width={800}
+                  height={600}
+                />
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <div class="icon-box">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                      </svg>
+                    </div>
+                    <h3 class="card-title">{item.title}</h3>
+                    <p class="card-desc">Advanced Solutions</p>
+                  </div>
+                </div>
+             </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div id="galleryModal" class="modal">
+    <button id="modalPrev" class="modal-nav modal-prev" aria-label="Anterior">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+    </button>
+    <button id="modalNext" class="modal-nav modal-next" aria-label="Siguiente">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+    </button>
+    
+    <div class="modal-content">
+      <button id="closeModal" class="modal-close" aria-label="Cerrar">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <img id="modalImage" src="" alt="Vista ampliada" />
+      <h3 id="modalTitle" class="modal-title"></h3>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Base Styles */
+  .modern-gallery {
+    background-color: #050505; /* Deep black usually fits "Cutting Edge" */
+    color: #fff;
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .subtitle {
+    display: block;
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+  }
+
+  .divider {
+    color: #9ca3af;
+    font-weight: 300;
+  }
+
+  .highlight {
+    color: #9ca3af; /* Muted grey for the second line as per reference */
+    font-weight: 500;
+  }
+
+  /* Grid Layout */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .bento-grid {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 300px; /* Fixed rough height for rows */
+    }
+  }
+
+  /* Card Styles */
+  .grid-item {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+
+  .grid-item:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+    border-color: rgba(255, 255, 255, 0.3);
+    z-index: 2;
+  }
+  
+  .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+  }
+
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+
+  .grid-item:hover .gallery-image {
+    transform: scale(1.1);
+  }
+
+  /* Overlay */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    transition: all 0.3s ease;
+  }
+
+  .overlay-content {
+      transform: translateY(10px);
+      transition: transform 0.3s ease;
+  }
+  
+  .grid-item:hover .overlay-content {
+      transform: translateY(0);
+  }
+
+  .icon-box {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1rem;
+      color: #3b82f6; /* Accent color */
+      transform: scale(0);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-origin: bottom left;
+  }
+  
+  .grid-item:hover .icon-box {
+      transform: scale(1);
+      opacity: 1;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+  }
+
+  .card-desc {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease 0.1s;
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .grid-item:hover .card-desc {
+      opacity: 1;
+      transform: translateY(0);
+      height: auto;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal.show {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    text-align: center;
+  }
+
+  .modal-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .modal-title {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      color: white;
+      font-weight: 600;
+  }
+
+  .modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    padding: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.3s ease;
+  }
+
+  .modal-nav:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .modal-prev { left: 2rem; }
+  .modal-next { right: 2rem; }
+
+  .modal-close {
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .modal-close:hover {
+      background: rgba(255,255,255,0.1);
+      transform: rotate(90deg);
+  }
+  
+  @media (max-width: 768px) {
+      .modal-nav {
+          padding: 0.5rem;
+      }
+      .modal-prev { left: 1rem; }
+      .modal-next { right: 1rem; }
+  }
+</style>
+
+<script>
+  // Simple Modal & Gallery Logic
+  const initGallery = () => {
+    const items = document.querySelectorAll('.grid-item');
+    const modal = document.getElementById('galleryModal');
+    const modalImg = document.getElementById('modalImage') as HTMLImageElement;
+    const modalTitle = document.getElementById('modalTitle');
+    const closeBtn = document.getElementById('closeModal');
+    const prevBtn = document.getElementById('modalPrev');
+    const nextBtn = document.getElementById('modalNext');
+    
+    // Collect data
+    const galleryData = Array.from(items).map(item => {
+        const img = item.querySelector('img');
+        const title = item.querySelector('.card-title')?.textContent;
+        return {
+            src: img?.src || '',
+            title: title || ''
+        };
+    });
+
+    let currentIndex = 0;
+
+    const openModal = (index: number) => {
+        if(!modal || !modalImg) return;
+        currentIndex = index;
+        updateModalContent();
+        modal.style.display = 'flex';
+        // Force reflow
+        modal.offsetHeight; 
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        if(!modal) return;
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }, 300);
+    };
+
+    const updateModalContent = () => {
+        if(!modalImg || currentIndex < 0 || currentIndex >= galleryData.length) return;
+        const data = galleryData[currentIndex];
+        modalImg.src = data.src;
+        if(modalTitle) modalTitle.textContent = data.title;
+    };
+
+    const nextImage = (e?: Event) => {
+        if(e) e.stopPropagation();
+        currentIndex = (currentIndex + 1) % galleryData.length;
+        updateModalContent();
+    };
+
+    const prevImage = (e?: Event) => {
+        if(e) e.stopPropagation();
+        currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+        updateModalContent();
+    };
+
+    // Listeners
+    items.forEach((item, index) => {
+        item.addEventListener('click', () => openModal(index));
+    });
+
+    closeBtn?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => {
+        if(e.target === modal) closeModal();
+    });
+
+    nextBtn?.addEventListener('click', nextImage);
+    prevBtn?.addEventListener('click', prevImage);
+
+    document.addEventListener('keydown', (e) => {
+        if(!modal?.classList.contains('show')) return;
+        if(e.key === 'Escape') closeModal();
+        if(e.key === 'ArrowRight') nextImage();
+        if(e.key === 'ArrowLeft') prevImage();
+    });
+  };
+
+  document.addEventListener('astro:page-load', initGallery);
+  // Also run on initial load if not using ViewTransitions
+  if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initGallery);
+  } else {
+      initGallery();
+  }
+</script>

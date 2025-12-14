@@ -2,9 +2,13 @@
 import type { NavigationLink } from "@/types";
 import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 import ServicesDropdown from "./ServicesDropdown.astro";
+import SimpleDropdown from "./SimpleDropdown.astro";
 
 const menu = Astro.props.menu as NavigationLink;
 const { pathname } = Astro.url;
+
+// Check if any child has children (grandchild existence implies complex dropdown)
+const hasGrandChildren = menu.children?.some((child) => child.children && child.children.length > 0);
 ---
 
 {
@@ -38,7 +42,11 @@ const { pathname } = Astro.url;
           <path d="m6 9 6 6 6-6" />
         </svg>
       </a>
-      <ServicesDropdown items={menu.children} />
+      {hasGrandChildren ? (
+        <ServicesDropdown items={menu.children} />
+      ) : (
+        <SimpleDropdown items={menu.children} />
+      )}
     </li>
   ) : (
     <li class="nav-item">

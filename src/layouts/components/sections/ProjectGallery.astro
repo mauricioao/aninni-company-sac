@@ -27,7 +27,7 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
     <div class="carousel" id="carousel">
       {
         imageList.map((img, index) => (
-          <div class="carousel-item" data-index={index}>
+          <div class="carousel-item" data-index={index} data-full-src={img.src}>
             <Image
               src={img}
               alt={`Proyecto ${index + 1}`}
@@ -259,25 +259,32 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
 
   .modal-content {
     position: relative;
-    max-width: 90%;
-    max-height: 90%;
+    width: auto;
+    height: auto;
+    max-width: 98vw;
+    max-height: 98vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none; /* Let clicks pass through container to close */
   }
 
   .modal-content img {
-    max-width: 100%;
-    max-height: 90vh;
+    /* If image is small, scale it up. If huge, scale down. */
+    width: auto;
+    height: auto;
+    max-width: 95vw;
+    max-height: 95vh;
     object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 4px; 
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    pointer-events: auto; /* Re-enable clicks on image */
   }
 
   .modal-close {
     position: absolute;
-    top: -20px;
-    right: -20px;
+    top: 20px;
+    right: 20px;
     color: #f1f1f1;
     font-size: 30px;
     font-weight: bold;
@@ -295,6 +302,7 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
     line-height: 1;
     padding: 0;
     padding-bottom: 4px; /* Center the X visually */
+    pointer-events: auto; 
   }
 
   .modal-close:hover {
@@ -336,14 +344,13 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
 
   @media (max-width: 768px) {
     .modal-close {
-      top: -15px;
-      right: -15px;
+      top: 10px;
+      right: 10px;
       width: 36px;
       height: 36px;
       font-size: 24px;
       background: rgba(0, 0, 0, 0.8); /* Darker background for mobile */
       border: 1px solid rgba(255, 255, 255, 0.5);
-      left: auto; /* Reset left */
     }
 
     .modal-nav {
@@ -351,8 +358,6 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
       height: 44px;
       font-size: 1.5rem;
       padding: 0;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .modal-prev {
@@ -373,23 +378,29 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
     const nextBtn = document.getElementById("nextBtn");
 
     if (!carousel || !items.length) {
-      console.error("Carousel elements not found");
       return;
     }
 
+    // Configuration
+    const LERP_FACTOR = 0.1; // Smoothness (lower = smoother/slower)
+    const DRAG_SENSITIVITY = 0.5;
+    const MOMENTUM_FACTOR = 0.95; // Friction after release
+
+    // State
     let currentAngle = 0;
     let targetAngle = 0;
     const totalItems = items.length;
     const angleStep = 360 / totalItems;
-    let radius = 550; // Default radius
+    let radius = 550; 
 
-    // Drag state
+    // Drag State
     let isDragging = false;
     let startX = 0;
-    let velocity = 0;
+    let startTargetAngle = 0;
     let lastX = 0;
+    let velocity = 0;
     let lastTime = 0;
-    let animationId: number;
+    let isAnimationFrame = false;
 
     // Zoom Modal Elements
     const modal = document.getElementById("imageModal");
@@ -397,128 +408,116 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
     const closeModal = document.getElementById("closeModal");
     const modalPrev = document.getElementById("modalPrev");
     const modalNext = document.getElementById("modalNext");
-    
     let currentModalIndex = -1;
-    // Get all image sources for navigation
-    const imageSources = Array.from(items).map(item => item.querySelector('img')?.src || '');
+    
+    // Get all image sources for navigation - NOW USING FULL RESOLUTION
+    const imageSources = Array.from(items).map(item => item.dataset.fullSrc || '');
 
-    // Responsive radius
     const updateRadius = () => {
       if (window.innerWidth < 768) {
-        radius = 220; // Smaller radius for mobile
+        radius = 220; 
       } else {
-        radius = 350; // Reduced radius for desktop
+        radius = 350; 
       }
       initCarousel();
     };
 
-    // Initialize carousel items in 3D circle
     const initCarousel = () => {
       items.forEach((item, index) => {
         const theta = (index * angleStep * Math.PI) / 180;
         const x = Math.sin(theta) * radius;
         const z = Math.cos(theta) * radius;
-        
-        // Adjust rotation to face outward correctly
         item.style.transform = `translate3d(${x}px, 0, ${z}px) rotateY(${index * angleStep}deg)`;
         
-        // Add click listener for zoom
-        item.addEventListener('click', () => {
-          if (!isDragging && Math.abs(velocity) < 0.1) { // Only open if not dragging
-             openModal(index);
-          }
-        });
+        // Update click listener to check for drag vs click
+        item.onclick = (e) => {
+            // If significant movement occurred, treat as drag, not click
+            if (Math.abs(velocity) > 0.5 || isDragging) return;
+            openModal(index);
+        };
       });
     };
 
-    // Rotate carousel
-    const rotateCarousel = () => {
-      carousel.style.transform = `rotateY(${currentAngle}deg)`;
-    };
-
-    // Inertia Animation Loop
-    const animate = () => {
-      if (isDragging) return;
-
-      if (Math.abs(velocity) > 0.01) {
-        currentAngle += velocity;
-        velocity *= 0.95; // Friction
-        rotateCarousel();
-        animationId = requestAnimationFrame(animate);
-      } else {
-        // Snap to nearest
-        snapToNearest();
+    // Main Animation Loop
+    const tick = () => {
+      if (!isDragging) {
+        // Apply momentum if any
+        if (Math.abs(velocity) > 0.01) {
+             targetAngle += velocity;
+             velocity *= MOMENTUM_FACTOR;
+        } else {
+             // Optional: Snap to nearest slot when stopped
+             // const snapped = Math.round(targetAngle / angleStep) * angleStep;
+             // targetAngle += (snapped - targetAngle) * 0.1; 
+        }
       }
-    };
 
-    const snapToNearest = () => {
-       const remainder = currentAngle % angleStep;
-       if (Math.abs(remainder) > 0.1) {
-          // Simple snap logic could go here if strict snapping is desired after inertia
-          // For now, let's just stop smoothly
-       }
-    };
-
-    // Smooth rotation to target
-    const smoothRotateToTarget = () => {
-      if (isDragging) return;
-      
-      // Simple lerp
+      // Linear Interpolation
       const diff = targetAngle - currentAngle;
       
-      if (Math.abs(diff) > 0.5) {
-        currentAngle += diff * 0.1; // Adjust 0.1 for speed
-        rotateCarousel();
-        animationId = requestAnimationFrame(smoothRotateToTarget);
-      } else {
-        currentAngle = targetAngle;
-        rotateCarousel();
-      }
+      // If far away, move closer
+      // When very close, just set it to avoid infinite micro-updates? 
+      // Actually standard lerp is fine, but for performance we can sleep if static.
+      // For now, simple continuous lerp:
+      currentAngle += diff * LERP_FACTOR;
+
+      carousel.style.transform = `rotateY(${currentAngle}deg)`;
+      
+      requestAnimationFrame(tick);
     };
 
-    // Navigation functions
+    // Start loop
+    requestAnimationFrame(tick);
+
+    // Controls
     const next = () => {
-      targetAngle -= angleStep;
-      cancelAnimationFrame(animationId);
-      smoothRotateToTarget();
+      // Move one full step relative to current approximate slot
+      // Or just add step to target
+      const currentSlot = Math.round(targetAngle / angleStep);
+      targetAngle = (currentSlot - 1) * angleStep;
     };
 
     const prev = () => {
-      targetAngle += angleStep;
-      cancelAnimationFrame(animationId);
-      smoothRotateToTarget();
+      const currentSlot = Math.round(targetAngle / angleStep);
+      targetAngle = (currentSlot + 1) * angleStep;
     };
 
     // Drag Events
     const handleDragStart = (e: MouseEvent | TouchEvent) => {
       isDragging = true;
-      cancelAnimationFrame(animationId);
-      
       startX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
       lastX = startX;
+      startTargetAngle = targetAngle;
       lastTime = Date.now();
       velocity = 0;
       
-      carousel.style.transition = 'none';
       carousel.style.cursor = 'grabbing';
+      // Stop any snapping/momentum instantly implies targetAngle fixes on current?
+      // Actually, we want to grab 'from where it is'. 
+      // But to avoid jumping, 'targetAngle' should be reset to 'currentAngle' visually?
+      // If we change targetAngle abruptly, lerp will jump? No, lerp will smooth it.
+      // Better to keep targetAngle consistent with the visual grab point.
+      // A common trick:
+      // dist = currentAngle - startAngle;
+      // We are just adding delta.
     };
 
     const handleDragMove = (e: MouseEvent | TouchEvent) => {
       if (!isDragging) return;
-      e.preventDefault(); // Prevent scrolling on touch
+      e.preventDefault(); 
       
       const x = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
-      const now = Date.now();
-      const dt = now - lastTime;
       const dx = x - lastX;
       
-      const sensitivity = 0.5;
-      currentAngle += dx * sensitivity;
-      rotateCarousel();
-
-      // Calculate velocity
+      // Update target directly
+      targetAngle += dx * DRAG_SENSITIVITY;
+      
+      // Calculate instantaneous velocity for throw
+      const now = Date.now();
+      const dt = now - lastTime;
       if (dt > 0) {
-        velocity = (dx * sensitivity); // Simple velocity
+        velocity = (dx * DRAG_SENSITIVITY); 
+        // Cap velocity?
       }
 
       lastX = x;
@@ -530,22 +529,53 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
       isDragging = false;
       carousel.style.cursor = 'grab';
       
-      // Start inertia
-      animate();
+      // Snap logic: adjust targetAngle to nearest slot AFTER momentum?
+      // Let's implement a simple "snap to effective target" 
+      // Predict where it will land: 
+      // land = targetAngle + (velocity / (1 - MOMENTUM_FACTOR)); 
+      // const snap = Math.round(land / angleStep) * angleStep;
+      // targetAngle = snap;
+      // But let's verify if the user wants strict slots. 
+      // The original code had slots. Let's do a soft snap.
+      
+      // We will leave velocity alone to let the 'tick' handle momentum, 
+      // but we can add a 'snap' phase later in tick if we want strict slots.
+      // For now, free spinning with momentum is smoother and feels better.
+      // If you want strict snapping, uncomment this:
+      /*
+      const predictedEnd = targetAngle + (velocity * 10); // simplified projection
+      const closestSlot = Math.round(predictedEnd / angleStep) * angleStep;
+      // We can nudge velocity to get there, or just set targetAngle behavior in tick.
+      */
+      
+      // Just ensure velocity isn't crazy
+      if (Math.abs(velocity) > 5) velocity = 5 * Math.sign(velocity);
     };
 
-    // Modal Functions
+    // ---- Event Binding ----
+
+    if (nextBtn) nextBtn.addEventListener("click", next);
+    if (prevBtn) prevBtn.addEventListener("click", prev);
+
+    carousel.addEventListener('mousedown', handleDragStart);
+    window.addEventListener('mousemove', handleDragMove);
+    window.addEventListener('mouseup', handleDragEnd);
+    window.addEventListener('mouseleave', handleDragEnd);
+
+    carousel.addEventListener('touchstart', handleDragStart, { passive: false });
+    window.addEventListener('touchmove', handleDragMove, { passive: false });
+    window.addEventListener('touchend', handleDragEnd);
+
+
+    // ---- Modal Logic (Unchanged mostly) ----
     const openModal = (index: number) => {
       if (!modal || !modalImg || index < 0 || index >= imageSources.length) return;
-      
       currentModalIndex = index;
       updateModalImage();
-      
       modal.style.display = 'flex';
-      // Trigger reflow
       modal.offsetHeight; 
       modal.classList.add('show');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
     };
 
     const updateModalImage = () => {
@@ -575,22 +605,6 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
       }, 300);
     };
 
-    // Event listeners
-    if (nextBtn) nextBtn.addEventListener("click", next);
-    if (prevBtn) prevBtn.addEventListener("click", prev);
-
-    // Mouse events
-    carousel.addEventListener('mousedown', handleDragStart);
-    window.addEventListener('mousemove', handleDragMove);
-    window.addEventListener('mouseup', handleDragEnd);
-    window.addEventListener('mouseleave', handleDragEnd);
-
-    // Touch events
-    carousel.addEventListener('touchstart', handleDragStart, { passive: false });
-    window.addEventListener('touchmove', handleDragMove, { passive: false });
-    window.addEventListener('touchend', handleDragEnd);
-
-    // Modal Events
     if (closeModal) closeModal.addEventListener('click', closeModalFunc);
     if (modal) {
         modal.addEventListener('click', (e) => {
@@ -601,24 +615,18 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
     if (modalPrev) modalPrev.addEventListener('click', prevModalImage);
 
     document.addEventListener('keydown', (e) => {
-        if (!modal || !modal.classList.contains('show')) return;
-        
-        if (e.key === 'Escape') closeModalFunc();
-        if (e.key === 'ArrowRight') nextModalImage(e);
-        if (e.key === 'ArrowLeft') prevModalImage(e);
+        if (modal && modal.classList.contains('show')) {
+            if (e.key === 'Escape') closeModalFunc();
+            if (e.key === 'ArrowRight') nextModalImage(e);
+            if (e.key === 'ArrowLeft') prevModalImage(e);
+        } else {
+             // Only nav carousel if modal not open
+             if (e.key === "ArrowRight") next();
+             if (e.key === "ArrowLeft") prev();
+        }
     });
 
-    // Keyboard navigation
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") prev();
-    });
-
-    // Resize listener
     window.addEventListener('resize', updateRadius);
-
-    // Initialize
-    updateRadius(); // Sets initial radius and positions
-    rotateCarousel();
+    updateRadius(); 
   });
 </script>

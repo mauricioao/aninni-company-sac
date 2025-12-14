@@ -1,0 +1,20 @@
+---
+import Base from "@/layouts/Base.astro";
+import { generatePaths } from "@/lib/utils/i18nUtils";
+import ModernGallery from "@/components/sections/ModernGallery.astro";
+
+export function getStaticPaths() {
+  return generatePaths();
+}
+---
+
+<Base
+  title="Galería"
+  metaTitle="Galería de Proyectos | Aninni Company"
+  description="Explora nuestra galería global de soluciones logísticas."
+  headerPosition="fixed"
+  hasHeaderDarkBackground={true}
+  footerSpaceTop={false}
+>
+  <ModernGallery />
+</Base>

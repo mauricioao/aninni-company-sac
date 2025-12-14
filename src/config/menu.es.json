@@ -52,6 +52,45 @@
               "enable": true
             }
           ]
+        },
+        {
+          "name": "Aduana",
+          "enable": true,
+          "children": [
+            {
+              "name": "Despacho Aduanero",
+              "url": "/services/despacho-aduanero",
+              "enable": true
+            }
+          ]
+        },
+        {
+          "name": "Asesoría",
+          "enable": true,
+          "children": [
+            {
+              "name": "Consultoría en Comercio Exterior",
+              "url": "/services/consultoria-comercio-exterior",
+              "enable": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "enable": true,
+      "name": "Productos",
+      "url": "/products",
+      "children": [
+        {
+          "name": "Repuestos",
+          "url": "/products/repuestos",
+          "enable": true
+        },
+        {
+          "name": "Otros",
+          "url": "/products/otros",
+          "enable": true
         }
       ]
     },
@@ -62,8 +101,8 @@
     },
     {
       "enable": true,
-      "name": "Proyectos",
-      "url": "/projects"
+      "name": "Galería",
+      "url": "/gallery"
     }
   ]
 }

@@ -1,0 +1,101 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { generatePaths, getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+import languages from "@/config/language.json";
+
+export function getStaticPaths() {
+  return generatePaths();
+}
+
+const { lang } = Astro.params;
+const products = await getCollection("products");
+
+// Get content directory for current language
+const currentLangConfig = languages.find((l) => l.languageCode === lang);
+const contentDir = currentLangConfig?.contentDir || "spanish";
+
+// Filter products for current language
+const currentProducts = products.filter((product) => {
+    const [pLang] = product.slug.split("/");
+    return pLang === contentDir;
+});
+
+---
+
+<Base
+  title="Nuestros Productos"
+  description="Catálogo de repuestos y productos auxiliares para su operación logística.">
+  <section
+    class="relative h-[40vh] min-h-[300px] w-full overflow-hidden bg-black">
+    <div class="absolute inset-0 z-0 opacity-50">
+      <div class="absolute inset-0 bg-linear-to-t from-black to-transparent">
+      </div>
+    </div>
+    <div class="relative z-10 container flex h-full flex-col justify-center">
+      <h1 class="text-4xl font-bold text-white md:text-6xl">
+        Nuestros Productos
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/80">
+        Calidad y garantía en cada componente.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24">
+    <div class="container">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {currentProducts.map((product) => (
+          <a
+            href={getLocaleUrlCTM(
+              `/products/${product.slug.split("/").pop()}`,
+              Astro.currentLocale,
+            )}
+            class="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-200">
+            <div class="relative aspect-video overflow-hidden">
+              {product.data.image && (
+                <OptimizedImage
+                  src={product.data.image}
+                  alt={product.data.title}
+                  width={600}
+                  height={400}
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              )}
+              <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40" />
+            </div>
+
+            <div class="flex flex-1 flex-col p-8">
+              <h3 class="mb-3 text-2xl font-bold text-black transition-colors group-hover:text-neutral-700">
+                {product.data.title}
+              </h3>
+
+              <p class="mb-6 line-clamp-3 text-sm leading-relaxed font-medium text-neutral-600">
+                {product.data.description}
+              </p>
+
+              <div class="mt-auto flex items-center text-sm font-bold tracking-wider text-yellow-600 uppercase transition-colors group-hover:text-yellow-500">
+                Ver catálogo
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="ml-2 transition-transform duration-300 group-hover:translate-x-2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
