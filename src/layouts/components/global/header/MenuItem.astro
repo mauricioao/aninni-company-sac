@@ -5,6 +5,7 @@ import ServicesDropdown from "./ServicesDropdown.astro";
 import SimpleDropdown from "./SimpleDropdown.astro";
 
 const menu = Astro.props.menu as NavigationLink;
+const { isMobile } = Astro.props;
 const { pathname } = Astro.url;
 
 // Check if any child has children (grandchild existence implies complex dropdown)
@@ -13,7 +14,10 @@ const hasGrandChildren = menu.children?.some((child) => child.children && child.
 
 {
   menu.children ? (
-    <li class="nav-item hs-dropdown group/dropdown relative inline-flex [--placement:bottom-left] [--trigger:hover]">
+    <li class:list={[
+      "nav-item hs-dropdown group/dropdown relative inline-flex [--placement:bottom-left]",
+      !isMobile && "[--trigger:hover]"
+      ]}>
       <a
         class:list={[
           "hs-dropdown-toggle nav-link inline-flex items-center gap-1",
@@ -23,9 +27,9 @@ const hasGrandChildren = menu.children?.some((child) => child.children && child.
           },
         ]}
         href={
-          menu.url && menu.url !== "#"
+          menu.url && menu.url !== "#" && !isMobile
             ? getLocaleUrlCTM(menu.url, Astro.currentLocale)
-            : "#"
+            : "javascript:void(0)"
         }>
         {menu.name}
         <svg
@@ -43,9 +47,9 @@ const hasGrandChildren = menu.children?.some((child) => child.children && child.
         </svg>
       </a>
       {hasGrandChildren ? (
-        <ServicesDropdown items={menu.children} />
+        <ServicesDropdown items={menu.children} parentUrl={menu.url} parentName={menu.name} isMobile={isMobile} />
       ) : (
-        <SimpleDropdown items={menu.children} />
+        <SimpleDropdown items={menu.children} parentUrl={menu.url} parentName={menu.name} isMobile={isMobile} />
       )}
     </li>
   ) : (
