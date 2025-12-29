@@ -6,6 +6,8 @@ import { getEntryCTM } from "@/lib/customContentLoader.astro";
 import BannerAgencyStartup from "@/components/sections/Banner.astro";
 // import PricingSection from "@/components/sections/PricingSection.astro";
 import ServicesSection from "@/components/sections/ServicesSection.astro";
+import FeaturedCarousel from "@/components/sections/FeaturedCarousel.astro";
+import WelcomeModal from "@/components/WelcomeModal.astro";
 
 import ParallaxBanner from "@/components/sections/ParallaxBanner.astro";
 import bannerImage from "@/assets/images/banner/banner-2.png";
@@ -18,9 +20,13 @@ const page = await getEntryCTM("homepage", "-index", Astro.currentLocale);
 ---
 
 <Base {...page?.data} headerPosition="fixed" hasHeaderDarkBackground={true} footerSpaceTop={false}>
+  <!-- Welcome Popup -->
+  <WelcomeModal />
+
   <BannerAgencyStartup />
   <Clients />
-  <ServicesSection />
+  <FeaturedCarousel />
+  <!-- <ServicesSection /> -->
   <ParallaxBanner src={bannerImage} />
   <!-- <PortfolioSection /> -->
   <!-- <PricingSection /> -->

@@ -6,6 +6,7 @@ import { markdownify } from "@/lib/utils/textConverter";
 import CustomButton from "@/components/CustomButton.astro";
 import overrideObjects from "@/lib/utils/overrideObjects.ts";
 import type { bannerAgencySectionSchema } from "@/sections.schema";
+import ServiceFinder from "@/components/sections/ServiceFinder.astro";
 import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
 
 // Type for this section data
@@ -44,14 +45,14 @@ const fontSizeMap: Record<NonNullable<typeof titleSize>, string> = {
 const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
 ---
 
-<section class="text-light mb-24 bg-black pt-52 md:mb-32">
-  <div class="container">
+<section class="text-light bg-black pt-52 relative z-20">
+  <div class="container relative z-10">
     <div class="mx-auto max-w-7xl space-y-7 text-center md:space-y-10">
       {
         title && (
           <h1
-            data-aos="reveal-anim-top"
-            data-aos-duration="1500"
+            data-aos="fade-up"
+            data-aos-duration="1000"
             class:list={[
               "text-inherit",
               fontSize,
@@ -61,56 +62,38 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
           />
         )
       }
+      
       {
-        button?.enable ? (
-          <div
-            data-aos="reveal-anim-top"
-            data-aos-duration="1500"
-            data-aos-delay="200"
-            class="mx-auto max-w-2xl space-y-6">
-            {description && (
-              <p
-                class="text-lg text-inherit opacity-80"
-                set:html={markdownify(description)}
-              />
-            )}
-            {button && button.enable && (
-              <CustomButton
-                hoverEffect="creative-fill"
-                class="btn-accent effect-color-dark mx-auto"
-                {...button}
-              />
-            )}
-          </div>
-        ) : (
-          description && (
-            <p
-              data-aos="reveal-anim-top"
-              data-aos-delay="200"
-              data-aos-duration="1500"
-              class="mx-auto max-w-2xl text-lg text-inherit opacity-80"
-              set:html={markdownify(description)}
-            />
-          )
+        description && (
+          <p
+             data-aos="fade-up"
+             data-aos-delay="100"
+             data-aos-duration="1000"
+             class="mx-auto max-w-2xl text-lg text-inherit opacity-80"
+             set:html={markdownify(description)}
+          />
         )
       }
+      
+      <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+        <ServiceFinder />
+      </div>
 
-      {
+       {
         image && (
           <div
-            data-aos="reveal-anim-top"
+            data-aos="fade-up"
             data-aos-duration="1500"
-            data-aos-delay="300"
-            data-aos-offset="0"
-            class="mx-auto mt-10 -mb-24 max-w-4xl md:mt-20 md:-mb-32">
+            data-aos-delay="400"
+            class="relative z-20 mx-auto mt-10 -mb-40 max-w-4xl md:mt-20 md:-mb-72">
             <OptimizedImage
               src={image}
               alt={title || "Banner"}
-              class="h-110 w-full object-cover md:h-135"
+              class="h-110 w-full object-cover md:h-135 rounded-lg shadow-2xl border border-white/10"
             />
           </div>
         )
       }
     </div>
-  </div>
+   </div>
 </section>

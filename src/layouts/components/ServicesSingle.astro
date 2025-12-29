@@ -2,12 +2,13 @@
 import { render } from "astro:content";
 
 import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
 
 import ImageList from "@/components/ImageList.astro";
 import ImageItem from "@/components/ImageItem.astro";
 
 const {
-  data: { title },
+  data: { title, image },
 } = Astro.props.content;
 
 const { Content } = await render(Astro.props.content);
@@ -15,8 +16,19 @@ const { Content } = await render(Astro.props.content);
 
 <section
   class="relative h-[40vh] min-h-[300px] w-full overflow-hidden bg-black">
-  <div class="absolute inset-0 z-0 opacity-50">
-    <div class="absolute inset-0 bg-linear-to-t from-black to-transparent">
+  {image && (
+      <div class="absolute inset-0 z-0">
+       <OptimizedImage
+          src={image}
+          alt={title}
+          width={1920}
+          height={1080}
+          class="h-full w-full object-cover opacity-60"
+       />
+      </div>
+  )}
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent">
     </div>
   </div>
   <div class="relative z-10 container flex h-full flex-col justify-center">

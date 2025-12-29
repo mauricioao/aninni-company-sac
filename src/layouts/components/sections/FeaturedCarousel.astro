@@ -1,0 +1,190 @@
+---
+import { getCollection } from "astro:content";
+import { getCollectionCTM } from "@/lib/customContentLoader.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import OptimizedImage from "../utilities/OptimizedImage.astro";
+
+// Fetch all services for current locale
+const allServices = await getCollectionCTM("services", Astro.currentLocale);
+
+// Define the order and specific services to show (matching Navbar)
+// IDs are typically "spanish/slug" or just "slug" depending on setup.
+// We will filter by checking if the slug ends with these keys.
+const featuredSlugs = [
+  "almacenaje-wms",
+  "valor-agregado-vas",
+  "carga-nacional",
+  "ultima-milla",
+  "carga-proyecto-mineria",
+  "fulfillment",
+  "despacho-aduanero",
+  "consultoria-comercio-exterior"
+];
+
+// Log found services for debugging (server-side)
+// console.log("DEBUG: All Services Count:", allServices.length);
+// console.log("DEBUG: Featured Slugs:", featuredSlugs);
+
+const services = featuredSlugs.map(slug => {
+    const found = allServices.find(s => s.slug.includes(slug) || s.id.includes(slug));
+    // if (!found) console.log(`DEBUG: Missing Content for slug: ${slug}`);
+    return found;
+}).filter(Boolean);
+
+// console.log("DEBUG: Final Services Count:", services.length);
+
+// Helper to get simple slug
+const getSimpleSlug = (slug: string) => slug.split('/').pop();
+---
+
+<section class="py-20 bg-[#0a0a0a] overflow-hidden relative"> <!-- Neutral dark background -->
+  
+  <div class="container relative z-10">
+     <div class="mb-12 text-center md:flex md:justify-between md:items-end md:text-left" data-aos="fade-up">
+        <div class="max-w-2xl">
+            <span class="text-accent font-semibold tracking-wider uppercase text-sm">Nuestras Soluciones</span>
+            <h2 class="text-h2 font-bold text-white mt-2">Servicios Integrales</h2>
+            <p class="text-white/60 mt-4 text-lg">Impulsamos su cadena de suministro con servicios diseñados para la máxima eficiencia y seguridad.</p>
+        </div>
+     </div>
+
+     <!-- Added padding-bottom to move dots down -->
+     <div class="swiper featured-swiper pb-16" data-aos="fade-up" data-aos-delay="200">
+        <div class="swiper-wrapper">
+           {services?.map((service: any) => (
+             <div class="swiper-slide group" style="height: 450px;"> <!-- Fixed height container with inline style -->
+                <div class="relative h-full rounded-2xl overflow-hidden border border-white/20 bg-[#151515] transition-all duration-500 group-hover:border-accent/50 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+                   <!-- Image Background -->
+                   <div class="absolute inset-0 z-0">
+                      {service.data.image ? (
+                        <OptimizedImage
+                        src={service.data.image}
+                        alt={service.data.title}
+                        width={600}
+                        height={400}
+                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      ) : (
+                        <div class="w-full h-full bg-gradient-to-br from-gray-800 to-black opacity-80"></div>
+                      )}
+                      
+                      <div class="absolute inset-0 bg-gradient-to-t from-black via-[#0a0a0a]/80 to-transparent"></div>
+                   </div>
+                   
+                   <!-- Content - Absolute positioning with high Z-Index -->
+                   <div class="absolute inset-x-0 bottom-0 p-8 flex flex-col justify-end z-30 pointer-events-none">
+                      <div class="transform transition-transform duration-300 group-hover:-translate-y-2 pointer-events-auto">
+                         <div class="w-12 h-1 bg-accent mb-4 rounded-full transition-all duration-300 group-hover:w-20"></div>
+                         <h3 class="text-2xl font-bold text-white mb-2 leading-tight drop-shadow-md relative z-30">{service.data.title}</h3>
+                         
+                         <!-- Description always visible, no flicker -->
+                         <p class="text-gray-200 text-sm line-clamp-3 leading-relaxed mb-4 drop-shadow-sm relative z-30">
+                             {service.data.description}
+                         </p>
+
+                         <!-- Clickable Area Coverage or Button -->
+                         <a href={`/services/${getSimpleSlug(service.slug)}/`} class="inline-flex items-center text-white font-medium hover:text-accent transition-colors mt-2 group/link relative z-30">
+                            <span class="mr-2">Ver Detalles</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                         </a>
+                      </div>
+                   </div>
+                   
+                   <!-- Full card link overlay -->
+                   <a href={`/services/${getSimpleSlug(service.slug)}/`} class="absolute inset-0 z-20" aria-label={`Ver detalles de ${service.data.title}`}></a>
+                </div>
+             </div>
+           ))}
+        </div>
+      </div>
+    </div>
+    <!-- Pagination below wrapper -->
+    <div class="swiper-pagination !bottom-1"></div>
+</section>
+
+<style>
+    :global(.swiper-pagination-bullet) {
+        background: white !important;
+        opacity: 0.3;
+        transition: all 0.3s;
+        width: 12px;
+        height: 4px;
+        border-radius: 2px;
+        margin: 0 4px !important;
+        opacity: 0.5;
+    }
+    :global(.swiper-pagination-bullet-active) {
+        background: white !important;
+        opacity: 1;
+        width: 32px;
+        border-radius: 2px;
+    }
+    
+    /* Dynamic Color Variations using nth-child */
+    :global(.swiper-slide:nth-child(4n+1) .group .bg-accent) { background-color: #3b82f6; } /* Blue */
+    :global(.swiper-slide:nth-child(4n+2) .group .bg-accent) { background-color: #10b981; } /* Emerald */
+    :global(.swiper-slide:nth-child(4n+3) .group .bg-accent) { background-color: #f59e0b; } /* Amber */
+    :global(.swiper-slide:nth-child(4n+4) .group .bg-accent) { background-color: #ef4444; } /* Red */
+
+    :global(.swiper-slide:nth-child(4n+1) .group:hover) { border-color: rgba(59, 130, 246, 0.5); }
+    :global(.swiper-slide:nth-child(4n+2) .group:hover) { border-color: rgba(16, 185, 129, 0.5); }
+    :global(.swiper-slide:nth-child(4n+3) .group:hover) { border-color: rgba(245, 158, 11, 0.5); }
+    :global(.swiper-slide:nth-child(4n+4) .group:hover) { border-color: rgba(239, 68, 68, 0.5); }
+
+    :global(.swiper-slide:nth-child(4n+1) .group .text-accent) { color: #3b82f6; }
+    :global(.swiper-slide:nth-child(4n+2) .group .text-accent) { color: #10b981; }
+    :global(.swiper-slide:nth-child(4n+3) .group .text-accent) { color: #f59e0b; }
+    :global(.swiper-slide:nth-child(4n+4) .group .text-accent) { color: #ef4444; }
+
+    :global(.swiper-slide:nth-child(4n+1) .group .hover\:text-accent:hover) { color: #3b82f6; }
+    :global(.swiper-slide:nth-child(4n+2) .group .hover\:text-accent:hover) { color: #10b981; }
+    :global(.swiper-slide:nth-child(4n+3) .group .hover\:text-accent:hover) { color: #f59e0b; }
+    :global(.swiper-slide:nth-child(4n+4) .group .hover\:text-accent:hover) { color: #ef4444; }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Pagination, Autoplay, EffectCoverflow } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+  import 'swiper/css/effect-coverflow';
+
+  function initSwiper() {
+     // Check if element exists to avoid errors on pages without it
+     if(!document.querySelector('.featured-swiper')) return;
+
+     new Swiper('.featured-swiper', {
+        modules: [Pagination, Autoplay, EffectCoverflow],
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+        },
+        slidesPerView: 1.2,
+        spaceBetween: 0,
+        loop: true,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: { slidesPerView: 2, spaceBetween: 20, centeredSlides: false, effect: 'slide' },
+            1024: { slidesPerView: 3, spaceBetween: 30, centeredSlides: false, effect: 'slide' },
+        }
+     });
+  }
+
+  // Handle Astro view transitions and initial load
+  document.addEventListener('astro:page-load', initSwiper);
+  document.addEventListener('DOMContentLoaded', initSwiper);
+</script>

@@ -1,0 +1,140 @@
+---
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+
+const lang = Astro.props.lang || Astro.currentLocale;
+---
+
+<div id="welcome-modal" class="fixed inset-0 z-[9999] hidden flex items-center justify-center p-4 backdrop-blur-sm bg-black/60 opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true">
+  
+  <div class="relative w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all scale-95 duration-300" id="modal-content">
+    
+    <!-- Close Button -->
+    <button type="button" class="absolute top-4 right-4 z-10 p-2 text-gray-400 hover:text-gray-600 transition-colors rounded-full hover:bg-gray-100" id="close-modal">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <div class="flex flex-col md:flex-row">
+       <!-- Left Side: Image/Visual (Optional, promoting brand) -->
+       <div class="hidden md:block md:w-2/5 bg-gray-50 relative overflow-hidden">
+           <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent z-10"></div>
+           <!-- Decorative Pattern -->
+           <svg class="absolute top-0 left-0 w-full h-full opacity-10" width="100%" height="100%">
+               <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                   <path d="M0 40L40 0H20L0 20M40 40V20L20 40" stroke="currentColor" stroke-width="2" fill="none" class="text-blue-500"/>
+               </pattern>
+               <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+           </svg>
+           
+           <div class="absolute inset-0 flex items-center justify-center z-20 p-8">
+                <!-- Large Icon/Illustration -->
+                <OptimizedImage
+                  src="/images/logos/LOGO ANINNI COMPANY01_SINFONDO.png"
+                  alt="Aninni Logo"
+                  width={240}
+                  height={240}
+                  class="w-full h-auto object-contain drop-shadow-xl" 
+                />
+           </div>
+       </div>
+
+       <!-- Right Side: Content -->
+       <div class="w-full md:w-3/5 p-8 md:p-10 flex flex-col justify-center">
+          <div class="text-center md:text-left mb-6">
+              <span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">Bienvenido</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 leading-tight mb-2">
+                  Aninni Company <span class="text-blue-600">S.A.C.</span>
+              </h2>
+              <p class="text-gray-600 text-sm">
+                  Impulsamos el éxito de su negocio con soluciones logísticas integrales y productos de alta calidad.
+              </p>
+          </div>
+
+          <!-- Feature Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              <!-- Services Option -->
+              <a href={getLocaleUrlCTM("/services", lang)} class="group relative flex flex-col items-center md:items-start p-4 border border-gray-200 rounded-xl hover:border-blue-500 hover:shadow-md transition-all duration-300 bg-gray-50 hover:bg-white text-center md:text-left" onclick="closeModal()">
+                  <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-3 group-hover:scale-110 transition-transform">
+                      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                  </div>
+                  <h3 class="font-bold text-gray-900 text-sm mb-1">Nuestros Servicios</h3>
+                  <p class="text-xs text-gray-500 mb-3 line-clamp-2">Transporte, Almacenaje, Aduanas y más.</p>
+                  <span class="text-blue-600 text-xs font-semibold group-hover:underline mt-auto">Explorar &rarr;</span>
+              </a>
+
+              <!-- Products Option -->
+              <a href={getLocaleUrlCTM("/products", lang)} class="group relative flex flex-col items-center md:items-start p-4 border border-gray-200 rounded-xl hover:border-blue-500 hover:shadow-md transition-all duration-300 bg-gray-50 hover:bg-white text-center md:text-left" onclick="closeModal()">
+                  <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mb-3 group-hover:scale-110 transition-transform">
+                      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                  </div>
+                  <h3 class="font-bold text-gray-900 text-sm mb-1">Catálogo de Productos</h3>
+                  <p class="text-xs text-gray-500 mb-3 line-clamp-2">Repuestos, EPPs y Suministros Industriales.</p>
+                  <span class="text-orange-600 text-xs font-semibold group-hover:underline mt-auto">Ver Catálogo &rarr;</span>
+              </a>
+          </div>
+
+          <!-- Footer/Note -->
+          <div class="text-center pt-4 border-t border-gray-100">
+             <button id="cta-dismiss" class="text-xs text-gray-400 hover:text-gray-600 underline transition-colors">
+                 Continuar al sitio principal
+             </button>
+          </div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // Expose close function to window for inline onclicks
+  window.closeModal = function() {
+      const modal = document.getElementById('welcome-modal');
+      const modalContent = document.getElementById('modal-content');
+      
+      if(modal && modalContent) {
+          modal.classList.add('opacity-0');
+          modalContent.classList.remove('scale-100');
+          modalContent.classList.add('scale-95');
+          setTimeout(() => {
+              modal.classList.add('hidden');
+          }, 300);
+      }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+      initWelcomeModal();
+  });
+  
+  document.addEventListener('DOMContentLoaded', () => {
+      initWelcomeModal();
+  });
+
+  function initWelcomeModal() {
+      const modal = document.getElementById('welcome-modal');
+      const modalContent = document.getElementById('modal-content');
+      const closeBtn = document.getElementById('close-modal');
+      const ctaDismiss = document.getElementById('cta-dismiss');
+      
+      if (!modal) return;
+
+      // Always show modal (removed sessionStorage check)
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+          modal.classList.remove('opacity-0');
+          modalContent.classList.remove('scale-95');
+          modalContent.classList.add('scale-100');
+      });
+
+      closeBtn?.addEventListener('click', window.closeModal);
+      ctaDismiss?.addEventListener('click', window.closeModal);
+      
+      // Close on backdrop click (optional, maybe user wants it forced? Keeping it strictly friendly for now)
+      modal.addEventListener('click', (e) => {
+          if (e.target === modal) window.closeModal();
+      });
+  }
+</script>
