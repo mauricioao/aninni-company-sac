@@ -1,90 +1,42 @@
 ---
-import type { Section } from "@/types";
-import type { z } from "astro:content";
-import { markdownify } from "@/lib/utils/textConverter";
-import { getEntryCTM } from "@/lib/customContentLoader.astro";
-import overrideObjects from "@/lib/utils/overrideObjects.ts";
-import type { clientsSectionSchema } from "@/sections.schema";
-import OptimizedImage from "../utilities/OptimizedImage.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from 'astro';
 
-export type ClientsSection = Section & z.infer<typeof clientsSectionSchema>;
+// Load all images from the empresas folder
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/empresas/*.{jpeg,jpg,png,gif}');
 
-type Props = {
-  content?: ClientsSection;
-};
+// Get the actual image paths/modules
+const imageModules = await Promise.all(Object.values(images).map(img => img()));
+const imageList = imageModules.map(mod => mod.default);
 
-let defaultContent = (
-  await getEntryCTM("sections", "clients", Astro.currentLocale)
-)?.data as ClientsSection;
 
-let actualContent = overrideObjects(
-  { ...defaultContent },
-  Astro.props.content,
-) as ClientsSection;
-
-let {
-  enable = true,
-  title,
-  list,
-  options: { columnsPerRow, appearance } = {},
-} = actualContent;
-
-const isDarkAppearance = appearance === "dark";
-
-if (!enable) {
-  return null;
-}
+// Title is now hardcoded in the template per user request
+// const title = "Empresas que trabajan con nosotros";
 ---
 
 <section class="pb-20 pt-48 md:pt-80 bg-white relative z-10">
   <div class="container space-y-8 md:space-y-16">
-    {
-      title && (
-        <div class="mx-auto lg:max-w-3xl">
-          <h2
-            class:list={[
-              "text-h1-sm md:text-h1 text-center",
-              isDarkAppearance && "text-light",
-            ]}
-            set:html={markdownify(title)}
-          />
-        </div>
-      )
-    }
-    <ul
-      class:list={[
-        "grid grid-cols-2 justify-center gap-0 overflow-hidden outline",
-        isDarkAppearance && "outline-white",
-        columnsPerRow === 6
-          ? "w-full md:grid-cols-3 lg:grid-cols-6"
-          : "mx-auto max-w-4xl lg:grid-cols-4",
-      ]}>
+    <div class="text-left">
+      <p class="text-blue-700 font-bold uppercase tracking-wider text-sm mb-2">Empresas</p>
+      <h2 class="text-h1-sm md:text-h1 text-dark">
+        Trabajan con nosotros
+      </h2>
+    </div>
+    
+    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 w-full mx-auto max-w-6xl px-4">
       {
-        list?.map((item) => (
-          <li
-            class:list={[
-              "group flex h-32 w-full items-center justify-center border",
-              isDarkAppearance && "border-white",
-            ]}>
-            <div class="relative h-8 grow overflow-hidden px-8">
-              <OptimizedImage
-                width={140}
-                height={32}
-                src={item.src}
-                alt={item.alt}
-                class="mx-auto h-8 transition-all duration-300 group-hover:-translate-y-8"
+        imageList.map((img) => (
+          <div class="flex items-center justify-center p-2 w-[40%] md:w-1/4 lg:w-1/5 grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 hover:scale-105">
+             <Image
+                src={img}
+                alt="Logo Empresa Aliada"
+                width={200}
+                height={128}
+                class="max-w-full h-auto object-contain max-h-24 md:max-h-32 w-auto"
               />
-              <OptimizedImage
-                width={140}
-                height={32}
-                src={item.src}
-                alt={item.alt}
-                class="mx-auto h-8 transition-all duration-300 group-hover:-translate-y-8"
-              />
-            </div>
-          </li>
+          </div>
         ))
       }
-    </ul>
+    </div>
   </div>
 </section>

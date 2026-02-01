@@ -83,8 +83,8 @@
   # Global Contact Information
   [settings.contactInfo]
     address = "Lima, Perú"
-    email   = "[aninni@email.com](mailto:aninni@email.com)"
-    phone   = "[+51 918380045](tel:+51918380045)"
+    email   = "[contacto@aninni.com.pe](mailto:contacto@aninni.com.pe)"
+    phone   = "[+51 924204083](tel:+51924204083)"
 
   # Header Offcanvas Configuration
   # Update social links in `src/config/social.json`

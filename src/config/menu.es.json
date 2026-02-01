@@ -6,23 +6,7 @@
       "url": "/services",
       "children": [
         {
-          "name": "LOGÍSTICA",
-          "enable": true,
-          "children": [
-            {
-              "name": "Almacenaje & WMS",
-              "url": "/services/almacenaje-wms",
-              "enable": true
-            },
-            {
-              "name": "Valor Agregado (VAS)",
-              "url": "/services/valor-agregado-vas",
-              "enable": true
-            }
-          ]
-        },
-        {
-          "name": "TRANSPORTE",
+          "name": "Transporte",
           "enable": true,
           "children": [
             {
@@ -31,35 +15,70 @@
               "enable": true
             },
             {
-              "name": "Última Milla",
-              "url": "/services/ultima-milla",
+              "name": "Carga Última Milla",
+              "url": "/services/carga-ultima-milla",
               "enable": true
             },
             {
-              "name": "Carga Proyecto/Minería",
-              "url": "/services/carga-proyecto-mineria",
+              "name": "Carga Proyecto",
+              "url": "/services/carga-proyecto",
+              "enable": true
+            },
+            {
+              "name": "Vehículos Particulares",
+              "url": "/services/vehiculos-particulares",
               "enable": true
             }
           ]
         },
         {
-          "name": "Almacén",
+          "name": "Servicio de Almacenaje",
           "enable": true,
           "children": [
             {
-              "name": "Fulfillment",
-              "url": "/services/fulfillment",
+              "name": "Depósito Aduanero",
+              "url": "/services/deposito-aduanero",
+              "enable": true
+            },
+            {
+              "name": "Depósito Simple",
+              "url": "/services/deposito-simple",
+              "enable": true
+            },
+            {
+              "name": "Aire Libre",
+              "url": "/services/aire-libre",
+              "enable": true
+            },
+            {
+              "name": "Rack",
+              "url": "/services/rack",
               "enable": true
             }
           ]
         },
         {
-          "name": "Aduana",
+          "name": "Servicio de Aduanas",
           "enable": true,
           "children": [
             {
-              "name": "Despacho Aduanero",
-              "url": "/services/despacho-aduanero",
+              "name": "Agencia de Aduana",
+              "url": "/services/agencia-de-aduana",
+              "enable": true
+            },
+            {
+              "name": "Agencia de Carga",
+              "url": "/services/agencia-de-carga",
+              "enable": true
+            },
+            {
+              "name": "Servicio de Logística Integral",
+              "url": "/services/logistica-integral",
+              "enable": true
+            },
+            {
+              "name": "Door to Door",
+              "url": "/services/door-to-door",
               "enable": true
             }
           ]
@@ -69,8 +88,13 @@
           "enable": true,
           "children": [
             {
-              "name": "Consultoría en Comercio Exterior",
-              "url": "/services/consultoria-comercio-exterior",
+              "name": "Asesoría en Comercio Exterior",
+              "url": "/services/asesoria-comercio-exterior",
+              "enable": true
+            },
+            {
+              "name": "Asesoría Contable y Administrativo",
+              "url": "/services/asesoria-contable-administrativo",
               "enable": true
             }
           ]
@@ -83,13 +107,8 @@
       "url": "/products",
       "children": [
         {
-          "name": "Repuestos",
-          "url": "/products/repuestos",
-          "enable": true
-        },
-        {
-          "name": "Otros",
-          "url": "/products/otros",
+          "name": "Repuestos para motos",
+          "url": "/products/repuestos-motos",
           "enable": true
         }
       ]

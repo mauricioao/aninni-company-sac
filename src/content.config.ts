@@ -72,20 +72,20 @@ const portfolioCollection = defineCollection({
 
 
 // Products Collection
-const productsCollection = defineCollection({
-  schema: page.merge(
-    z.object({
-        items: z.array(
-          z.object({
-            name: z.string(),
-            image: z.string().optional(),
-            description: z.string().optional(),
-            price: z.string().optional(),
-            tag: z.string().optional(),
-          })
-        ).optional()
-    })
-  ),
+const products = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    image: z.string().optional(),
+    draft: z.boolean().optional(),
+    items: z.array(z.object({
+      name: z.string(),
+      description: z.string(),
+      image: z.string().optional(),
+      tag: z.string().optional(),
+      stock: z.boolean().optional().default(true),
+    })).optional(),
+  }),
 });
 
 // Export collections
@@ -95,7 +95,7 @@ export const collections = {
   services: serviceCollection,
   [portfolioFolder]: portfolioCollection,
   portfolio: portfolioCollection,
-  products: productsCollection,
+  products: products,
 
   pages: pagesCollection,
   sections: defineCollection({}),

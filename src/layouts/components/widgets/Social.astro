@@ -59,7 +59,9 @@ if (linkType === "share" && currentPage) {
 
   const baseURL = Astro.url.origin;
   slug = new URL(slug, baseURL).href;
-  list = linkType === "share" ? list : list.filter((social) => social.url);
+  /* const baseURL = Astro.url.origin; // ALREADY DEFINED
+  slug = new URL(slug, baseURL).href; */ // ALREADY DEFINED
+  list = linkType === "share" ? list : list.filter((social) => social.url && social.enable);
 
   function getShareLink(
     platform: string,
@@ -105,7 +107,7 @@ if (linkType === "share" && currentPage) {
     <ul
       class:list={["flex flex-wrap items-center gap-3.5", className]}
       {...rest}>
-      {list.map((social) => (
+      {list.filter(social => social.enable).map((social) => (
         <li>
           <a
             aria-label={social.label}

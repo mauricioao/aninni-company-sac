@@ -7,8 +7,9 @@ import { FaWhatsapp } from "react-icons/fa";
 // const { phone } = config.settings.contactInfo;
 // Extract number from markdown link if present, e.g., "[+51 918380045](tel:+51918380045)" -> "51918380045"
 // Or just use a default if not found.
-const phoneNumber = "51918380045"; // Defaulting to the one seen in config for now, can be dynamic later
-const whatsappUrl = `https://wa.me/${phoneNumber}`;
+const phoneNumber = "51924204083";
+const defaultMessage = "Hola Annini Company, vengo desde la web, quiero información.";
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;
 ---
 
 <a

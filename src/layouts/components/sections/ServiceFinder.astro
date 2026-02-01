@@ -1,15 +1,18 @@
 ---
 const serviceList = [
-    { label: "Transporte de Carga Pesada", value: "Carga Pesada" },
-    { label: "Aduanas y Despacho", value: "Aduanas" },
-    { label: "Almacenaje y Distribución", value: "Almacenaje" },
-    { label: "Flete Internacional (Marítimo/Aéreo)", value: "Flete Internacional" },
-    { label: "Carga de Proyecto (Minería/Construcción)", value: "Carga de Proyecto" },
-    { label: "Última Milla / E-commerce", value: "Última Milla" },
-    { label: "Asesoría en Comercio Exterior", value: "Asesoría" },
-    { label: "Mudanzas Corporativas", value: "Mudanzas" },
-    { label: "Transporte de Maquinaria", value: "Maquinaria" },
-    { label: "Logística Integral (3PL)", value: "Logística 3PL" },
+    { label: "Carga Nacional", value: "Carga Nacional" },
+    { label: "Carga Última Milla", value: "Carga Última Milla" },
+    { label: "Carga Proyecto", value: "Carga Proyecto" },
+    { label: "Vehículos Particulares", value: "Vehículos Particulares" },
+    { label: "Depósito Aduanero", value: "Depósito Aduanero" },
+    { label: "Depósito Simple", value: "Depósito Simple" },
+    { label: "Almacenaje (Aire Libre - Rack)", value: "Almacenaje" },
+    { label: "Agencia de Aduana", value: "Agencia de Aduana" },
+    { label: "Agencia de Carga", value: "Agencia de Carga" },
+    { label: "Logística Integral", value: "Logística Integral" },
+    { label: "Door to Door", value: "Door to Door" },
+    { label: "Asesoría Comercio Exterior", value: "Asesoría Comercio Exterior" },
+    { label: "Asesoría Contable/Admin", value: "Asesoría Contable" },
 ];
 ---
 
@@ -22,7 +25,7 @@ const serviceList = [
       </div>
       <select 
         id="service-select" 
-        class="bg-white/5 border border-white/20 text-white text-sm rounded-lg focus:ring-accent focus:border-accent block w-full pl-10 p-4 placeholder-white/50 backdrop-blur-sm appearance-none cursor-pointer hover:bg-white/10 transition-colors [&>option]:text-dark"
+        class="bg-white/5 border border-white/20 text-white text-sm rounded-lg focus:ring-accent focus:border-accent block w-full pl-10 p-4 placeholder-white/50 backdrop-blur-sm appearance-none cursor-pointer hover:bg-white/10 transition-colors [&>option]:text-dark bg-none"
       >
         <option value="" class="bg-dark text-gray-300">Selecciona un servicio...</option>
         {serviceList.map((s) => (
@@ -50,12 +53,12 @@ const serviceList = [
 <script>
   const btn = document.getElementById('find-service-btn');
   const select = document.getElementById('service-select') as HTMLSelectElement;
-  const phoneNumber = "51999999999"; // Replace with actual company number if known, otherwise generic
+  const phoneNumber = "51924204083"; // Replace with actual company number if known, otherwise generic
 
   btn?.addEventListener('click', () => {
     if (select && select.value) {
-      const service = select.value;
-      const message = `Quiero transportar ${service}, necesito información`;
+      const selectedService = select.value;
+      const message = `Quiero información sobre el servicio de "${selectedService}", espero su pronta respuesta, gracias.`;
       const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
     } else {

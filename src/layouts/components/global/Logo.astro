@@ -42,27 +42,29 @@ if (Astro.props.height) {
 
 <a
   href={getLocaleUrlCTM("/", Astro.currentLocale)}
-  class:list={["logo-wrapper", className]}>
+  class:list={["logo-wrapper shrink-0", className]}>
   {
     src || logoAlternate || logo ? (
       <>
         <OptimizedImage
           src={src ? src : logo}
-          class="logo"
+          class="logo object-contain"
           alt={toSentenceCase("Brand logo of " + title)}
           style={{
             height: logoHeight,
-            width: logoWidth,
+            width: "auto",
+            maxWidth: logoWidth,
           }}
         />
         {logoAlternate && (
           <OptimizedImage
             src={logoAlternate}
-            class="logo-alternate"
+            class="logo-alternate object-contain"
             alt={toSentenceCase("Brand logo of " + title)}
             style={{
               height: logoHeight,
-              width: logoWidth,
+              width: "auto",
+              maxWidth: logoWidth,
             }}
           />
         )}
