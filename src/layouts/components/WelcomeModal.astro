@@ -41,44 +41,45 @@ const lang = Astro.props.lang || Astro.currentLocale;
        </div>
 
        <!-- Right Side: Content -->
-       <div class="w-full md:w-3/5 p-8 md:p-10 flex flex-col justify-center">
-          <div class="text-center md:text-left mb-6">
-              <span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wider uppercase mb-3">Bienvenido</span>
-              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 leading-tight mb-2">
-                  Aninni Company <span class="text-blue-600">S.A.C.</span>
+       <div class="w-full md:w-3/5 p-8 md:p-10 flex flex-col justify-center relative">
+          <!-- Subtle Glow Effect Behind Text -->
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-100/50 rounded-full blur-3xl -z-10"></div>
+          
+          <div class="text-center md:text-left mb-8 relative">
+              <span class="inline-block py-1.5 px-4 rounded-full bg-blue-50 text-blue-600 border border-blue-100 text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">Bienvenido</span>
+              <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-3 tracking-tight">
+                  Aninni Company <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">S.A.C.</span>
               </h2>
-              <p class="text-gray-600 text-sm">
-                  Impulsamos el éxito de su negocio con soluciones logísticas integrales y productos de alta calidad.
+              <p class="text-gray-600 text-sm md:text-base max-w-md mx-auto md:mx-0">
+                  Impulsamos el éxito de su negocio con soluciones logísticas integrales, modernas y de alta calidad.
               </p>
           </div>
 
-          <!-- Feature Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <!-- Feature Focus -->
+          <div class="mb-8 transform transition-transform hover:-translate-y-1">
               <!-- Services Option -->
-              <a href={getLocaleUrlCTM("/services", lang)} class="group relative flex flex-col items-center md:items-start p-4 border border-gray-200 rounded-xl hover:border-blue-500 hover:shadow-md transition-all duration-300 bg-gray-50 hover:bg-white text-center md:text-left" onclick="closeModal()">
-                  <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-3 group-hover:scale-110 transition-transform">
-                      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+              <a href={getLocaleUrlCTM("/services", lang)} class="group relative flex flex-col md:flex-row items-center md:items-start p-6 border border-gray-100 shadow-sm rounded-2xl hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 bg-white overflow-hidden text-center md:text-left" onclick="closeModal()">
+                  <!-- Subtle background gradient on hover -->
+                  <div class="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div class="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 mb-4 md:mb-0 md:mr-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shrink-0 shadow-sm">
+                      <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                   </div>
-                  <h3 class="font-bold text-gray-900 text-sm mb-1">Nuestros Servicios</h3>
-                  <p class="text-xs text-gray-500 mb-3 line-clamp-2">Transporte, Almacenaje, Aduanas y más.</p>
-                  <span class="text-blue-600 text-xs font-semibold group-hover:underline mt-auto">Explorar &rarr;</span>
-              </a>
-
-              <!-- Products Option -->
-              <a href={getLocaleUrlCTM("/products", lang)} class="group relative flex flex-col items-center md:items-start p-4 border border-gray-200 rounded-xl hover:border-blue-500 hover:shadow-md transition-all duration-300 bg-gray-50 hover:bg-white text-center md:text-left" onclick="closeModal()">
-                  <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mb-3 group-hover:scale-110 transition-transform">
-                      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                  <div class="relative flex-1">
+                      <h3 class="font-bold text-gray-900 text-lg mb-1 group-hover:text-blue-700 transition-colors">Nuestros Servicios</h3>
+                      <p class="text-sm text-gray-500 mb-3 leading-relaxed">Explora nuestras soluciones en Transporte, Almacenaje, Aduanas y Asesoría estructurada para tu empresa.</p>
+                      <span class="inline-flex items-center text-blue-600 text-sm font-semibold group-hover:translate-x-1 transition-transform">
+                          Explorar Servicios
+                          <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                      </span>
                   </div>
-                  <h3 class="font-bold text-gray-900 text-sm mb-1">Catálogo de Productos</h3>
-                  <p class="text-xs text-gray-500 mb-3 line-clamp-2">Repuestos, EPPs y Suministros Industriales.</p>
-                  <span class="text-orange-600 text-xs font-semibold group-hover:underline mt-auto">Ver Catálogo &rarr;</span>
               </a>
           </div>
 
           <!-- Footer/Note -->
-          <div class="text-center pt-4 border-t border-gray-100">
-             <button id="cta-dismiss" class="text-xs text-gray-400 hover:text-gray-600 underline transition-colors">
-                 Continuar al sitio principal
+          <div class="text-center pt-5 border-t border-gray-100">
+             <button id="cta-dismiss" class="text-sm text-gray-400 hover:text-gray-800 transition-colors font-medium">
+                 Continuar al sitio
              </button>
           </div>
        </div>

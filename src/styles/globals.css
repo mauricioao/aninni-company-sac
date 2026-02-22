@@ -7,6 +7,15 @@
 @source "preline/dist/*.js";
 @import "preline/variants.css";
 
+@layer utilities {
+  .text-gradient-primary {
+    @apply text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-cyan-500;
+  }
+  .btn-gradient {
+    @apply bg-linear-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white border-0 transition-all duration-300;
+  }
+}
+
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 @import "./safe.css";

@@ -69,7 +69,7 @@ if (breadcrumbExcludedPaths && breadcrumbExcludedPaths.length > 0) {
           breadcrumbParts.map(({ label, ...attrs }, index) => (
             <li class="capitalize" role="listitem">
               {index !== breadcrumbParts.length - 1 && attrs.href !== "" ? (
-                <a class="text-primary" {...attrs}>
+                <a class="text-gradient-primary" {...attrs}>
                   {label}
                 </a>
               ) : (

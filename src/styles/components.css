@@ -1,6 +1,7 @@
 /* AOS Animations */
 /* --------------------------------- */
 
+
 [data-aos] {
   opacity: 0;
   transform: translateY(0);

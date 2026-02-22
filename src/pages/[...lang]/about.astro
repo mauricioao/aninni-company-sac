@@ -12,21 +12,21 @@ export function getStaticPaths() {
 // Team members data
 const teamMembers = [
   {
-    name: "Carlos Mendoza",
-    title: "CEO & Fundador",
-    bio: "Con más de 15 años de experiencia en logística y transporte, Carlos lidera la visión estratégica de Aninni Company SAC.",
+    name: "Antoni Gabriel",
+    title: "CEO",
+    bio: "Líder estratégico enfocado en la excelencia y el crecimiento sostenible de Aninni Company SAC.",
     image: "/images/team/ceo-placeholder.jpg",
   },
   {
-    name: "María Torres",
-    title: "Administradora de Operaciones",
-    bio: "Experta en optimización de procesos logísticos, María asegura la excelencia operativa en cada proyecto.",
+    name: "Naun Gabriel",
+    title: "Administración y Finanzas",
+    bio: "Experto en optimización de recursos y gestión financiera, asegurando la solidez de nuestras operaciones.",
     image: "/images/team/admin1-placeholder.jpg",
   },
   {
-    name: "Jorge Ramírez",
-    title: "Administrador de Logística",
-    bio: "Especialista en gestión de flotas y planificación de rutas, Jorge coordina nuestras operaciones de transporte.",
+    name: "Bricenia Ramirez",
+    title: "Contabilidad y Administración",
+    bio: "Especialista en control contable y procesos administrativos para una gestión transparente y eficiente.",
     image: "/images/team/admin2-placeholder.jpg",
   },
 ];
@@ -37,12 +37,12 @@ const teamMembers = [
   description="Conoce más sobre Aninni Company SAC, nuestra misión, visión y el equipo que hace posible nuestros servicios de logística.">
   <!-- Hero Section -->
   <section
-    class="relative h-[40vh] min-h-[300px] w-full overflow-hidden bg-black">
-    <div class="absolute inset-0 z-0 opacity-50">
+    class="relative h-[40vh] min-h-[300px] w-full overflow-hidden bg-black animate-fade-in">
+    <div class="absolute inset-0 z-0 opacity-50 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:20px_20px]">
       <div class="absolute inset-0 bg-linear-to-t from-black to-transparent">
       </div>
     </div>
-    <div class="relative z-10 container flex h-full flex-col justify-center">
+    <div class="relative z-10 container flex h-full flex-col justify-center" data-aos="fade-up">
       <h1 class="text-4xl font-bold text-white md:text-6xl">Sobre Nosotros</h1>
       <p class="mt-4 max-w-2xl text-lg text-white/80">
         Transformando la logística en Perú con tecnología y compromiso.
@@ -51,41 +51,54 @@ const teamMembers = [
   </section>
 
   <!-- Company Presentation Section -->
-  <section class="py-16 md:py-24">
-    <div class="container">
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
-        <!-- Image -->
-        <div class="relative overflow-hidden rounded-2xl">
+  <section class="py-16 md:py-24 overflow-hidden relative">
+    <!-- Decorative Layout Lines -->
+    <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      <div class="absolute left-1/4 top-0 bottom-0 w-px bg-neutral-100 opacity-50"></div>
+      <div class="absolute right-1/4 top-0 bottom-0 w-px bg-neutral-100 opacity-50"></div>
+      <div class="absolute left-0 right-0 top-1/2 h-px bg-neutral-100 opacity-50"></div>
+    </div>
 
+    <div class="container relative z-10">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+        <!-- Image -->
+        <div class="relative flex h-full min-h-[300px] items-center justify-center rounded-2xl p-8 lg:p-12"
+             data-aos="fade-right">
+          <!-- Dot Pattern Decorative Element -->
+          <div class="absolute -top-4 -left-4 w-24 h-24 bg-[radial-gradient(#eab308_2px,transparent_2px)] [background-size:12px_12px] opacity-20 z-0"></div>
+          
           <OptimizedImage
             src={"/images/logos/LOGO ANINNI COMPANY02_SINFONDO.png"}
-            alt="Aninni Company SAC Operations"
-            class="w-full h-full object-cover"
+            alt="Aninni Company SAC Logo"
+            class="relative z-10 h-auto w-full max-w-sm object-contain drop-shadow-2xl"
           />
         </div>
 
         <!-- Content -->
-        <div class="flex flex-col justify-center space-y-6">
-          <h2 class="text-3xl font-bold text-black md:text-4xl">
-            Líderes en Soluciones Logísticas Integrales
-          </h2>
-          <p class="text-lg leading-relaxed font-medium text-black">
-            Aninni Company SAC es una empresa peruana especializada en brindar
-            soluciones logísticas de vanguardia. Con años de experiencia en el
-            mercado, nos hemos consolidado como un socio confiable para empresas
-            que buscan optimizar sus operaciones de almacenamiento, transporte y
-            distribución.
+        <div class="flex flex-col justify-center space-y-6"
+             data-aos="fade-left" data-aos-delay="200">
+          <div>
+            <h2 class="text-3xl font-bold text-black md:text-4xl">
+              Bienvenidos a <span class="text-blue-900">Aninni Company SAC</span>
+            </h2>
+            <p class="mt-2 text-sm md:text-base font-medium text-neutral-500 uppercase tracking-[0.2em]">
+              Donde el propósito se encuentra con la excelencia.
+            </p>
+          </div>
+          <p class="text-lg leading-relaxed font-medium text-black/90">
+            En Aninni Company, creemos que detrás de cada requerimiento hay una historia y una oportunidad para generar valor. Desde nuestros inicios, nos hemos propuesto no solo cumplir con estándares, sino redefinirlos.
           </p>
-          <p class="text-lg leading-relaxed font-medium text-black">
-            Nuestro enfoque combina tecnología de punta, como sistemas WMS
-            (Warehouse Management System), con un equipo altamente capacitado
-            que entiende las necesidades específicas de cada cliente. Desde el
-            almacenaje hasta la última milla, pasando por proyectos mineros y
-            fulfillment, ofrecemos servicios personalizados que impulsan el
-            crecimiento de tu negocio.
+          <p class="text-lg leading-relaxed font-medium text-black/90">
+            Ya sea que estés buscando calidad, innovación o simplemente una alianza confiable, queremos decirte que has llegado al lugar correcto. Nuestro equipo está comprometido a brindarte una experiencia cercana, profesional y diseñada a tu medida.
           </p>
+          <p class="text-lg leading-relaxed font-medium text-black/90">
+            Gracias por confiar en nosotros y ser parte de nuestra evolución. Estamos listos para comenzar este camino juntos.
+          </p>
+          <!-- <p class="text-lg leading-relaxed font-bold text-black mt-2 border-l-4 border-yellow-400 pl-4 py-2 bg-yellow-400/10">
+            Bienvenido a bordo.
+          </p> -->
           <div class="flex flex-wrap gap-4 pt-4">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 group cursor-pointer transition-transform hover:-translate-y-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -96,13 +109,13 @@ const teamMembers = [
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="text-yellow-400">
+                class="text-yellow-400 group-hover:scale-110 transition-transform">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span class="font-bold text-black">Tecnología Avanzada</span>
+              <span class="font-bold text-black group-hover:text-yellow-500 transition-colors">Tecnología Avanzada</span>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 group cursor-pointer transition-transform hover:-translate-y-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -113,13 +126,13 @@ const teamMembers = [
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="text-yellow-400">
+                class="text-yellow-400 group-hover:scale-110 transition-transform">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span class="font-bold text-black">Equipo Experto</span>
+              <span class="font-bold text-black group-hover:text-yellow-500 transition-colors">Equipo Experto</span>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 group cursor-pointer transition-transform hover:-translate-y-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -130,11 +143,11 @@ const teamMembers = [
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="text-yellow-400">
+                class="text-yellow-400 group-hover:scale-110 transition-transform">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span class="font-bold text-black">
+              <span class="font-bold text-black group-hover:text-yellow-500 transition-colors">
                 Soluciones Personalizadas
               </span>
             </div>
@@ -145,67 +158,76 @@ const teamMembers = [
   </section>
 
   <!-- Mission & Vision Section -->
-  <section class="bg-blue-950 py-16 md:py-24">
-    <div class="container">
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+  <section class="relative bg-[#0A192F] py-20 md:py-32 overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute inset-0 z-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+    <div class="absolute -right-32 -top-32 w-96 h-96 bg-blue-600/30 rounded-full blur-[120px]"></div>
+    <div class="absolute -left-32 -bottom-32 w-96 h-96 bg-yellow-400/20 rounded-full blur-[120px]"></div>
+    
+    <!-- Decorative Layout Lines (Dark Section) -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <div class="absolute left-[15%] top-0 bottom-0 w-px bg-white/5"></div>
+      <div class="absolute right-[15%] top-0 bottom-0 w-px bg-white/5"></div>
+    </div>
+    
+    <div class="container relative z-10">
+      <div class="grid grid-cols-1 gap-12 md:grid-cols-2">
         <!-- Mission Card -->
         <div
-          class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white p-8 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-200 md:p-10">
+          class="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-2xl transition-all duration-300 hover:shadow-yellow-400/10 md:p-12"
+          data-aos="fade-up">
           <div
-            class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400 transition-colors group-hover:bg-yellow-400 group-hover:text-black">
+            class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400 transition-all duration-500 group-hover:bg-yellow-400 group-hover:text-black shadow-[0_0_20px_rgba(234,179,8,0.2)] group-hover:shadow-yellow-400/40">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
+              width="40"
+              height="40"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
+              stroke-width="1.5"
               stroke-linecap="round"
-              stroke-linejoin="round">
+              stroke-linejoin="round"
+              class="group-hover:scale-110 transition-transform">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
           </div>
-          <h3 class="mb-4 text-2xl font-bold text-black md:text-3xl">
+          <h3 class="mb-6 text-3xl font-bold text-white md:text-4xl tracking-tight relative inline-block">
             Misión
+            <span class="absolute -bottom-3 left-0 w-12 h-1.5 bg-yellow-400 rounded-full transition-all duration-500 group-hover:w-full"></span>
           </h3>
-          <p class="text-base leading-relaxed text-neutral-600 md:text-lg">
-            Proporcionar soluciones logísticas integrales de clase mundial,
-            combinando tecnología de vanguardia con un servicio personalizado
-            que supere las expectativas de nuestros clientes. Nos comprometemos
-            a ser el socio estratégico que impulse la eficiencia operativa y el
-            crecimiento sostenible de cada negocio que confía en nosotros.
+          <p class="text-lg leading-relaxed text-neutral-300/90 font-medium mt-4">
+            Transformar la vida de nuestros clientes a través de soluciones de servicios logísticos y administrativos de alta calidad, combinando innovación tecnológica y un servicio humano excepcional, para superar las expectativas en cada punto de contacto.
           </p>
         </div>
 
         <!-- Vision Card -->
         <div
-          class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white p-8 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-200 md:p-10">
+          class="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-2xl transition-all duration-300 hover:shadow-yellow-400/10 md:p-12"
+          data-aos="fade-up" data-aos-delay="300">
           <div
-            class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400 transition-colors group-hover:bg-yellow-400 group-hover:text-black">
+            class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400 transition-all duration-500 group-hover:bg-yellow-400 group-hover:text-black shadow-[0_0_20px_rgba(234,179,8,0.2)] group-hover:shadow-yellow-400/40">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
+              width="40"
+              height="40"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
+              stroke-width="1.5"
               stroke-linecap="round"
-              stroke-linejoin="round">
+              stroke-linejoin="round"
+              class="group-hover:scale-110 transition-transform">
               <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
               <circle cx="12" cy="12" r="3"></circle>
             </svg>
           </div>
-          <h3 class="mb-4 text-2xl font-bold text-black md:text-3xl">
+          <h3 class="mb-6 text-3xl font-bold text-white md:text-4xl tracking-tight relative inline-block">
             Visión
+            <span class="absolute -bottom-3 left-0 w-12 h-1.5 bg-yellow-400 rounded-full transition-all duration-500 group-hover:w-full"></span>
           </h3>
-          <p class="text-base leading-relaxed text-neutral-600 md:text-lg">
-            Ser reconocidos como el líder en soluciones logísticas en Perú,
-            destacando por nuestra innovación tecnológica, excelencia operativa
-            y compromiso con la sostenibilidad. Aspiramos a expandir nuestros
-            servicios a nivel regional, siendo la primera opción para empresas
-            que buscan transformar sus operaciones logísticas.
+          <p class="text-lg leading-relaxed text-neutral-300/90 font-medium mt-4">
+            Ser reconocidos hacia el 2030 como el referente indiscutible de excelencia en el mercado de servicios logísticos y administrativos, destacando por nuestra capacidad de adaptarnos a los retos globales y por generar un impacto positivo y sostenible en nuestra comunidad.
           </p>
         </div>
       </div>
@@ -219,40 +241,47 @@ const teamMembers = [
         <h2 class="text-3xl font-bold text-black md:text-4xl dark:text-white">
           Nuestro Equipo
         </h2>
-        <p class="mt-4 text-lg text-neutral-600 dark:text-neutral-400">
+        <p class="mt-2 text-sm md:text-base font-medium text-neutral-500 uppercase tracking-wide">
           Conoce a los profesionales que lideran Aninni Company SAC
         </p>
       </div>
 
       <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
         {
-          teamMembers.map((member) => (
-            <div class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-200">
-              <div class="relative aspect-square overflow-hidden bg-neutral-200">
-                <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-300 to-neutral-400">
+          teamMembers.map((member, index) => (
+            <div class="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lg transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
+                 data-aos="fade-up" data-aos-delay={index * 200}>
+              <div class="relative aspect-4/5 overflow-hidden bg-neutral-200">
+                <div class="flex h-full w-full items-center justify-center bg-linear-to-br from-neutral-300 to-neutral-500 group-hover:scale-110 transition-transform duration-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="80"
-                    height="80"
+                    width="100"
+                    height="100"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
+                    stroke-width="1"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="text-neutral-500">
+                    class="text-neutral-400 opacity-50">
                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
                 </div>
+                <!-- Overlay Gradient -->
+                <div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
 
-              <div class="flex flex-1 flex-col p-6">
-                <h3 class="mb-2 text-xl font-bold text-black">{member.name}</h3>
-                <p class="mb-4 text-sm font-semibold tracking-wider text-yellow-600 uppercase">
+              <div class="flex flex-1 flex-col p-8 z-10 bg-white relative transition-colors group-hover:bg-blue-50/30">
+                <!-- Decorative dot pattern in corner -->
+                <div class="absolute top-4 right-4 w-12 h-12 bg-[radial-gradient(#e5e5e5_2px,transparent_2px)] [background-size:8px_8px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <h3 class="mb-2 text-2xl font-bold text-black group-hover:text-blue-900 transition-colors uppercase tracking-tight">{member.name}</h3>
+                <p class="mb-5 text-sm font-bold tracking-[0.2em] text-yellow-500 uppercase">
                   {member.title}
                 </p>
-                <p class="text-sm leading-relaxed text-neutral-600">
+                <div class="w-8 h-1 bg-yellow-400 mb-5 group-hover:w-16 transition-all duration-500"></div>
+                <p class="text-base leading-relaxed text-neutral-600 font-medium">
                   {member.bio}
                 </p>
               </div>

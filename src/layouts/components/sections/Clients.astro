@@ -16,17 +16,18 @@ const imageList = imageModules.map(mod => mod.default);
 
 <section class="pb-20 pt-48 md:pt-80 bg-white relative z-10">
   <div class="container space-y-8 md:space-y-16">
-    <div class="text-left">
-      <p class="text-blue-700 font-bold uppercase tracking-wider text-sm mb-2">Empresas</p>
-      <h2 class="text-h1-sm md:text-h1 text-dark">
+    <div class="text-left" data-aos="fade-up">
+      <p class="text-blue-700 font-bold uppercase tracking-[0.2em] text-sm mb-2">Empresas que</p>
+      <h2 class="text-h1-sm md:text-h1 text-dark uppercase tracking-tight">
         Trabajan con nosotros
       </h2>
     </div>
     
     <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 w-full mx-auto max-w-6xl px-4">
       {
-        imageList.map((img) => (
-          <div class="flex items-center justify-center p-2 w-[40%] md:w-1/4 lg:w-1/5 grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 hover:scale-105">
+        imageList.map((img, index) => (
+          <div class="flex items-center justify-center p-2 w-[40%] md:w-1/4 lg:w-1/5 grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 hover:scale-110"
+               data-aos="fade-up" data-aos-delay={index * 100}>
              <Image
                 src={img}
                 alt="Logo Empresa Aliada"

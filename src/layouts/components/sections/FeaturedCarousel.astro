@@ -11,23 +11,23 @@ const allServices = await getCollectionCTM("services", Astro.currentLocale);
 // IDs are typically "spanish/slug" or just "slug" depending on setup.
 // We will filter by checking if the slug ends with these keys.
 const featuredSlugs = [
-  "almacenaje-wms",
-  "valor-agregado-vas",
   "carga-nacional",
-  "ultima-milla",
-  "carga-proyecto-mineria",
-  "fulfillment",
-  "despacho-aduanero",
-  "consultoria-comercio-exterior"
+  "carga-ultima-milla",
+  "vehiculos-particulares",
+  "carga-proyecto",
+  "aire-libre",
+  "deposito-simple",
+  "rack",
+  "deposito-aduanero",
+  "logistica-integral",
+  "agencia-de-aduana",
+  "agencia-de-carga",
+  "asesoria-comercio-exterior",
+  "asesoria-contable-administrativo"
 ];
 
-// Log found services for debugging (server-side)
-// console.log("DEBUG: All Services Count:", allServices.length);
-// console.log("DEBUG: Featured Slugs:", featuredSlugs);
-
 const services = featuredSlugs.map(slug => {
-    const found = allServices.find(s => s.slug.includes(slug) || s.id.includes(slug));
-    // if (!found) console.log(`DEBUG: Missing Content for slug: ${slug}`);
+    const found = allServices.find(s => s.slug.endsWith(slug) || s.id.endsWith(`${slug}.md`));
     return found;
 }).filter(Boolean);
 

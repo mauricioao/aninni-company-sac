@@ -20,13 +20,13 @@
               "enable": true
             },
             {
-              "name": "Carga Proyecto",
-              "url": "/services/carga-proyecto",
+              "name": "Vehículos Particulares",
+              "url": "/services/vehiculos-particulares",
               "enable": true
             },
             {
-              "name": "Vehículos Particulares",
-              "url": "/services/vehiculos-particulares",
+              "name": "Carga Proyecto",
+              "url": "/services/carga-proyecto",
               "enable": true
             }
           ]
@@ -36,23 +36,23 @@
           "enable": true,
           "children": [
             {
-              "name": "Depósito Aduanero",
-              "url": "/services/deposito-aduanero",
-              "enable": true
-            },
-            {
-              "name": "Depósito Simple",
-              "url": "/services/deposito-simple",
-              "enable": true
-            },
-            {
               "name": "Aire Libre",
               "url": "/services/aire-libre",
               "enable": true
             },
             {
+              "name": "Almacén Simple",
+              "url": "/services/deposito-simple",
+              "enable": true
+            },
+            {
               "name": "Rack",
               "url": "/services/rack",
+              "enable": true
+            },
+            {
+              "name": "Depósito Aduanero",
+              "url": "/services/deposito-aduanero",
               "enable": true
             }
           ]
@@ -62,23 +62,18 @@
           "enable": true,
           "children": [
             {
+              "name": "Logística Integral",
+              "url": "/services/logistica-integral",
+              "enable": true
+            },
+            {
               "name": "Agencia de Aduana",
               "url": "/services/agencia-de-aduana",
               "enable": true
             },
             {
-              "name": "Agencia de Carga",
+              "name": "Agente de Carga",
               "url": "/services/agencia-de-carga",
-              "enable": true
-            },
-            {
-              "name": "Servicio de Logística Integral",
-              "url": "/services/logistica-integral",
-              "enable": true
-            },
-            {
-              "name": "Door to Door",
-              "url": "/services/door-to-door",
               "enable": true
             }
           ]
@@ -98,18 +93,6 @@
               "enable": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "enable": true,
-      "name": "Productos",
-      "url": "/products",
-      "children": [
-        {
-          "name": "Repuestos para motos",
-          "url": "/products/repuestos-motos",
-          "enable": true
         }
       ]
     },
