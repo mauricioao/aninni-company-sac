@@ -186,7 +186,7 @@ const noteStyles = {
                   class:list={[
                     input.type === "radio"
                       ? "form-radio"
-                      : "form-checkbox checked:!bg-primary checked:!border-primary !border !border-white !bg-white text-black focus:ring-offset-black",
+                      : "form-checkbox checked:bg-primary! checked:border-primary! border! border-white! bg-white! text-black focus:ring-offset-black",
                   ]}
                   ]}
                   required={input.required ? true : undefined}
@@ -216,7 +216,7 @@ const noteStyles = {
               class:list={[
                 input.type === "radio"
                   ? "form-radio"
-                  : "form-checkbox checked:!bg-primary checked:!border-primary !border !border-white !bg-white text-black focus:ring-offset-black",
+                  : "form-checkbox checked:bg-primary! checked:border-primary! border! border-white! bg-white! text-black focus:ring-offset-black",
               ]}
               ]}
               required={input.required ? true : undefined}
@@ -260,7 +260,8 @@ const noteStyles = {
         <CustomButton
           tag="button"
           type="submit"
-          class="text-base-sm btn-gradient w-fit md:text-base border-0 overflow-hidden"
+          hoverEffect="creative-fill"
+          class="text-base-sm btn-gradient w-fit md:text-base border-0 overflow-hidden effect-color-accent"
           {...form.submitButton}
         />
       </div>

@@ -43,9 +43,32 @@ const fontSizeMap: Record<NonNullable<typeof titleSize>, string> = {
 };
 
 const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
+
+// Process title for animation
+const processedTitle = (title ? (markdownify(title) as string) : "");
+const animatedTitle = processedTitle.replace(
+  "Soluciones",
+  `<span class="flip-container">
+    <span class="flip-inner">
+      <span class="flip-item"><span class="bg-[#2d73c6] text-white px-3 py-1 rounded-md">Soluciones</span></span>
+      <span class="flip-item"><span class="bg-[#2d73c6] text-white px-3 py-1 rounded-md">Logística</span></span>
+      <span class="flip-item"><span class="bg-[#2d73c6] text-white px-3 py-1 rounded-md">Eficiencia</span></span>
+      <span class="flip-item"><span class="bg-[#2d73c6] text-white px-3 py-1 rounded-md">Soluciones</span></span>
+    </span>
+  </span>`
+);
 ---
 
 <section class="text-light bg-black pt-52 relative z-20">
+  <div class="absolute inset-0 -z-10 opacity-0 transition-opacity duration-1000 ease-in-out pointer-events-none overflow-hidden" id="video-bg-container">
+    <video 
+      id="intro-video" 
+      muted 
+      playsinline 
+      class="h-full w-full object-cover opacity-50"
+    >
+    </video>
+  </div>
   <div class="container relative z-10">
     <div class="mx-auto max-w-7xl space-y-7 text-center md:space-y-10">
       {
@@ -56,12 +79,100 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
             class:list={[
               "text-inherit",
               fontSize,
-              "block leading-tight font-bold break-words text-inherit",
+              "block leading-tight font-bold wrap-break-word text-inherit overflow-hidden",
             ]}
-            set:html={markdownify(title)}
+            set:html={animatedTitle}
           />
         )
       }
+
+<style is:global>
+  .flip-container {
+    height: 1.25em;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    padding: 0 0.2rem;
+    min-width: 6ch;
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .flip-container {
+      min-width: 10ch;
+    }
+  }
+
+  .flip-inner {
+    display: block;
+    animation: flip-show 12s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+  }
+
+  .flip-item {
+    display: block;
+    height: 1.25em;
+    line-height: 1.25em;
+    white-space: nowrap;
+    text-align: center;
+    /* Ensure child doesn't bleed out */
+    overflow: hidden;
+  }
+
+  @keyframes flip-show {
+    0% { margin-top: 0; }
+    5% { margin-top: -1.25em; }
+    33% { margin-top: -1.25em; }
+    38% { margin-top: -2.5em; }
+    66% { margin-top: -2.5em; }
+    71% { margin-top: -3.75em; }
+    99.99% { margin-top: -3.75em; }
+    100% { margin-top: 0; }
+  }
+</style>
+
+<script>
+  const videos = [
+    "/videos/1.mov",
+    "/videos/2.mov",
+    "/videos/3.mov",
+    "/videos/4.mov",
+    "/videos/5.mp4",
+    "/videos/6.mov",
+    "/videos/7.mov"
+  ];
+
+  const videoElement = document.getElementById('intro-video') as HTMLVideoElement;
+  const container = document.getElementById('video-bg-container');
+  let currentVideoIndex = 0;
+
+  if (videoElement && container) {
+    // Initialize first video
+    videoElement.src = videos[0];
+    
+    // Play with fallback
+    const startPlayback = () => {
+      videoElement.play().then(() => {
+        container.style.opacity = '1';
+      }).catch(e => {
+        console.warn("Autoplay prevented, retrying...", e);
+        // Retry on first interaction if needed, but usually muted works
+        document.addEventListener('click', () => {
+          videoElement.play();
+          container.style.opacity = '1';
+        }, { once: true });
+      });
+    };
+
+    videoElement.addEventListener('ended', () => {
+      currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+      videoElement.src = videos[currentVideoIndex];
+      videoElement.play();
+    });
+
+    // Start
+    setTimeout(startPlayback, 500);
+  }
+</script>
       
       {
         description && (
