@@ -1,0 +1,81 @@
+---
+/**
+ * GridEffect.astro
+ * Recreates the HAML/SCSS animation with interactive dot grid.
+ */
+interface Props {
+  class?: string;
+  dotColor?: string;
+}
+
+const { class: className, dotColor = "#A9C9FF" } = Astro.props;
+
+// Logic to generate 100 tiles (10x10)
+const tiles = Array.from({ length: 100 }, (_, i) => i);
+
+// The box-shadow logic from SCSS
+const gap = 3; // rem
+const coef = -0.3; // rem
+
+let bxs = ['0 0 0'];
+for (let i = 1; i <= 4; i++) {
+    bxs.push(`${i * gap}rem 0 0 ${i * coef}rem`);
+    bxs.push(`${-i * gap}rem 0 0 ${i * coef}rem`);
+    bxs.push(`0 ${-i * gap}rem 0 ${i * coef}rem`);
+    bxs.push(`0 ${i * gap}rem 0 ${i * coef}rem`);
+
+    for (let j = 1; j <= 4; j++) {
+        const spread = i * j * 1.5 * coef;
+        bxs.push(`${i * gap}rem ${j * gap}rem 0 ${spread}rem`);
+        bxs.push(`${i * gap}rem ${-j * gap}rem 0 ${spread}rem`);
+        bxs.push(`${-i * gap}rem ${j * gap}rem 0 ${spread}rem`);
+        bxs.push(`${-i * gap}rem ${-j * gap}rem 0 ${spread}rem`);
+    }
+}
+const boxShadowValue = bxs.join(', ');
+---
+
+<div class:list={["grid-effect", className]}>
+  {tiles.map(() => (
+    <div class="grid-effect-tile"></div>
+  ))}
+</div>
+
+<style define:vars={{ dotColor, boxShadowValue }}>
+  .grid-effect {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    pointer-events: auto; /* Ensure tiles can be hovered */
+  }
+
+  .grid-effect-tile {
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .grid-effect-tile::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 0.3rem;
+    width: 0.3rem;
+    border-radius: 50%;
+    background: var(--dotColor);
+    box-shadow: var(--boxShadowValue);
+    transition: 500ms linear all;
+    pointer-events: none; /* Dots don't block hover */
+  }
+
+  .grid-effect-tile:hover::before {
+    height: 3rem;
+    width: 3rem;
+    transition: 70ms linear all;
+  }
+</style>

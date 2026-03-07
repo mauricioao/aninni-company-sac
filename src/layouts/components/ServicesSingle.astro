@@ -8,167 +8,179 @@ import ImageList from "@/components/ImageList.astro";
 import ImageItem from "@/components/ImageItem.astro";
 
 const {
-  data: { title, image },
+  data: { 
+    title, 
+    description,
+    image,
+    ventajas,
+    soluciones_title,
+    soluciones_text,
+    soluciones_features,
+    soluciones_images
+  },
 } = Astro.props.content;
 
 const { Content } = await render(Astro.props.content);
+
+// Always use the new layout, provide fallbacks if markdown doesn't have them yet.
+const displayVentajas = ventajas && ventajas.length > 0 ? ventajas : [
+  { title: "Beneficios", description: "Soluciones adaptadas a tus necesidades específicas.", icon: "" },
+  { title: "Disponibilidad", description: "Soporte y monitoreo continuo para tu operación.", icon: "" },
+  { title: "Garantía", description: "Calidad asegurada en cada proceso implementado.", icon: "" }
+];
+
+const displaySolucionesFeatures = soluciones_features && soluciones_features.length > 0 ? soluciones_features : [
+  { title: "Atención Especializada", description: "Nuestro equipo de expertos gestionará todos los detalles de su operación." },
+  { title: "Optimización de Tiempos", description: "Buscamos siempre la ruta y método más eficiente para su carga." }
+];
 ---
 
-<section
-  class="relative h-[40vh] min-h-[300px] w-full overflow-hidden bg-black">
-  {image && (
-      <div class="absolute inset-0 z-0">
-       <OptimizedImage
-          src={image}
-          alt={title}
-          width={1920}
-          height={1080}
-          class="h-full w-full object-cover opacity-60"
-       />
-      </div>
-  )}
-  <div class="absolute inset-0 z-0">
-    <div class="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent">
-    </div>
-  </div>
-  <div class="relative z-10 container flex h-full flex-col justify-center">
-    <div class="max-w-4xl">
-      <a
-        href={getLocaleUrlCTM("/services", Astro.currentLocale)}
-        class="mb-4 inline-flex items-center text-sm font-medium text-white/80 transition-colors hover:text-yellow-400">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2">
-          <path d="m15 18-6-6 6-6"></path>
-        </svg>
-        Volver a Servicios
-      </a>
-      {
-        title && (
-          <h1
-            class="text-4xl font-bold text-white md:text-6xl lg:text-7xl"
-            set:html={title}
-          />
-        )
-      }
-    </div>
-  </div>
-</section>
-
-<section class="py-16 md:py-24">
-  <div class="container">
-    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
-      <!-- Left Column: Key Info -->
-      <div class="lg:col-span-4">
-        <div
-          class="sticky top-32 rounded-2xl border border-white/10 bg-neutral-900 p-8 backdrop-blur-md">
-          <h3 class="mb-6 text-xl font-semibold text-white">
-            Información Clave
-          </h3>
-          <div class="space-y-6">
-            <div class="flex items-start gap-4">
-              <div
-                class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-yellow-400/20 text-yellow-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline
-                    points="22 4 12 14.01 9 11.01">
-                  </polyline>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-medium text-white">Beneficios</h4>
-                <p class="text-sm text-white/80">
-                  Soluciones adaptadas a tus necesidades específicas.
-                </p>
-              </div>
-            </div>
-            <div class="flex items-start gap-4">
-              <div
-                class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-yellow-400/20 text-yellow-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle><polyline
-                    points="12 6 12 12 16 14">
-                  </polyline>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-medium text-white">Disponibilidad</h4>
-                <p class="text-sm text-white/80">
-                  Soporte y monitoreo continuo para tu operación.
-                </p>
-              </div>
-            </div>
-            <div class="flex items-start gap-4">
-              <div
-                class="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-yellow-400/20 text-yellow-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-medium text-white">Garantía</h4>
-                <p class="text-sm text-white/80">
-                  Calidad asegurada en cada proceso implementado.
-                </p>
-              </div>
-            </div>
+<div class="service-page bg-white relative overflow-hidden w-full m-0 p-0">
+    
+    <!-- HERO SECTION -->
+    <section class="relative w-full min-h-[500px] lg:min-h-[600px] flex flex-col justify-center bg-[#f8fafc] z-10 overflow-hidden">
+      <!-- Background Image container (Right) -->
+      {image && (
+          <div class="absolute inset-y-0 right-0 z-0 h-full w-full lg:w-[65%]">
+            <OptimizedImage
+                src={image}
+                alt={title || ''}
+                width={1920}
+                height={1080}
+                class="h-full w-full object-cover"
+            />
+            <div class="absolute inset-0 bg-linear-to-r from-[#f8fafc] via-[#f8fafc]/80 to-transparent lg:hidden"></div>
+            
+            <!-- White soft angled separation line for desktop -->
+            <svg class="absolute top-0 -left-1 h-full w-[250px] text-[#f8fafc] fill-current z-10 hidden lg:block" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M0 0 L100 0 C 100 0, 30 50, 100 100 L 0 100 Z" />
+            </svg>
           </div>
+      )}
 
-          <div class="mt-8 border-t border-white/10 pt-8">
-            <a
-              href="#contact-form"
-              class="flex w-full items-center justify-center rounded-full bg-yellow-400 px-6 py-3 text-sm font-bold text-black transition-transform hover:scale-105 hover:bg-yellow-300">
-              Solicitar Cotización
-            </a>
-          </div>
+      <!-- Bottom Waves -->
+      <svg class="absolute inset-x-0 -bottom-px w-full h-[60px] md:h-[120px] z-20 pointer-events-none" viewBox="0 0 1440 320" preserveAspectRatio="none">
+         <path fill="#f8fafc" fill-opacity="1" d="M0,128L80,149.3C160,171,320,213,480,213.3C640,213,800,171,960,144C1120,117,1280,107,1360,101.3L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+      </svg>
+
+      <div class="container relative z-30 pt-20 pb-16">
+        <div class="max-w-3xl">
+          <a
+            href={getLocaleUrlCTM("/services", Astro.currentLocale)}
+            class="mb-6 inline-flex items-center text-sm font-semibold text-yellow-600 transition-colors hover:text-blue-900 uppercase tracking-widest">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="mr-2">
+              <path d="m15 18-6-6 6-6"></path>
+            </svg>
+            Volver a Servicios
+          </a>
+          {title && (
+            <h1
+              class="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-[#0a192f] mb-6 leading-tight sm:leading-snug"
+              style="word-wrap: break-word; overflow-wrap: break-word;"
+              set:html={title}
+            />
+          )}
+          <p class="text-neutral-600 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-md">
+             {description || "Ofrecemos servicios de transporte internacional para su carga, conectándolo con los principales mercados globales de manera segura y eficiente."}
+          </p>
+          <a href="#contact-form" class="inline-flex items-center justify-center rounded-full bg-yellow-400 px-8 py-4 text-sm font-bold text-[#0a192f] transition-transform hover:-translate-y-1 hover:shadow-lg hover:shadow-yellow-400/30">
+            Solicitar Cotización
+          </a>
         </div>
       </div>
+    </section>
 
-      <!-- Right Column: Main Content -->
-      <div class="lg:col-span-8">
-        {
-          Content && (
-            <div class="prose-styles content has-video-modal">
-              <Content components={{ ImageItem, ImageList }} />
-            </div>
-          )
-        }
-      </div>
-    </div>
+    <!-- Ventajas Section -->
+       <section class="py-24 bg-[#f8fafc] relative z-20">
+          <div class="container relative z-10">
+             <h2 class="text-3xl md:text-4xl font-bold text-[#0a192f] text-center mb-16">Ventajas de nuestro Servicio</h2>
+             
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                {displayVentajas.map((v: any, i: number) => (
+                   <div class={`flex flex-col items-center text-center p-6 ${i !== 2 ? 'md:border-r border-neutral-200' : ''}`}>
+                      <div class="w-24 h-24 mb-6 relative group overflow-hidden">
+                         <img src={v.icon || '/images/icons/default-icon.png'} alt={v.title} class="w-full h-full object-contain transform transition-transform group-hover:scale-110" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWFiMzA4IiBzdHJva2Utd2lkdGg9IjIiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PHBhdGggZD0iTTEyIDZ2Nmw0IDIiLz48L3N2Zz4='" />
+                      </div>
+                      <h3 class="text-xl font-extrabold text-[#0a192f] mb-3">{v.title}</h3>
+                      <p class="text-neutral-500 font-medium leading-relaxed">{v.description}</p>
+                   </div>
+                ))}
+             </div>
+          </div>
+          
+       </section>
+
+    <!-- Soluciones Integrales Section -->
+       <section class="py-24 bg-white relative z-0 mt-[60px] md:mt-[120px]">
+          <!-- Add top padding to account for the dark blue wave overlapping -->
+          <div class="container max-w-7xl pt-10">
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Left Side -->
+                <div class="order-2 lg:order-1">
+                   <h2 class="text-3xl md:text-4xl font-extrabold text-[#0a192f] mb-6 leading-tight">
+                      {soluciones_title || 'Soluciones Logísticas Integrales'}
+                   </h2>
+                   <p class="text-neutral-500 text-lg mb-10 leading-relaxed font-medium max-w-lg">
+                      {soluciones_text}
+                   </p>
+                   
+                   <div class="space-y-6 max-w-lg">
+                      {displaySolucionesFeatures.map((feat: any) => (
+                         <div class="bg-white border border-neutral-100 rounded-2xl p-6 shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex gap-4 transition-transform hover:-translate-y-1">
+                            <div class="shrink-0 mt-1">
+                               <div class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-white shadow-md">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                               </div>
+                            </div>
+                            <div>
+                               <h4 class="text-xl font-bold text-[#0a192f] mb-2">{feat.title}</h4>
+                               <p class="text-neutral-500 text-sm leading-relaxed font-medium">{feat.description}</p>
+                            </div>
+                         </div>
+                      ))}
+                   </div>
+                </div>
+
+                <!-- Right Side Images -->
+                {soluciones_images && soluciones_images.length > 0 ? (
+                    <div class="order-1 lg:order-2 flex flex-col gap-6">
+                       {soluciones_images.map((imgUrl: string, i: number) => (
+                           <div class="w-full relative rounded-3xl overflow-hidden shadow-2xl h-[280px] md:h-[320px]">
+                              <img src={imgUrl} alt="Solución" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" />
+                           </div>
+                       ))}
+                    </div>
+                ) : (
+                    <div class="order-1 lg:order-2">
+                       <div class="w-full relative rounded-3xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.06)] h-[400px] border-2 border-dashed border-neutral-200 bg-white flex flex-col items-center justify-center p-8 text-center group transition-colors hover:border-yellow-400">
+                          <div class="w-20 h-20 mb-6 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-yellow-50 transition-colors shadow-sm border border-neutral-100">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300 group-hover:text-yellow-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                             </svg>
+                          </div>
+                          <h4 class="text-xl font-bold text-[#0a192f] mb-3">Imágenes del Servicio</h4>
+                          <p class="text-neutral-500 text-sm mb-6 leading-relaxed max-w-sm mx-auto">Para mostrar imágenes aquí, agrega las rutas dentro de tu archivo markdown usando la propiedad <strong class="text-[#0a192f]">soluciones_images</strong>:</p>
+                          <code class="bg-[#f8fafc] border border-neutral-200 px-4 py-3 rounded-xl text-sm text-blue-800 font-mono w-full md:w-auto shadow-inner text-left">
+soluciones_images: <br/>  - "/images/rutatuya.jpg"
+                          </code>
+                       </div>
+                    </div>
+                )}
+             </div>
+             
+              <!-- Ensure standard markdown content still renders underneath if present -->
+             {Content && (
+                <div class="mt-20 prose prose-lg prose-blue max-w-none text-neutral-600">
+                   <Content components={{ ImageItem, ImageList }} />
+                </div>
+             )}
+          </div>
+       </section>
   </div>
-</section>

@@ -2,6 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import { generatePaths } from "@/lib/utils/i18nUtils";
 import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+import GridEffect from "@/components/effects/GridEffect.astro";
 
 export function getStaticPaths() {
   return generatePaths();
@@ -37,14 +38,17 @@ const teamMembers = [
   description="Conoce más sobre Aninni Company SAC, nuestra misión, visión y el equipo que hace posible nuestros servicios de logística.">
   <!-- Hero Section -->
   <section
-    class="relative h-[40vh] min-h-[300px] w-full overflow-hidden bg-black animate-fade-in">
-    <div class="absolute inset-0 z-0 opacity-50 bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:20px_20px]">
-      <div class="absolute inset-0 bg-linear-to-t from-black to-transparent">
+    class="relative h-[40vh] min-h-[400px] w-full overflow-hidden bg-black animate-fade-in group">
+    <!-- Interactive Background Effect -->
+    <GridEffect dotColor="#ffffff" class="opacity-30" />
+    
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute inset-0 bg-linear-to-t from-black to-transparent pointer-events-none">
       </div>
     </div>
-    <div class="relative z-10 container flex h-full flex-col justify-center" data-aos="fade-up">
-      <h1 class="text-4xl font-bold text-white md:text-6xl">Sobre Nosotros</h1>
-      <p class="mt-4 max-w-2xl text-lg text-white/80">
+    <div class="relative z-10 container flex h-full flex-col justify-center pointer-events-none" data-aos="fade-up">
+      <h1 class="text-4xl font-bold text-white md:text-6xl uppercase tracking-tighter">Sobre Nosotros</h1>
+      <p class="mt-4 max-w-2xl text-lg text-white/80 font-medium">
         Transformando la logística en Perú con tecnología y compromiso.
       </p>
     </div>
@@ -158,11 +162,11 @@ const teamMembers = [
   </section>
 
   <!-- Mission & Vision Section -->
-  <section class="relative bg-[#0A192F] py-20 md:py-32 overflow-hidden">
+  <section class="relative bg-black py-20 md:py-32 overflow-hidden">
     <!-- Decorative background elements -->
-    <div class="absolute inset-0 z-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
-    <div class="absolute -right-32 -top-32 w-96 h-96 bg-blue-600/30 rounded-full blur-[120px]"></div>
-    <div class="absolute -left-32 -bottom-32 w-96 h-96 bg-yellow-400/20 rounded-full blur-[120px]"></div>
+    <div class="absolute inset-0 z-0 opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+    <div class="absolute -right-32 -top-32 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px]"></div>
+    <div class="absolute -left-32 -bottom-32 w-96 h-96 bg-cyan-500/20 rounded-full blur-[120px]"></div>
     
     <!-- Decorative Layout Lines (Dark Section) -->
     <div class="absolute inset-0 pointer-events-none z-0">
@@ -174,10 +178,10 @@ const teamMembers = [
       <div class="grid grid-cols-1 gap-12 md:grid-cols-2">
         <!-- Mission Card -->
         <div
-          class="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-2xl transition-all duration-300 hover:shadow-yellow-400/10 md:p-12"
+          class="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-2xl transition-all duration-300 hover:shadow-blue-500/10 md:p-12"
           data-aos="fade-up">
           <div
-            class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400 transition-all duration-500 group-hover:bg-yellow-400 group-hover:text-black shadow-[0_0_20px_rgba(234,179,8,0.2)] group-hover:shadow-yellow-400/40">
+            class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-white/90 text-[#0A192F] transition-all duration-500 group-hover:bg-[#0A192F] group-hover:text-white shadow-[0_0_20px_rgba(255,255,255,0.1)] group-hover:shadow-blue-500/40">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="40"
@@ -194,7 +198,7 @@ const teamMembers = [
           </div>
           <h3 class="mb-6 text-3xl font-bold text-white md:text-4xl tracking-tight relative inline-block">
             Misión
-            <span class="absolute -bottom-3 left-0 w-12 h-1.5 bg-yellow-400 rounded-full transition-all duration-500 group-hover:w-full"></span>
+            <span class="absolute -bottom-3 left-0 w-12 h-1.5 bg-blue-600 rounded-full transition-all duration-500 group-hover:w-full group-hover:bg-linear-to-r group-hover:from-blue-600 group-hover:to-cyan-500"></span>
           </h3>
           <p class="text-lg leading-relaxed text-neutral-300/90 font-medium mt-4">
             Transformar la vida de nuestros clientes a través de soluciones de servicios logísticos y administrativos de alta calidad, combinando innovación tecnológica y un servicio humano excepcional, para superar las expectativas en cada punto de contacto.
@@ -203,10 +207,10 @@ const teamMembers = [
 
         <!-- Vision Card -->
         <div
-          class="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-2xl transition-all duration-300 hover:shadow-yellow-400/10 md:p-12"
+          class="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-2xl transition-all duration-300 hover:shadow-blue-500/10 md:p-12"
           data-aos="fade-up" data-aos-delay="300">
           <div
-            class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400 transition-all duration-500 group-hover:bg-yellow-400 group-hover:text-black shadow-[0_0_20px_rgba(234,179,8,0.2)] group-hover:shadow-yellow-400/40">
+            class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-white/90 text-[#0A192F] transition-all duration-500 group-hover:bg-[#0A192F] group-hover:text-white shadow-[0_0_20px_rgba(255,255,255,0.1)] group-hover:shadow-blue-500/40">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="40"
@@ -224,7 +228,7 @@ const teamMembers = [
           </div>
           <h3 class="mb-6 text-3xl font-bold text-white md:text-4xl tracking-tight relative inline-block">
             Visión
-            <span class="absolute -bottom-3 left-0 w-12 h-1.5 bg-yellow-400 rounded-full transition-all duration-500 group-hover:w-full"></span>
+            <span class="absolute -bottom-3 left-0 w-12 h-1.5 bg-blue-600 rounded-full transition-all duration-500 group-hover:w-full group-hover:bg-linear-to-r group-hover:from-blue-600 group-hover:to-cyan-500"></span>
           </h3>
           <p class="text-lg leading-relaxed text-neutral-300/90 font-medium mt-4">
             Ser reconocidos hacia el 2030 como el referente indiscutible de excelencia en el mercado de servicios logísticos y administrativos, destacando por nuestra capacidad de adaptarnos a los retos globales y por generar un impacto positivo y sostenible en nuestra comunidad.

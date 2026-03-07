@@ -26,15 +26,17 @@ const imageList = imageModules.map(mod => mod.default);
     <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 w-full mx-auto max-w-6xl px-4">
       {
         imageList.map((img, index) => (
-          <div class="flex items-center justify-center p-2 w-[40%] md:w-1/4 lg:w-1/5 grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 hover:scale-110"
+          <div class="flex items-center justify-center w-[40%] md:w-1/4 lg:w-1/5 group"
                data-aos="fade-up" data-aos-delay={index * 100}>
-             <Image
-                src={img}
-                alt="Logo Empresa Aliada"
-                width={200}
-                height={128}
-                class="max-w-full h-auto object-contain max-h-24 md:max-h-32 w-auto"
-              />
+            <div class="p-4 w-full h-full flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-700 ease-out opacity-60 group-hover:opacity-100 group-hover:scale-110 cursor-pointer group-hover:drop-shadow-xl transform-gpu">
+               <Image
+                  src={img}
+                  alt="Logo Empresa Aliada"
+                  width={200}
+                  height={128}
+                  class="max-w-full h-auto object-contain max-h-24 md:max-h-32 w-auto"
+                />
+            </div>
           </div>
         ))
       }

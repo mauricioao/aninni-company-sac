@@ -11,32 +11,42 @@ import img6 from "@/assets/images/gallery/6.jpg";
 import img7 from "@/assets/images/gallery/7.jpg";
 import img8 from "@/assets/images/gallery/8.jpg";
 
-const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
-// Duplicate images to ensure enough items for a full circle if needed, or just use as is.
-// For a better 3D effect with 8 images, we might want to ensure they are spaced out well.
+const projects = [
+  { img: img1, title: "Gestión Logística Integral", subtitle: "Optimización de la cadena de suministro" },
+  { img: img2, title: "Distribución de Repuestos", subtitle: "Suministro confiable de componentes" },
+  { img: img3, title: "Transporte Especializado", subtitle: "Distribución eficiente a nivel nacional" },
+  { img: img4, title: "Almacenamiento Seguro", subtitle: "Infraestructura moderna de alto nivel" },
+  { img: img5, title: "Gestión Administrativa", subtitle: "Resolución de soluciones corporativas" },
+  { img: img6, title: "Soporte Técnico Especializado", subtitle: "Atención y seguimiento 24/7" },
+  { img: img7, title: "Innovación Tecnológica", subtitle: "Sistemas avanzados de operaciones" },
+  { img: img8, title: "Proyectos a Medida", subtitle: "Adaptabilidad integral para tu empresa" }
+];
 
 ---
 
 <section class="gallery-section">
   <div class="gallery-header">
     <h1>Nuestros Proyectos</h1>
-    <p>Desliza para explorar</p>
+    <p>Explora nuestro portafolio de soluciones logísticas, corporativas y de suministro. Cada proyecto refleja nuestro pleno compromiso con la excelencia, la innovación tecnológica y el servicio personalizado, transformando los desafíos de nuestros clientes en resultados exitosos. Desliza para conocer más de nuestro trabajo y operaciones.</p>
   </div>
 
   <div class="carousel-container">
     <div class="carousel" id="carousel">
       {
-        imageList.map((img, index) => (
-          <div class="carousel-item" data-index={index} data-full-src={img.src}>
+        projects.map((project, index) => (
+          <div class="carousel-item" data-index={index} data-full-src={project.img.src}>
             <Image
-              src={img}
-              alt={`Proyecto ${index + 1}`}
+              src={project.img}
+              alt={project.title}
               class="carousel-image"
               width={400}
               height={500}
             />
             <div class="carousel-overlay">
-              <span class="carousel-title">Proyecto {index + 1}</span>
+              <div class="overlay-content">
+                <span class="carousel-title">{project.title}</span>
+                <span class="carousel-subtitle">{project.subtitle}</span>
+              </div>
             </div>
           </div>
         ))
@@ -100,7 +110,10 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
   .gallery-header p {
     font-size: 1.125rem;
     color: #9ca3af;
-    font-weight: 300;
+    font-weight: 400;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
   }
 
   .carousel-container {
@@ -156,7 +169,7 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
     left: 0;
     right: 0;
     padding: 1.5rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     display: flex;
@@ -167,11 +180,25 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
     opacity: 1;
   }
 
+  .overlay-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
   .carousel-title {
     color: #ffffff;
     font-size: 1.25rem;
     font-weight: 700;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    line-height: 1.2;
+  }
+
+  .carousel-subtitle {
+    color: #eab308;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   .carousel-controls {

@@ -6,6 +6,18 @@ const services = defineCollection({
     description: z.string(),
     image: z.string().optional(),
     draft: z.boolean().optional(),
+    ventajas: z.array(z.object({
+      icon: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })).optional(),
+    soluciones_title: z.string().optional(),
+    soluciones_text: z.string().optional(),
+    soluciones_features: z.array(z.object({
+      title: z.string(),
+      description: z.string(),
+    })).optional(),
+    soluciones_images: z.array(z.string()).optional(),
   }),
 });
 
