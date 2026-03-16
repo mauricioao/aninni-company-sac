@@ -3,7 +3,6 @@ import type { z } from "astro/zod";
 import type { Section } from "@/types";
 import { getEntryCTM } from "@/lib/customContentLoader.astro";
 import { markdownify } from "@/lib/utils/textConverter";
-import CustomButton from "@/components/CustomButton.astro";
 import overrideObjects from "@/lib/utils/overrideObjects.ts";
 import type { bannerAgencySectionSchema } from "@/sections.schema";
 import ServiceFinder from "@/components/sections/ServiceFinder.astro";
@@ -32,7 +31,7 @@ let actualContent = overrideObjects(
 ) as bannerAgency;
 
 // Extracting required values from 'content' object
-let { title, image, titleSize, description, button } =
+let { title, image, titleSize, description } =
   actualContent as bannerAgency;
 
 // Font sizes for the heading (useful if you have a long heading)

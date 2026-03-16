@@ -352,7 +352,6 @@ const noteStyles = {
   import {
     formspreeSubmit,
     netlifySubmit,
-    formSubmit,
     isFormFilled,
     setMessage,
     validateSelectTag,
@@ -409,13 +408,15 @@ const noteStyles = {
           // Traditional submission handled by iframe
           setMessage("Enviando mensaje...", true, true, form);
           
-          const iframe = document.getElementById("contact-submission-iframe");
+          const iframe = document.getElementById("contact-submission-iframe") as HTMLIFrameElement | null;
           const onIframeLoad = () => {
-            iframe.removeEventListener("load", onIframeLoad);
+            if (iframe) {
+              iframe.removeEventListener("load", onIframeLoad);
+            }
             
             // Show custom modal
-            if (window.HSOverlay) {
-              window.HSOverlay.open(document.querySelector("#success-modal"));
+            if ((window as any).HSOverlay) {
+              (window as any).HSOverlay.open(document.querySelector("#success-modal"));
             }
             
             // Reset form
@@ -427,7 +428,9 @@ const noteStyles = {
             submitBtn?.removeAttribute("disabled");
           };
           
-          iframe.addEventListener("load", onIframeLoad);
+          if (iframe) {
+            iframe.addEventListener("load", onIframeLoad);
+          }
           // Let it submit naturally because target is set to the iframe
         } else {
           e.preventDefault();

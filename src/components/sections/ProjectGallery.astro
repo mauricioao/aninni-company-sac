@@ -385,14 +385,7 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
 
     // Drag state
     let isDragging = false;
-    let startX = 0;
-    let currentX = 0;
-    let startAngle = 0;
-    let velocity = 0;
-    let lastX = 0;
-    let lastTime = 0;
     let animationId: number;
-    let isDecelerating = false;
 
     // Zoom Modal Elements
     const modal = document.getElementById("imageModal");
@@ -449,7 +442,6 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
         rotateCarousel();
         animationId = requestAnimationFrame(animate);
       } else {
-        isDecelerating = false;
         // Snap to nearest
         snapToNearest();
       }
@@ -496,13 +488,10 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
     // Drag Events
     const handleDragStart = (e: MouseEvent | TouchEvent) => {
       isDragging = true;
-      isDecelerating = false;
       cancelAnimationFrame(animationId);
       
       startX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
-      lastX = startX;
       lastTime = Date.now();
-      startAngle = currentAngle;
       velocity = 0;
       
       carousel.style.transition = 'none';
@@ -537,7 +526,6 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
       carousel.style.cursor = 'grab';
       
       // Start inertia
-      isDecelerating = true;
       animate();
     };
 

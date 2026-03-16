@@ -4,7 +4,6 @@ import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
 import { getCollectionCTM } from "@/lib/customContentLoader.astro";
 import { supportedLanguages, getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 import { parseTomlToJson } from "@/lib/utils/tomlUtils";
-import extractSlug from "@/lib/utils/extractSlug";
 
 export async function getStaticPaths() {
   const paths = await Promise.all(

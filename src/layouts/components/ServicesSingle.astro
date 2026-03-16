@@ -147,7 +147,7 @@ const displayImages = (soluciones_images && soluciones_images.length > 0)
 
         <!-- Scrolling Steps (Right) -->
         <div class="w-full lg:w-2/3 flex flex-col gap-10 lg:gap-20 relative">
-          {displayProceso.map((p: any, i: number) => (
+          {displayProceso.map((p: any) => (
             <div class="flex gap-6 lg:gap-10 items-start opacity-70 hover:opacity-100 transition-opacity duration-500 group">
               <div class="shrink-0 text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-linear-to-b from-white/20 to-transparent group-hover:from-yellow-400 group-hover:to-yellow-600/50 transition-all font-mono">
                 {p.step}

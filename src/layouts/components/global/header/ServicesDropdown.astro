@@ -5,11 +5,10 @@ import type { NavigationLink } from "@/types";
 interface Props {
   items: NavigationLink[];
   parentUrl?: string;
-  parentName?: string;
   isMobile?: boolean;
 }
 
-const { items, parentUrl, parentName, isMobile } = Astro.props;
+const { items, parentUrl, isMobile } = Astro.props;
 ---
 
 <div

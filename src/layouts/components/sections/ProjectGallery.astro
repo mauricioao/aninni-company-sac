@@ -422,12 +422,7 @@ const projects = [
 
     // Drag State
     let isDragging = false;
-    let startX = 0;
-    let startTargetAngle = 0;
-    let lastX = 0;
-    let velocity = 0;
     let lastTime = 0;
-    let isAnimationFrame = false;
 
     // Zoom Modal Elements
     const modal = document.getElementById("imageModal");
@@ -457,7 +452,7 @@ const projects = [
         item.style.transform = `translate3d(${x}px, 0, ${z}px) rotateY(${index * angleStep}deg)`;
         
         // Update click listener to check for drag vs click
-        item.onclick = (e) => {
+        item.onclick = () => {
             // If significant movement occurred, treat as drag, not click
             if (Math.abs(velocity) > 0.5 || isDragging) return;
             openModal(index);
@@ -512,9 +507,7 @@ const projects = [
     // Drag Events
     const handleDragStart = (e: MouseEvent | TouchEvent) => {
       isDragging = true;
-      startX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
       lastX = startX;
-      startTargetAngle = targetAngle;
       lastTime = Date.now();
       velocity = 0;
       
