@@ -75,13 +75,13 @@ form:
   inputs:
     - label: ""
       placeholder: "Nombre *"
-      name: "Nombre" # This is crucial. Its indicate under which name you want to receive this field data
+      name: "name" # This is crucial. Its indicate under which name you want to receive this field data
       required: true
       halfWidth: true
       defaultValue: ""
     - label: ""
       placeholder: "Email *"
-      name: "Email" # This is crucial. Its indicate under which name you want to receive this field data
+      name: "email" # This is crucial. Its indicate under which name you want to receive this field data
       required: true
       type: "email"
       halfWidth: true
@@ -135,7 +135,7 @@ form:
       defaultValue: ""
       rows: "2" # Only work if tag is textarea
       placeholder: "¿Cómo lo podemos ayudar? *"
-      name: "Message" # This is crucial. Its indicate under which name you want to receive this field data
+      name: "message" # This is crucial. Its indicate under which name you want to receive this field data
       required: true
       halfWidth: false
     - label: ""
@@ -143,7 +143,7 @@ form:
       defaultValue: ""
       rows: "2" # Only work if tag is textarea
       placeholder: "¿Cómo supo sobre nosotros?"
-      name: "Message" # This is crucial. Its indicate under which name you want to receive this field data
+      name: "referral" # This is crucial. Its indicate under which name you want to receive this field data
       required: false
       halfWidth: false
     # - label: "Google Search" # only valid for type="checkbox" & type === "radio"
@@ -181,7 +181,7 @@ form:
     #   defaultValue: ""
     - label: "Estoy deacuerdo con los [términos y condiciones](/)." # only valid for type="checkbox" & type === "radio"
       id: "privacy-policy"
-      name: "Agreed Privacy" # This is crucial. Its indicate under which name you want to receive this field data
+      name: "agreed_privacy" # This is crucial. Its indicate under which name you want to receive this field data
       value: "Agreed" # Value that will be submit (applicable for type="checkbox" & type === "radio")
       checked: false # only valid for type="checkbox" & type === "radio"
       required: true
@@ -193,5 +193,5 @@ form:
       content: ¡Gracias por comunicarte con nosotros! Te estaremos respondiendo lo antes posible.
     - note: deprecated # info | warning | success | deprecated | hint
       parentClass: "hidden text-sm message error"
-      content: Something went wrong! please use this mail - [aninni@gmail.com](mailto:aninni@gmail.com) to submit a ticket!
+      content: Something went wrong! please use this mail - [info@aninni.com](mailto:info@aninni.com) to submit a ticket!
 ---

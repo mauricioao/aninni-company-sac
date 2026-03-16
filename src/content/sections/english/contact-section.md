@@ -68,13 +68,13 @@ form:
   inputs:
     - label: ""
       placeholder: "Nom complet *"
-      name: "Nom complet" # Indique sous quel nom vous voulez recevoir cette donnée
+      name: "name" # Indique sous quel nom vous voulez recevoir cette donnée
       required: true
       halfWidth: true
       defaultValue: ""
     - label: ""
       placeholder: "Adresse e-mail *"
-      name: "Adresse e-mail" # Indique sous quel nom vous voulez recevoir cette donnée
+      name: "email" # Indique sous quel nom vous voulez recevoir cette donnée
       required: true
       type: "email"
       halfWidth: true
@@ -128,12 +128,12 @@ form:
       defaultValue: ""
       rows: "2"
       placeholder: "Comment pouvons-nous vous aider *"
-      name: "Message" # Indique sous quel nom vous voulez recevoir cette donnée
+      name: "message" # Indique sous quel nom vous voulez recevoir cette donnée
       required: true
       halfWidth: false
     - label: "Recherche Google"
       checked: false
-      name: "Source Utilisateur"
+      name: "referral"
       required: true
       groupLabel: "Comment avez-vous entendu parler de nous ?"
       group: "source"
@@ -141,7 +141,7 @@ form:
       halfWidth: true
       defaultValue: ""
     - label: "Réseaux sociaux"
-      name: "Source Utilisateur"
+      name: "referral"
       required: true
       groupLabel: ""
       group: "source"
@@ -178,5 +178,5 @@ form:
       content: "Nous avons bien reçu votre message ! Nous vous répondrons dès que possible."
     - note: deprecated
       parentClass: "hidden text-sm message error"
-      content: "Une erreur est survenue ! Veuillez utiliser cet e-mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) pour soumettre un ticket !"
+      content: "Une erreur est survenue ! Veuillez utiliser cet e-mail - [info@aninni.com](mailto:info@aninni.com) pour soumettre un ticket !"
 ---

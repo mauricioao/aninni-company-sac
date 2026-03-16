@@ -2,6 +2,9 @@
 title: "Vehículos Particulares"
 description: "Transporte seguro y confiable de vehículos particulares a nivel nacional."
 image: "/images/services/transporte-vehiculos.jpg"
+soluciones_images:
+  - "/images/services/transporte-vehiculos2.jpg"
+  - "/images/services/transporte-vehiculos3.jpg"
 draft: false
 ---
 

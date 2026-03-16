@@ -85,7 +85,8 @@ const noteStyles = {
     "data-action": contactFormAction,
     "data-provider": contactFormProvider,
     "data-netlify": contactFormProvider === "netlify" ? "true" : undefined,
-    action: contactFormProvider === "netlify" ? contactFormAction : undefined,
+    action: contactFormProvider === "formsubmit.co" ? contactFormAction : (contactFormProvider === "netlify" ? contactFormAction : undefined),
+    target: contactFormProvider === "formsubmit.co" ? "contact-submission-iframe" : undefined,
   }}
   method="post"
   class:list={["grid grid-cols-2 gap-x-4 gap-y-6", Astro.props.class]}>
@@ -106,7 +107,14 @@ const noteStyles = {
 
   {
     contactFormProvider === "formsubmit.co" && (
-      <input type="hidden" name="_template" value="table" />
+      <>
+        <input type="hidden" name="_template" value="table" />
+        <input 
+          type="hidden" 
+          name="_autoresponse" 
+          value="¡Hola! Muchas gracias por ponerte en contacto con Aninni Company. Hemos recibido tus datos y nuestro equipo ya se puso manos a la obra para darte una respuesta lo antes posible. Mientras tanto, quédate tranquilo/a que estamos en ello. ¡Hablamos muy pronto!" 
+        />
+      </>
     )
   }
 
@@ -276,6 +284,42 @@ const noteStyles = {
     )
   }
 </form>
+{/* Hidden Iframe for non-reloading submission */}
+<iframe name="contact-submission-iframe" id="contact-submission-iframe" class="hidden"></iframe>
+
+{/* Success Modal */}
+<div id="success-modal" class="hs-overlay pointer-events-none fixed start-0 top-0 z-80 hidden size-full overflow-y-auto overflow-x-hidden opacity-0 transition-all hs-overlay-open:opacity-100 hs-overlay-open:duration-500">
+  <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 m-3 mt-0 flex min-h-[calc(100%-3.5rem)] items-center opacity-0 transition-all sm:mx-auto sm:w-full sm:max-w-lg">
+    <div class="flex w-full flex-col rounded-3xl border border-white/10 bg-black/80 shadow-2xl backdrop-blur-xl">
+      <div class="flex items-center justify-between border-b border-white/5 px-6 py-4">
+        <h3 class="text-xl font-bold text-white">
+          Aninni Company
+        </h3>
+        <button type="button" class="flex size-8 items-center justify-center rounded-full border border-transparent text-sm font-semibold text-white/50 hover:bg-white/10 disabled:pointer-events-none disabled:opacity-50" data-hs-overlay="#success-modal">
+          <span class="sr-only">Close</span>
+          <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="px-6 py-10 text-center">
+        <div class="mb-4 flex justify-center">
+          <div class="flex size-20 items-center justify-center rounded-full bg-green-500/20 text-green-500 shadow-[0_0_40px_-10px_rgba(34,197,94,0.3)]">
+            <svg class="size-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+        </div>
+        <h2 class="mb-2 text-2xl font-bold text-white">¡Mensaje Enviado con Éxito!</h2>
+        <p class="text-white/70">
+          Gracias por contactarnos. Tu información ha sido recibida correctamente y te hemos enviado una copia a tu correo.
+        </p>
+      </div>
+      <div class="flex items-center justify-end gap-x-2 px-6 py-4">
+        <button type="button" class="btn-gradient inline-flex items-center gap-x-2 rounded-xl border-0 px-6 py-3 text-sm font-medium text-black transition-all hover:scale-105 active:scale-95" data-hs-overlay="#success-modal">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <style>
   .form-check-label :global(a) {
     color: white;
@@ -285,6 +329,21 @@ const noteStyles = {
   .form-check-label :global(a:hover) {
     color: #facc15; /* yellow-400 */
     text-decoration-color: #facc15;
+  }
+
+  /* Fix email input focus/autofill color consistency */
+  .form-input:-webkit-autofill,
+  .form-input:-webkit-autofill:hover,
+  .form-input:-webkit-autofill:focus,
+  .form-input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px black inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  
+  .form-input:focus {
+    background-color: transparent !important;
+    outline: none !important;
   }
 </style>
 
@@ -335,8 +394,6 @@ const noteStyles = {
     });
 
     form?.addEventListener("submit", async (e: Event) => {
-      e.preventDefault();
-
       const provider = form?.getAttribute("data-provider") || "";
       const action = form?.getAttribute("data-action") || "";
 
@@ -348,46 +405,61 @@ const noteStyles = {
       selectTags.forEach(validateSelectTag);
 
       if (isFormFilled(form)) {
-        // Console form data for debugging
-        const formData = Object.fromEntries(new FormData(form).entries());
-        console.log(
-          Object.entries(formData)
-            .map(([key, value]) => `${key}: ${value}`)
-            .join("\n\n"),
-        );
+        if (provider === "formsubmit.co") {
+          // Traditional submission handled by iframe
+          setMessage("Enviando mensaje...", true, true, form);
+          
+          const iframe = document.getElementById("contact-submission-iframe");
+          const onIframeLoad = () => {
+            iframe.removeEventListener("load", onIframeLoad);
+            
+            // Show custom modal
+            if (window.HSOverlay) {
+              window.HSOverlay.open(document.querySelector("#success-modal"));
+            }
+            
+            // Reset form
+            form.reset();
+            setMessage("¡Mensaje enviado!", true, false, form);
+            
+            // Re-enable submit button
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn?.removeAttribute("disabled");
+          };
+          
+          iframe.addEventListener("load", onIframeLoad);
+          // Let it submit naturally because target is set to the iframe
+        } else {
+          e.preventDefault();
+          setMessage("Form Submitting!...", true, true, form);
 
-        setMessage("Form Submitting!...", true, true, form);
-
-        try {
-          switch (provider) {
-            case "netlify":
-              await netlifySubmit(form, action);
-              break;
-            case "formsubmit.co":
-              await formSubmit({
-                form,
-                action,
-              });
-              break;
-            case "formspree":
-              await formspreeSubmit(
-                Object.fromEntries(new FormData(form).entries()),
-                5000,
-                form,
-              );
-              break;
-            default:
-              throw new Error("Unknown form provider.");
+          try {
+            switch (provider) {
+              case "netlify":
+                await netlifySubmit(form, action);
+                break;
+              case "formspree":
+                await formspreeSubmit(
+                  Object.fromEntries(new FormData(form).entries()),
+                  5000,
+                  form,
+                );
+                break;
+              default:
+                throw new Error("Unknown form provider.");
+            }
+          } catch (error) {
+            setMessage(
+              error +
+                "! Please use this mail - [info@aninni.com](mailto:info@aninni.com) to submit a ticket!",
+              false,
+              false,
+              form,
+            );
           }
-        } catch (error) {
-          setMessage(
-            error +
-              "! Please use this mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) to submit a ticket!",
-            false,
-            false,
-            form,
-          );
         }
+      } else {
+        e.preventDefault();
       }
     });
   });

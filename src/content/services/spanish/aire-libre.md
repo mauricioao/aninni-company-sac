@@ -2,6 +2,9 @@
 title: "Aire Libre"
 description: "Almacenamiento en patio para carga sobredimensionada o resistente a la intemperie."
 image: "/images/services/aire-libre.jpg"
+soluciones_images:
+  - "/images/services/aire-libre2.jpg"
+  - "/images/services/aire-libre3.jpg"
 draft: false
 ---
 

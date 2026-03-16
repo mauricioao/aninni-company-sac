@@ -2,6 +2,9 @@
 title: "Valor Agregado (VAS)"
 description: "Servicios de valor agregado para personalizar y mejorar sus productos."
 image: "/images/services/vas.jpg"
+soluciones_images:
+  - "/images/services/vas2.jpg"
+  - "/images/services/vas3.jpg"
 draft: false
 ---
 

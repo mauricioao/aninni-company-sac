@@ -11,6 +11,16 @@ const services = defineCollection({
       title: z.string(),
       description: z.string(),
     })).optional(),
+    proceso: z.array(z.object({
+      step: z.string(),
+      title: z.string(),
+      description: z.string(),
+    })).optional(),
+    impacto: z.object({
+      title: z.string().optional(),
+      description: z.string().optional(),
+      buttonText: z.string().optional(),
+    }).optional(),
     soluciones_title: z.string().optional(),
     soluciones_text: z.string().optional(),
     soluciones_features: z.array(z.object({

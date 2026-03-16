@@ -2,6 +2,9 @@
 title: "Asesoría Contable y Administrativo"
 description: "Soporte experto en gestión contable y administrativa para empresas logísticas y de comercio exterior."
 image: "/images/services/contable.jpg"
+soluciones_images:
+  - "/images/services/contable2.jpg"
+  - "/images/services/contable3.jpg"
 draft: false
 ---
 

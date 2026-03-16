@@ -2,6 +2,10 @@
 title: "Depósito Aduanero"
 description: "Servicio de depósito aduanero para optimizar sus operaciones de comercio exterior."
 image: "/images/services/aduana.jpg"
+soluciones_images:
+  - "/images/services/aduana2.jpg"
+  - "/images/services/aduana3.jpg"
+
 draft: false
 ---
 

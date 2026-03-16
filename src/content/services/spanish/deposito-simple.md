@@ -2,6 +2,9 @@
 title: "Depósito Simple"
 description: "Almacenaje seguro y flexible para su mercadería general."
 image: "/images/services/almacen.jpg"
+soluciones_images:
+  - "/images/services/almacen2.jpg"
+  - "/images/services/almacen3.jpg"
 draft: false
 ---
 

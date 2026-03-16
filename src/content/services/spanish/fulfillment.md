@@ -2,6 +2,9 @@
 title: "Fulfillment"
 description: "Soluciones completas de fulfillment para e-commerce."
 image: "/images/services/fulfillment.jpg"
+soluciones_images:
+  - "/images/services/fulfillment2.jpg"
+  - "/images/services/fulfillment3.jpg"
 draft: false
 ---
 

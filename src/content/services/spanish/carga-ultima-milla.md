@@ -2,6 +2,9 @@
 title: "Carga Última Milla"
 description: "Servicio de distribución final eficiente para e-commerce y retail."
 image: "/images/services/ultima-milla.jpg"
+soluciones_images:
+  - "/images/services/ultima-milla2.jpg"
+  - "/images/services/ultima-milla3.jpg"
 draft: false
 ---
 

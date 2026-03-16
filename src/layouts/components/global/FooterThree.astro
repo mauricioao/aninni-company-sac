@@ -22,6 +22,9 @@ const {
   data: { title, description },
 } = await getEntryCTM("sections", "call-to-action", Astro.currentLocale);
 
+// Ensure the email is always info@aninni.com
+email = "[info@aninni.com](mailto:info@aninni.com)";
+
 let { form } = (
   await getEntryCTM("sections", "contact-section", Astro.currentLocale)
 )?.data;
@@ -58,7 +61,7 @@ const copyrightParts = splitProtectedText(copyrightText);
         <div class="space-y-4">
           {
             config.settings.copyright?.enable && (
-              <ul class="has-list has-list-slash prose-a:text-inherit text-light flex flex-wrap gap-y-2 [&>li>span::after]:!bg-white">
+              <ul class="has-list has-list-slash prose-a:text-inherit text-light flex flex-wrap gap-y-2 [&>li>span::after]:bg-white!">
                 {copyrightParts.map((value) => (
                   <li class="prose-a:text-white prose-a:hover:text-yellow-400 prose-a:transition-colors prose-a:duration-300">
                     <span set:html={markdownify(value)} />

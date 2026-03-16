@@ -2,6 +2,9 @@
 title: "Rack"
 description: "Sistema de almacenamiento vertical optimizado para paletizados."
 image: "/images/services/rack.jpg"
+soluciones_images:
+  - "/images/services/rack2.jpg"
+  - "/images/services/rack3.jpg"
 draft: false
 ---
 

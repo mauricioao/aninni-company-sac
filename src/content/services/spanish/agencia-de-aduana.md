@@ -2,6 +2,9 @@
 title: "Agencia de Aduana"
 description: "Representación legal y gestión experta ante la autoridad aduanera."
 image: "/images/services/agencia-aduana.jpg"
+soluciones_images:
+  - "/images/services/agencia-aduana2.jpg"
+  - "/images/services/agencia-aduana3.jpg"
 draft: false
 ---
 

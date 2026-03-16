@@ -2,6 +2,9 @@
 title: "Asesoría en Comercio Exterior"
 description: "Asesoramiento estratégico para optimizar su cadena logística y expandir sus mercados internacionales."
 image: "/images/services/asesoria.jpg"
+soluciones_images:
+  - "/images/services/asesoria2.jpg"
+  - "/images/services/asesoria3.jpg"
 draft: false
 ---
 

@@ -2,6 +2,9 @@
 title: "Agencia de Carga"
 description: "Coordinación logística internacional aérea y marítima."
 image: "/images/services/agencia-carga.jpg"
+soluciones_images:
+  - "/images/services/agencia-carga2.jpg"
+  - "/images/services/agencia-carga3.jpg"
 draft: false
 ---
 

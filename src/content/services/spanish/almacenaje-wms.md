@@ -2,6 +2,9 @@
 title: "Almacenaje & WMS"
 description: "Soluciones de almacenaje y gestión de inventarios con tecnología WMS."
 image: "/images/services/almacenaje.jpg"
+soluciones_images:
+  - "/images/services/almacenaje2.jpg"
+  - "/images/services/almacenaje3.jpg"
 draft: false
 ---
 

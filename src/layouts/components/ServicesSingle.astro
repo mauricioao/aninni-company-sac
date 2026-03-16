@@ -1,9 +1,7 @@
 ---
 import { render } from "astro:content";
-
 import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
-
 import ImageList from "@/components/ImageList.astro";
 import ImageItem from "@/components/ImageItem.astro";
 
@@ -13,6 +11,8 @@ const {
     description,
     image,
     ventajas,
+    proceso,
+    impacto,
     soluciones_title,
     soluciones_text,
     soluciones_features,
@@ -22,165 +22,235 @@ const {
 
 const { Content } = await render(Astro.props.content);
 
-// Always use the new layout, provide fallbacks if markdown doesn't have them yet.
+// Fallbacks para que nunca haya bloques vacíos
 const displayVentajas = ventajas && ventajas.length > 0 ? ventajas : [
-  { title: "Beneficios", description: "Soluciones adaptadas a tus necesidades específicas.", icon: "" },
-  { title: "Disponibilidad", description: "Soporte y monitoreo continuo para tu operación.", icon: "" },
-  { title: "Garantía", description: "Calidad asegurada en cada proceso implementado.", icon: "" }
+  { title: "Sinergia Operativa", description: "Integración perfecta en cada etapa de tu supply chain.", icon: "" },
+  { title: "Visibilidad 360°", description: "Control en tiempo real con tecnología predictiva.", icon: "" },
+  { title: "Reducción de Riesgo", description: "Protocolos estrictos de seguridad y cumplimiento normativo.", icon: "" },
+  { title: "Agilidad", description: "Respuestas dinámicas ante retos logísticos globales.", icon: "" }
+];
+
+const displayProceso = proceso && proceso.length > 0 ? proceso : [
+  { step: "01", title: "Análisis Consultivo", description: "Evaluamos su ecosistema logístico para diseñar una estrategia a medida." },
+  { step: "02", title: "Ingeniería de Rutas", description: "Optimizamos trayectos y modalidades para máxima eficiencia." },
+  { step: "03", title: "Ejecución Milimétrica", description: "Implementación del plan con monitoreo satelital continuo." },
+  { step: "04", title: "Entrega y Reporte", description: "Confirmación en destino y reporte de KPIs operativos." }
 ];
 
 const displaySolucionesFeatures = soluciones_features && soluciones_features.length > 0 ? soluciones_features : [
-  { title: "Atención Especializada", description: "Nuestro equipo de expertos gestionará todos los detalles de su operación." },
-  { title: "Optimización de Tiempos", description: "Buscamos siempre la ruta y método más eficiente para su carga." }
+  { title: "Estructura Dedicada", description: "Capacidad reservada para operaciones críticas." },
+  { title: "Optimización Inteligente", description: "Reducción de costos ocultos mediante analítica." }
 ];
+
+// Garantizar imágenes: Si el usuario define soluciones_images en el .md, se usan esas.
+// Si no, por ahora lo dejamos vacío o usamos la imagen principal repetida según prefiera el diseño inicial.
+const displayImages = (soluciones_images && soluciones_images.length > 0) 
+  ? soluciones_images 
+  : (image ? [
+      image.replace(/(\.[^.]+)$/, '2$1'), 
+      image.replace(/(\.[^.]+)$/, '3$1')
+    ] : []);
 ---
 
-<div class="service-page bg-white relative overflow-hidden w-full m-0 p-0">
+<div class="service-page relative w-full m-0 p-0 font-sans selection:bg-yellow-400 selection:text-[#0a192f] overflow-hidden bg-white">
     
-    <!-- HERO SECTION -->
-    <section class="relative w-full min-h-[500px] lg:min-h-[600px] flex flex-col justify-center bg-[#f8fafc] z-10 overflow-hidden">
-      <!-- Background Image container (Right) -->
-      {image && (
-          <div class="absolute inset-y-0 right-0 z-0 h-full w-full lg:w-[65%]">
-            <OptimizedImage
-                src={image}
-                alt={title || ''}
-                width={1920}
-                height={1080}
-                class="h-full w-full object-cover"
-            />
-            <div class="absolute inset-0 bg-linear-to-r from-[#f8fafc] via-[#f8fafc]/80 to-transparent lg:hidden"></div>
-            
-            <!-- White soft angled separation line for desktop -->
-            <svg class="absolute top-0 -left-1 h-full w-[250px] text-[#f8fafc] fill-current z-10 hidden lg:block" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <path d="M0 0 L100 0 C 100 0, 30 50, 100 100 L 0 100 Z" />
-            </svg>
+    <!-- BLOCK 1: Hero Asimétrico Vanguardista (AZUL) -->
+    <section class="relative w-full py-16 lg:py-[100px] overflow-hidden border-b border-white/5 bg-[#0a192f] text-slate-300">
+      <!-- Decoración tipográfica de fondo -->
+      <div class="absolute -top-10 -right-10 text-[20vw] font-black text-white/3 leading-none pointer-events-none select-none uppercase z-0 break-words w-screen mix-blend-overlay">
+        {title || 'Servicio'}
+      </div>
+
+      <div class="container relative z-20 flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
+        
+        <div class="w-full lg:w-3/5 order-2 lg:order-1 relative">
+           <a href={getLocaleUrlCTM("/services", Astro.currentLocale)} class="inline-flex items-center gap-3 text-xs font-bold text-yellow-500 uppercase tracking-[0.2em] hover:text-white transition-colors mb-6 group">
+              <span class="w-8 h-[2px] bg-yellow-500 group-hover:w-12 group-hover:bg-white transition-all"></span> Volver
+           </a>
+           <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-[0.95] tracking-tighter" set:html={title} />
+           
+           <p class="text-base md:text-lg font-light text-slate-400 max-w-xl leading-relaxed mb-8 border-l-2 border-yellow-500 pl-5">
+              {description}
+           </p>
+
+           <div class="flex items-center gap-8">
+              <a href="#soluciones" class="text-white hover:text-yellow-400 font-bold uppercase tracking-widest text-sm transition-colors flex items-center gap-2 group">
+                 Explorar
+                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:translate-x-2 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </a>
+           </div>
+        </div>
+
+        <!-- Imagen Asimétrica Reducida -->
+        {image && (
+          <div class="w-full lg:w-2/5 order-1 lg:order-2 h-[25vh] lg:h-[35vh] relative group overflow-hidden rounded-3xl lg:rounded-bl-[60px] lg:rounded-tr-[60px] shadow-lg border border-white/10">
+             <div class="absolute inset-0 bg-[#0a192f]/20 mix-blend-multiply z-10 group-hover:bg-transparent transition-colors duration-700"></div>
+             <OptimizedImage src={image} alt={title || 'Servicio'} width={800} height={600} class="h-full w-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out grayscale-[20%] group-hover:grayscale-0" />
           </div>
-      )}
+        )}
+      </div>
+    </section>
 
-      <!-- Bottom Waves -->
-      <svg class="absolute inset-x-0 -bottom-px w-full h-[60px] md:h-[120px] z-20 pointer-events-none" viewBox="0 0 1440 320" preserveAspectRatio="none">
-         <path fill="#f8fafc" fill-opacity="1" d="M0,128L80,149.3C160,171,320,213,480,213.3C640,213,800,171,960,144C1120,117,1280,107,1360,101.3L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
-      </svg>
+    <!-- Marquee de impacto -->
+    <div class="w-full bg-yellow-400 text-[#0a192f] py-3 overflow-hidden flex whitespace-nowrap">
+       <div class="animate-[marquee_20s_linear_infinite] flex gap-12 items-center text-sm font-black uppercase tracking-[0.3em]">
+          <span>Logística Integral</span> <span>•</span> <span>Innovación</span> <span>•</span> <span>Conexión Global</span> <span>•</span> <span>Seguridad</span> <span>•</span>
+          <span>Logística Integral</span> <span>•</span> <span>Innovación</span> <span>•</span> <span>Conexión Global</span> <span>•</span> <span>Seguridad</span> <span>•</span>
+          <span>Logística Integral</span> <span>•</span> <span>Innovación</span> <span>•</span> <span>Conexión Global</span> <span>•</span> <span>Seguridad</span> <span>•</span>
+       </div>
+    </div>
 
-      <div class="container relative z-30 pt-20 pb-16">
-        <div class="max-w-3xl">
-          <a
-            href={getLocaleUrlCTM("/services", Astro.currentLocale)}
-            class="mb-6 inline-flex items-center text-sm font-semibold text-yellow-600 transition-colors hover:text-blue-900 uppercase tracking-widest">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="mr-2">
-              <path d="m15 18-6-6 6-6"></path>
-            </svg>
-            Volver a Servicios
-          </a>
-          {title && (
-            <h1
-              class="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-[#0a192f] mb-6 leading-tight sm:leading-snug"
-              style="word-wrap: break-word; overflow-wrap: break-word;"
-              set:html={title}
-            />
-          )}
-          <p class="text-neutral-600 text-lg md:text-xl font-medium mb-10 leading-relaxed max-w-md">
-             {description || "Ofrecemos servicios de transporte internacional para su carga, conectándolo con los principales mercados globales de manera segura y eficiente."}
-          </p>
-          <a href="#contact-form" class="inline-flex items-center justify-center rounded-full bg-yellow-400 px-8 py-4 text-sm font-bold text-[#0a192f] transition-transform hover:-translate-y-1 hover:shadow-lg hover:shadow-yellow-400/30">
-            Solicitar Cotización
-          </a>
+    <!-- BLOCK 2: Bento Grid (BLANCO / GRIS CLARO) -->
+    <section class="py-20 md:py-28 relative z-10 bg-slate-50 border-b border-slate-200">
+      <div class="container px-4">
+        <div class="mb-14 md:mb-20 flex flex-col md:flex-row gap-8 justify-between items-end">
+          <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-[#0a192f] leading-none tracking-tighter">Nuestra<br/><span class="text-transparent bg-clip-text bg-linear-to-r from-yellow-500 to-yellow-600">Ventaja Competitiva</span></h2>
+          <p class="text-slate-600 max-w-sm text-left md:text-right font-light">Métricas y metodologías que transforman tu cadena de valor en un activo estratégico.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 md:gap-6 lg:h-[500px]">
+          {displayVentajas.map((v: any, i: number) => {
+             // Bento layout logic
+             let colSpan = "md:col-span-1";
+             let rowSpan = "md:row-span-1";
+             if (i === 0) { colSpan = "md:col-span-2"; rowSpan = "md:row-span-2"; }
+             else if (i === 1) { colSpan = "md:col-span-2"; }
+             
+             return (
+              <div class={`relative rounded-3xl overflow-hidden bg-white border border-slate-200 p-8 flex flex-col justify-end group transition-all duration-500 hover:bg-slate-50 hover:border-yellow-400 hover:shadow-xl ${colSpan} ${rowSpan}`}>
+                <div class="absolute top-8 right-8 text-slate-200 group-hover:text-yellow-500/80 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m12 16 4-4-4-4"></path><path d="M8 12h8"></path></svg>
+                </div>
+                
+                <h3 class={`font-black text-[#0a192f] mb-3 ${i === 0 ? 'text-3xl lg:text-4xl' : 'text-xl lg:text-2xl'}`}>{v.title}</h3>
+                <p class={`text-slate-600 font-light ${i === 0 ? 'text-lg max-w-sm' : 'text-sm'}`}>{v.description}</p>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
 
-    <!-- Ventajas Section -->
-       <section class="py-24 bg-[#f8fafc] relative z-20">
-          <div class="container relative z-10">
-             <h2 class="text-3xl md:text-4xl font-bold text-[#0a192f] text-center mb-16">Ventajas de nuestro Servicio</h2>
-             
-             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                {displayVentajas.map((v: any, i: number) => (
-                   <div class={`flex flex-col items-center text-center p-6 ${i !== 2 ? 'md:border-r border-neutral-200' : ''}`}>
-                      <div class="w-24 h-24 mb-6 relative group overflow-hidden">
-                         <img src={v.icon || '/images/icons/default-icon.png'} alt={v.title} class="w-full h-full object-contain transform transition-transform group-hover:scale-110" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWFiMzA4IiBzdHJva2Utd2lkdGg9IjIiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PHBhdGggZD0iTTEyIDZ2Nmw0IDIiLz48L3N2Zz4='" />
-                      </div>
-                      <h3 class="text-xl font-extrabold text-[#0a192f] mb-3">{v.title}</h3>
-                      <p class="text-neutral-500 font-medium leading-relaxed">{v.description}</p>
-                   </div>
-                ))}
-             </div>
+    <!-- BLOCK 3: Metodología Interactiva (AZUL OSCURO) -->
+    <section class="py-20 md:py-28 bg-[#0a192f] relative text-white">
+      <div class="container px-4 block lg:flex gap-16">
+        
+        <!-- Sticky Header (Left) -->
+        <div class="w-full lg:w-1/3 mb-16 lg:mb-0 relative">
+          <div class="sticky top-32">
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase leading-[0.9]">El <br/><span class="text-yellow-400">Proceso</span></h2>
+            <p class="text-slate-400 border-l border-white/20 pl-5 py-2 font-light">
+              Arquitectura operativa diseñada para predecir, gestionar y ejecutar con absoluta claridad en cada fase.
+            </p>
           </div>
+        </div>
+
+        <!-- Scrolling Steps (Right) -->
+        <div class="w-full lg:w-2/3 flex flex-col gap-10 lg:gap-20 relative">
+          {displayProceso.map((p: any, i: number) => (
+            <div class="flex gap-6 lg:gap-10 items-start opacity-70 hover:opacity-100 transition-opacity duration-500 group">
+              <div class="shrink-0 text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-linear-to-b from-white/20 to-transparent group-hover:from-yellow-400 group-hover:to-yellow-600/50 transition-all font-mono">
+                {p.step}
+              </div>
+              <div class="pt-2 lg:pt-4">
+                <h4 class="text-2xl lg:text-3xl font-bold text-white mb-3 tracking-tight">{p.title}</h4>
+                <p class="text-slate-400 text-base md:text-lg font-light leading-relaxed">{p.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BLOCK 4: Soluciones a Medida (BLANCO) -->
+    <section id="soluciones" class="py-20 md:py-28 relative overflow-hidden bg-white border-t border-slate-200">
+      <div class="container px-4">
+        <div class="flex flex-col lg:flex-row gap-12 lg:gap-8 items-start lg:items-center">
           
-       </section>
-
-    <!-- Soluciones Integrales Section -->
-       <section class="py-24 bg-white relative z-0 mt-[60px] md:mt-[120px]">
-          <!-- Add top padding to account for the dark blue wave overlapping -->
-          <div class="container max-w-7xl pt-10">
-             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                <!-- Left Side -->
-                <div class="order-2 lg:order-1">
-                   <h2 class="text-3xl md:text-4xl font-extrabold text-[#0a192f] mb-6 leading-tight">
-                      {soluciones_title || 'Soluciones Logísticas Integrales'}
-                   </h2>
-                   <p class="text-neutral-500 text-lg mb-10 leading-relaxed font-medium max-w-lg">
-                      {soluciones_text}
-                   </p>
-                   
-                   <div class="space-y-6 max-w-lg">
-                      {displaySolucionesFeatures.map((feat: any) => (
-                         <div class="bg-white border border-neutral-100 rounded-2xl p-6 shadow-[0px_4px_20px_rgba(0,0,0,0.05)] flex gap-4 transition-transform hover:-translate-y-1">
-                            <div class="shrink-0 mt-1">
-                               <div class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-white shadow-md">
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
-                               </div>
-                            </div>
-                            <div>
-                               <h4 class="text-xl font-bold text-[#0a192f] mb-2">{feat.title}</h4>
-                               <p class="text-neutral-500 text-sm leading-relaxed font-medium">{feat.description}</p>
-                            </div>
-                         </div>
-                      ))}
-                   </div>
+          <!-- Left: Texto & Features -->
+          <div class="w-full lg:w-1/2 pr-0 lg:pr-12 relative z-10">
+            <h2 class="text-4xl lg:text-5xl font-black text-[#0a192f] mb-8 tracking-tighter leading-none">
+              {soluciones_title || 'Enfoque Integral'}
+            </h2>
+            <p class="text-slate-600 text-lg md:text-xl font-light mb-12 leading-relaxed">
+              {soluciones_text}
+            </p>
+            
+            <div class="space-y-6">
+              {displaySolucionesFeatures.map((feat: any) => (
+                <div class="border-t border-slate-200 pt-5">
+                  <h4 class="text-xl font-bold text-[#0a192f] mb-2 flex items-center gap-3">
+                     <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                     {feat.title}
+                  </h4>
+                  <p class="text-slate-600 font-light pl-5">{feat.description}</p>
                 </div>
-
-                <!-- Right Side Images -->
-                {soluciones_images && soluciones_images.length > 0 ? (
-                    <div class="order-1 lg:order-2 flex flex-col gap-6">
-                       {soluciones_images.map((imgUrl: string, i: number) => (
-                           <div class="w-full relative rounded-3xl overflow-hidden shadow-2xl h-[280px] md:h-[320px]">
-                              <img src={imgUrl} alt="Solución" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" />
-                           </div>
-                       ))}
-                    </div>
-                ) : (
-                    <div class="order-1 lg:order-2">
-                       <div class="w-full relative rounded-3xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.06)] h-[400px] border-2 border-dashed border-neutral-200 bg-white flex flex-col items-center justify-center p-8 text-center group transition-colors hover:border-yellow-400">
-                          <div class="w-20 h-20 mb-6 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-yellow-50 transition-colors shadow-sm border border-neutral-100">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300 group-hover:text-yellow-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                             </svg>
-                          </div>
-                          <h4 class="text-xl font-bold text-[#0a192f] mb-3">Imágenes del Servicio</h4>
-                          <p class="text-neutral-500 text-sm mb-6 leading-relaxed max-w-sm mx-auto">Para mostrar imágenes aquí, agrega las rutas dentro de tu archivo markdown usando la propiedad <strong class="text-[#0a192f]">soluciones_images</strong>:</p>
-                          <code class="bg-[#f8fafc] border border-neutral-200 px-4 py-3 rounded-xl text-sm text-blue-800 font-mono w-full md:w-auto shadow-inner text-left">
-soluciones_images: <br/>  - "/images/rutatuya.jpg"
-                          </code>
-                       </div>
-                    </div>
-                )}
-             </div>
-             
-              <!-- Ensure standard markdown content still renders underneath if present -->
-             {Content && (
-                <div class="mt-20 prose prose-lg prose-blue max-w-none text-neutral-600">
-                   <Content components={{ ImageItem, ImageList }} />
-                </div>
-             )}
+              ))}
+            </div>
+ 
+            <!-- Markdown Content -->
+            {Content && (
+               <div class="mt-14 prose prose-base md:prose-lg max-w-none prose-headings:font-black prose-headings:text-[#0a192f] prose-headings:tracking-tighter prose-a:text-yellow-600 prose-p:font-light prose-p:text-slate-600">
+                  <Content components={{ ImageItem, ImageList }} />
+               </div>
+            )}
           </div>
-       </section>
-  </div>
+ 
+          <!-- Right: Imágenes Dinámicas -->
+          {displayImages && displayImages.length > 0 && (
+            <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-start relative lg:min-h-[600px] mt-16 lg:mt-0">
+               <div class="relative w-full max-w-md mx-auto">
+                  {displayImages.map((img: string, i: number) => {
+                     const isFirst = i === 0;
+                     
+                     return (
+                     <div class={`shadow-lg transition-all duration-700 hover:z-30 hover:scale-105 border border-slate-200 bg-slate-100 overflow-hidden
+                        ${isFirst 
+                          ? 'relative lg:absolute w-[80%] md:w-[85%] aspect-[4/5] lg:top-0 lg:right-0 z-20 rounded-3xl lg:rounded-tr-[60px] lg:rounded-bl-[60px] ml-auto' 
+                          : 'relative lg:absolute w-[70%] md:w-[75%] aspect-[3/4] lg:bottom-0 lg:left-0 z-10 rounded-2xl lg:rounded-tl-[50px] lg:rounded-br-[50px] -mt-12 lg:mt-0 lg:-translate-y-8 ml-4 lg:ml-0'
+                        }`}>
+                        <div class="absolute inset-0 bg-[#0a192f]/5 mix-blend-color z-10 hover:opacity-0 transition-opacity"></div>
+                        <OptimizedImage src={img} alt="Operación" width={600} height={800} class="h-full w-full object-cover grayscale-15 hover:grayscale-0" />
+                     </div>
+                     )
+                  })}
+               </div>
+            </div>
+          )}
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 5: CTA de Impacto (AZUL OSCURO para cerrar la página sin dejar blancos) -->
+    <section class="cta-section py-24 md:py-32 relative border-t border-slate-200 overflow-hidden bg-[#0a192f] w-full mb-0 pb-32">
+      <!-- Decoraciones sutiles -->
+      <div class="absolute inset-0 opacity-10 mix-blend-color-dodge bg-noise"></div>
+      
+      <div class="container relative z-10 px-4 text-center">
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase leading-tight">
+          {impacto?.title || "Eleva tu Operación"}
+        </h2>
+        <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto font-light">
+          {impacto?.description || "Inicia el cambio hacia una cadena de suministro ágil, resiliente y de clase mundial."}
+        </p>
+        
+        <a href="#contact-form" class="inline-flex items-center gap-4 bg-yellow-400 text-[#0a192f] font-black uppercase tracking-widest px-8 md:px-10 py-4 hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-[0_10px_30px_rgba(250,204,21,0.2)]">
+          <span>{impacto?.buttonText || "Solicitar Cotización"}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </a>
+      </div>
+    </section>
+
+</div>
+
+<style>
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>

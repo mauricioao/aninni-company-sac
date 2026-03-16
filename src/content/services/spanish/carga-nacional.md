@@ -2,6 +2,9 @@
 title: "Carga Nacional"
 description: "Transporte de carga a nivel nacional con cobertura total."
 image: "/images/services/carga-nacional.jpg"
+soluciones_images:
+  - "/images/services/carga-nacional2.jpg"
+  - "/images/services/carga-nacional3.jpg"
 draft: false
 ---
 
