@@ -47,9 +47,9 @@ const hasGrandChildren = menu.children?.some((child) => child.children && child.
         </svg>
       </a>
       {hasGrandChildren ? (
-        <ServicesDropdown items={menu.children} parentUrl={menu.url} parentName={menu.name} isMobile={isMobile} />
+        <ServicesDropdown items={menu.children} parentUrl={menu.url} isMobile={isMobile} />
       ) : (
-        <SimpleDropdown items={menu.children} parentUrl={menu.url} parentName={menu.name} isMobile={isMobile} />
+        <SimpleDropdown items={menu.children} parentUrl={menu.url} isMobile={isMobile} />
       )}
     </li>
   ) : (

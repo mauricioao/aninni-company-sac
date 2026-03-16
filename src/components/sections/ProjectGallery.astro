@@ -385,6 +385,10 @@ const imageList = [img1, img2, img3, img4, img5, img6, img7, img8];
 
     // Drag state
     let isDragging = false;
+    let startX = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let velocity = 0;
     let animationId: number;
 
     // Zoom Modal Elements
