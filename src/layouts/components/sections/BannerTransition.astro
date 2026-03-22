@@ -92,7 +92,7 @@ const initialQuote = quotes[0];
   }
 </style>
 
-<script define:vars={{ quotes }}>
+<script is:inline define:vars={{ quotes }}>
   const updateQuote = () => {
     const phraseEl = document.getElementById('quotePhrase');
     const authorEl = document.getElementById('quoteAuthor');
