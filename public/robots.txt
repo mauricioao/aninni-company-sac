@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /_astro/
+Disallow: /cdn-cgi/
+
+Sitemap: https://aninni.com/sitemap-index.xml

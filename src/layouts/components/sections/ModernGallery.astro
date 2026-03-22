@@ -1,56 +1,134 @@
 ---
 import { Image } from "astro:assets";
-import img1 from "@/assets/images/gallery/1.jpg";
-import img2 from "@/assets/images/gallery/2.jpg";
-import img3 from "@/assets/images/gallery/3.jpg";
-import img4 from "@/assets/images/gallery/4.jpg";
-import img5 from "@/assets/images/gallery/5.jpg";
-import img6 from "@/assets/images/gallery/6.jpg";
-import img7 from "@/assets/images/gallery/7.jpg";
-import img8 from "@/assets/images/gallery/8.jpg";
 
-// Grid items configuration to match the bento-style layout
-// We will have 8 items. Let's arrange them in a cool grid.
-const galleryItems = [
-  { img: img1, title: "Gestión Logística en Puertos", span: "md:col-span-2 md:row-span-1" },
-  { img: img2, title: "Transporte Marítimo Internacional", span: "md:col-span-1 md:row-span-1" },
-  { img: img3, title: "Red de Contenedores Refrigerados", span: "md:col-span-1 md:row-span-1" },
-  { img: img4, title: "Almacenamiento de Carga a Gran Escala", span: "md:col-span-2 md:row-span-1" },
-  { img: img5, title: "Operadores Logísticos Globales", span: "md:col-span-1 md:row-span-1" },
-  { img: img6, title: "Centros de Distribución", span: "md:col-span-1 md:row-span-1" },
-  { img: img7, title: "Gestión de Inventarios y Bodegas", span: "md:col-span-1 md:row-span-1" },
-  { img: img8, title: "Envíos y Entregas Express", span: "md:col-span-1 md:row-span-1" },
+// Carga dinámica de todas las imágenes de la galería (soporta jpg, jpeg, png, webp, avif, gif)
+const galleryImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/gallery/*.{jpg,jpeg,png,webp,avif,gif}",
+  { eager: true }
+);
+
+// Carga dinámica de todos los videos (.mp4)
+const galleryVideos = import.meta.glob<{ default: string }>(
+  "/src/assets/images/gallery/*.mp4",
+  { eager: true }
+);
+
+// Ordenar numéricamente las imágenes por nombre de archivo (1.png, 2.png, ..., 14.png)
+const sortedImages = Object.entries(galleryImages)
+  .sort(([a], [b]) => {
+    const numA = parseInt(a.match(/\/(\d+)\./)?.[1] || "0");
+    const numB = parseInt(b.match(/\/(\d+)\./)?.[1] || "0");
+    return numA - numB;
+  })
+  .map(([, mod]) => mod.default);
+
+// Ordenar videos alfabéticamente (a.mp4, b.mp4...)
+const sortedVideos = Object.keys(galleryVideos)
+  .sort()
+  .map((key) => galleryVideos[key].default);
+
+// Títulos contextuales para imágenes
+const imageTitles = [
+  "Flota en Terminal Portuario",           // 1 
+  "Transporte de Carga en Callao",         // 2 
+  "Carga Sobredimensionada",               // 3 
+  "Embarque Vehicular en Contenedor",      // 4 
+  "Operaciones con Montacargas",           // 5 
+  "Centro de Almacenamiento",              // 6 
+  "Ruta Nocturna Ancón–Pativilca",         // 7 
+  "Ingreso a Terminal Portuario",          // 8 
+  "Carga y Descarga de Contenedores",      // 9 
+  "Patio de Contenedores",                 // 10 
+  "Tránsito Nocturno de Contenedores",     // 11 
+  "Transporte Pesado Urbano",              // 12 
+  "Consolidación de Mercancía",            // 13 
+  "Operaciones con Reach Stacker",         // 14 
 ];
+
+// Títulos para videos (basados en rubro logística)
+const videoTitles = [
+  "Maniobra de Carga Pesada",
+  "Eficiencia en el Puerto",
+  "Logística Integrada",
+  "Transporte Especializado",
+];
+
+// Patrón de tamaños asimétrico para la grilla bento vertical de fotos
+const spanPattern = [
+  "small", "tall", "small", "small", "tall", "small", "small", 
+  "small", "tall", "small", "small", "tall", "small", "small"
+];
+
+// Generar items de fotos
+const photoItems = sortedImages.map((img, i) => ({
+  type: 'photo',
+  img,
+  title: imageTitles[i] || `Operación Logística ${i + 1}`,
+  size: spanPattern[i % spanPattern.length],
+}));
+
+// Generar items de videos
+const videoItems = sortedVideos.map((video, i) => ({
+  type: 'video',
+  video,
+  title: videoTitles[i] || `Registro Operativo ${String.fromCharCode(97 + i).toUpperCase()}`,
+  size: i % 2 === 0 ? 'tall' : 'small', // Variación básica para videos
+}));
 ---
 
-<section class="modern-gallery">
+<section class="modern-gallery scroll-mt-20" id="galeria">
   <div class="container mx-auto px-4 py-20">
-    <div class="header-content mb-16 animate-fade-in-up">
-      <span class="subtitle">GALERÍA DE PROYECTOS</span>
-      <h1 class="title">
-        NUESTRO ALCANCE <span class="divider">—</span><br />
-        <span class="highlight">Logística para el futuro.</span>
-      </h1>
-      <p class="mt-4 text-gray-400 max-w-2xl text-lg">
-        Proyectos e imágenes que muestran nuestro compromiso y excelencia.
-      </p>
+    
+    <!-- Selector Fotos/Videos Estilo 3D/Neomorfismo -->
+    <div class="flex justify-center mb-12">
+      <div class="toggle-container-3d">
+        <button id="btnPhotos" class="toggle-btn-3d active" data-type="photos">
+          FOTOS
+        </button>
+        <button id="btnVideos" class="toggle-btn-3d" data-type="videos">
+          VIDEOS
+        </button>
+      </div>
     </div>
 
-    <div class="bento-grid">
+    <div class="header-content mb-16 animate-fade-in-up">
+      <span class="subtitle" id="gallerySubtitle">GALERÍA DE PROYECTOS</span>
+      <div id="photoHeader">
+        <h2 class="title" id="galleryTitle">
+          NUESTRO ALCANCE <span class="divider">—</span><br />
+          <span class="highlight">Logística para el futuro.</span>
+        </h2>
+        <p class="mt-4 text-gray-400 max-w-2xl text-lg" id="galleryDesc">
+          Proyectos e imágenes que muestran nuestro compromiso y excelencia operativa en cada kilómetro.
+        </p>
+      </div>
+      <div id="videoHeader" class="hidden">
+        <h2 class="title">
+          REGISTRO EN ACCIÓN <span class="divider">—</span><br />
+          <span class="highlight">Eficiencia en movimiento.</span>
+        </h2>
+        <p class="mt-4 text-gray-400 max-w-2xl text-lg">
+          Documentamos cada maniobra crítica para garantizar la máxima seguridad y control de tu carga.
+        </p>
+      </div>
+    </div>
+
+    <!-- Grilla de Fotos -->
+    <div id="photoGrid" class="bento-grid">
       {
-        galleryItems.map((item, index) => (
+        photoItems.map((item, index) => (
           <div 
-            class={`grid-item group ${item.span}`} 
+            class={`grid-item photo-item group ${item.size === 'tall' ? 'grid-item--tall' : 'grid-item--small'}`} 
             data-index={index}
-            style={`animation-delay: ${index * 100}ms`}
+            style={`animation-delay: ${index * 50}ms`}
           >
              <div class="card-inner">
                 <Image
                   src={item.img}
                   alt={item.title}
-                  class="gallery-image"
-                  width={800}
-                  height={600}
+                  class="gallery-media"
+                  width={600}
+                  height={1067}
                 />
                 <div class="overlay">
                   <div class="overlay-content">
@@ -60,7 +138,46 @@ const galleryItems = [
                       </svg>
                     </div>
                     <h3 class="card-title">{item.title}</h3>
-                    <p class="card-desc">Soluciones Avanzadas</p>
+                    <p class="card-desc">Logística Avanzada</p>
+                  </div>
+                </div>
+             </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Grilla de Videos -->
+    <div id="videoGrid" class="bento-grid hidden">
+      {
+        videoItems.map((item, index) => (
+          <div 
+            class={`grid-item video-item group ${item.size === 'tall' ? 'grid-item--tall' : 'grid-item--small'}`} 
+            data-index={index}
+            style={`animation-delay: ${index * 100}ms`}
+          >
+             <div class="card-inner">
+                <video 
+                  src={item.video} 
+                  class="gallery-media h-full w-full object-cover" 
+                  muted 
+                  loop 
+                  playsinline
+                ></video>
+                <div class="video-indicator">
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-8 h-8">
+                      <path d="M8 5v14l11-7z" />
+                   </svg>
+                </div>
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <div class="icon-box !color-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+                      </svg>
+                    </div>
+                    <h3 class="card-title">{item.title}</h3>
+                    <p class="card-desc">Operativa en Tiempo Real</p>
                   </div>
                 </div>
              </div>
@@ -70,7 +187,7 @@ const galleryItems = [
     </div>
   </div>
 
-  <!-- Image Modal -->
+  <!-- Multimedia Modal -->
   <div id="galleryModal" class="modal">
     <button id="modalPrev" class="modal-nav modal-prev" aria-label="Anterior">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
@@ -89,7 +206,12 @@ const galleryItems = [
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
-      <img id="modalImage" src="" alt="Vista ampliada" />
+      
+      <div id="modalMediaContainer">
+        <img id="modalImage" class="modal-media" src="" alt="Vista ampliada" />
+        <video id="modalVideo" class="modal-media hidden" controls autoplay loop></video>
+      </div>
+      
       <h3 id="modalTitle" class="modal-title"></h3>
     </div>
   </div>
@@ -98,10 +220,55 @@ const galleryItems = [
 <style>
   /* Base Styles */
   .modern-gallery {
-    background-color: #050505; /* Deep black usually fits "Cutting Edge" */
+    background-color: #050505; 
     color: #fff;
     min-height: 100vh;
     font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* 3D Toggle Styles (Neomorphism) */
+  .toggle-container-3d {
+    display: flex;
+    background: rgba(20, 20, 20, 0.5);
+    padding: 8px;
+    border-radius: 20px;
+    box-shadow: 
+      inset 4px 4px 8px rgba(0, 0, 0, 0.8),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .toggle-btn-3d {
+    padding: 10px 30px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: #6b7280;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  }
+
+  /* Pressed State (Active) */
+  .toggle-btn-3d.active {
+    color: #3b82f6;
+    background: rgba(30, 30, 30, 0.4);
+    box-shadow: 
+      inset 4px 4px 6px rgba(0, 0, 0, 0.6),
+      inset -2px -2px 4px rgba(255, 255, 255, 0.03);
+    transform: scale(0.98);
+  }
+
+  /* Raised State (Inactive/Hover) */
+  .toggle-btn-3d:not(.active):hover {
+    color: #fff;
+    box-shadow: 
+      4px 4px 10px rgba(0, 0, 0, 0.5),
+      -2px -2px 8px rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
   }
 
   .subtitle {
@@ -127,22 +294,36 @@ const galleryItems = [
   }
 
   .highlight {
-    color: #9ca3af; /* Muted grey for the second line as per reference */
+    color: #9ca3af; 
     font-weight: 500;
   }
 
   /* Grid Layout */
   .bento-grid {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 250px;
+    grid-auto-flow: dense;
+    gap: 1rem;
+    transition: all 0.5s ease;
   }
 
   @media (min-width: 768px) {
     .bento-grid {
       grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 300px; /* Fixed rough height for rows */
+      grid-auto-rows: 220px;
+      gap: 1.25rem;
     }
+  }
+
+  /* Tall items span 2 rows */
+  .grid-item--tall {
+    grid-row: span 2;
+  }
+
+  /* Small items span 1 row */
+  .grid-item--small {
+    grid-row: span 1;
   }
 
   /* Card Styles */
@@ -170,15 +351,39 @@ const galleryItems = [
       position: relative;
   }
 
-  .gallery-image {
+  .gallery-media {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.7s ease;
   }
 
-  .grid-item:hover .gallery-image {
+  .grid-item:hover .gallery-media {
     transform: scale(1.1);
+  }
+
+  /* Video Indicator */
+  .video-indicator {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .grid-item:hover .video-indicator {
+    transform: scale(1.2) rotate(360deg);
+    background: #3b82f6;
   }
 
   /* Overlay */
@@ -206,7 +411,7 @@ const galleryItems = [
       width: 40px;
       height: 40px;
       margin-bottom: 1rem;
-      color: #3b82f6; /* Accent color */
+      color: #3b82f6; 
       transform: scale(0);
       opacity: 0;
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -219,7 +424,7 @@ const galleryItems = [
   }
 
   .card-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: white;
     margin-bottom: 0.25rem;
@@ -241,6 +446,9 @@ const galleryItems = [
       transform: translateY(0);
       height: auto;
   }
+
+  /* UTILS */
+  .hidden { display: none !important; }
 
   /* Animations */
   @keyframes fadeInUp {
@@ -281,19 +489,22 @@ const galleryItems = [
     max-width: 90vw;
     max-height: 90vh;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .modal-content img {
+  .modal-media {
     max-width: 100%;
     max-height: 80vh;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 0 50px rgba(0,0,0,0.5);
     border: 1px solid rgba(255,255,255,0.1);
   }
 
   .modal-title {
-      margin-top: 1rem;
-      font-size: 1.5rem;
+      margin-top: 1.5rem;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
       color: white;
       font-weight: 600;
   }
@@ -305,7 +516,7 @@ const galleryItems = [
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255,255,255,0.1);
     color: white;
-    padding: 1rem;
+    padding: 1.25rem;
     border-radius: 50%;
     cursor: pointer;
     z-index: 1001;
@@ -322,60 +533,102 @@ const galleryItems = [
 
   .modal-close {
     position: absolute;
-    top: -3rem;
+    top: -4rem;
     right: 0;
-    background: transparent;
-    border: none;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
     color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 50%;
     transition: all 0.3s ease;
   }
 
   .modal-close:hover {
-      background: rgba(255,255,255,0.1);
+      background: #ef4444;
       transform: rotate(90deg);
+      border-color: #ef4444;
   }
   
   @media (max-width: 768px) {
-      .modal-nav {
-          padding: 0.5rem;
-      }
+      .modal-nav { padding: 0.75rem; }
       .modal-prev { left: 1rem; }
       .modal-next { right: 1rem; }
+      .modal-close { top: -3.5rem; }
   }
 </style>
 
 <script>
-  // Simple Modal & Gallery Logic
   const initGallery = () => {
-    const items = document.querySelectorAll('.grid-item');
+    // Selectors for Toggle
+    const btnPhotos = document.getElementById('btnPhotos');
+    const btnVideos = document.getElementById('btnVideos');
+    const photoGrid = document.getElementById('photoGrid');
+    const videoGrid = document.getElementById('videoGrid');
+    const photoHeader = document.getElementById('photoHeader');
+    const videoHeader = document.getElementById('videoHeader');
+
+    // Selectors for Modal
     const modal = document.getElementById('galleryModal');
     const modalImg = document.getElementById('modalImage') as HTMLImageElement;
+    const modalVideo = document.getElementById('modalVideo') as HTMLVideoElement;
     const modalTitle = document.getElementById('modalTitle');
     const closeBtn = document.getElementById('closeModal');
     const prevBtn = document.getElementById('modalPrev');
     const nextBtn = document.getElementById('modalNext');
-    
-    // Collect data
-    const galleryData = Array.from(items).map(item => {
-        const img = item.querySelector('img');
-        const title = item.querySelector('.card-title')?.textContent;
-        return {
-            src: img?.src || '',
-            title: title || ''
-        };
-    });
 
+    let currentType: 'photos' | 'videos' = 'photos';
     let currentIndex = 0;
+    let currentData: any[] = [];
+
+    const updateGalleryType = (type: 'photos' | 'videos') => {
+        currentType = type;
+        if (type === 'photos') {
+            btnPhotos?.classList.add('active');
+            btnVideos?.classList.remove('active');
+            photoGrid?.classList.remove('hidden');
+            videoGrid?.classList.add('hidden');
+            photoHeader?.classList.remove('hidden');
+            videoHeader?.classList.add('hidden');
+        } else {
+            btnPhotos?.classList.remove('active');
+            btnVideos?.classList.add('active');
+            photoGrid?.classList.add('hidden');
+            videoGrid?.classList.remove('hidden');
+            photoHeader?.classList.add('hidden');
+            videoHeader?.classList.remove('hidden');
+            
+            // Auto-play grid videos on switch
+            const gridVideos = videoGrid?.querySelectorAll('video');
+            gridVideos?.forEach(v => v.play());
+        }
+        refreshGalleryData();
+    };
+
+    const refreshGalleryData = () => {
+        const items = document.querySelectorAll(currentType === 'photos' ? '.photo-item' : '.video-item');
+        currentData = Array.from(items).map(item => {
+            const media = item.querySelector('.gallery-media') as (HTMLImageElement | HTMLVideoElement);
+            const title = item.querySelector('.card-title')?.textContent;
+            return {
+                src: media?.src || '',
+                title: title || ''
+            };
+        });
+        
+        // Add click listeners to current items
+        items.forEach((item, index) => {
+            item.removeEventListener('click', () => {}); // Clean up
+            item.addEventListener('click', () => openModal(index));
+        });
+    };
 
     const openModal = (index: number) => {
-        if(!modal || !modalImg) return;
+        if(!modal) return;
         currentIndex = index;
         updateModalContent();
         modal.style.display = 'flex';
-        // Force reflow
         modal.offsetHeight; 
         modal.classList.add('show');
         document.body.style.overflow = 'hidden';
@@ -384,6 +637,10 @@ const galleryItems = [
     const closeModal = () => {
         if(!modal) return;
         modal.classList.remove('show');
+        if (modalVideo) {
+            modalVideo.pause();
+            modalVideo.src = "";
+        }
         setTimeout(() => {
             modal.style.display = 'none';
             document.body.style.overflow = '';
@@ -391,47 +648,63 @@ const galleryItems = [
     };
 
     const updateModalContent = () => {
-        if(!modalImg || currentIndex < 0 || currentIndex >= galleryData.length) return;
-        const data = galleryData[currentIndex];
-        modalImg.src = data.src;
+        if(!currentData[currentIndex]) return;
+        const data = currentData[currentIndex];
+        
+        if (currentType === 'photos') {
+            if (modalImg) {
+                modalImg.src = data.src;
+                modalImg.classList.remove('hidden');
+            }
+            if (modalVideo) modalVideo.classList.add('hidden');
+        } else {
+            if (modalVideo) {
+                modalVideo.src = data.src;
+                modalVideo.classList.remove('hidden');
+                modalVideo.play();
+            }
+            if (modalImg) modalImg.classList.add('hidden');
+        }
+        
         if(modalTitle) modalTitle.textContent = data.title;
     };
 
-    const nextImage = (e?: Event) => {
+    const nextItem = (e?: Event) => {
         if(e) e.stopPropagation();
-        currentIndex = (currentIndex + 1) % galleryData.length;
+        currentIndex = (currentIndex + 1) % currentData.length;
         updateModalContent();
     };
 
-    const prevImage = (e?: Event) => {
+    const prevItem = (e?: Event) => {
         if(e) e.stopPropagation();
-        currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+        currentIndex = (currentIndex - 1 + currentData.length) % currentData.length;
         updateModalContent();
     };
 
-    // Listeners
-    items.forEach((item, index) => {
-        item.addEventListener('click', () => openModal(index));
-    });
+    // Listeners for Toggle
+    btnPhotos?.addEventListener('click', () => updateGalleryType('photos'));
+    btnVideos?.addEventListener('click', () => updateGalleryType('videos'));
 
+    // Modal Listeners
     closeBtn?.addEventListener('click', closeModal);
     modal?.addEventListener('click', (e) => {
         if(e.target === modal) closeModal();
     });
-
-    nextBtn?.addEventListener('click', nextImage);
-    prevBtn?.addEventListener('click', prevImage);
+    nextBtn?.addEventListener('click', nextItem);
+    prevBtn?.addEventListener('click', prevItem);
 
     document.addEventListener('keydown', (e) => {
         if(!modal?.classList.contains('show')) return;
         if(e.key === 'Escape') closeModal();
-        if(e.key === 'ArrowRight') nextImage();
-        if(e.key === 'ArrowLeft') prevImage();
+        if(e.key === 'ArrowRight') nextItem();
+        if(e.key === 'ArrowLeft') prevItem();
     });
+
+    // Initial Load
+    refreshGalleryData();
   };
 
   document.addEventListener('astro:page-load', initGallery);
-  // Also run on initial load if not using ViewTransitions
   if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initGallery);
   } else {

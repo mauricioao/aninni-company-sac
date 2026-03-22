@@ -1,0 +1,125 @@
+---
+// Sección de transición entre el Banner y los Servicios
+// Absorbe el overlap de la imagen del banner y muestra una frase célebre de la industria
+import quotesData from "../../../config/quotes.json";
+
+// Explicitly define for script scope
+const quotes = quotesData;
+// Fallback inicial para SSR
+const initialQuote = quotes[0];
+---
+
+<section class="banner-transition">
+  <div class="container mx-auto px-4 py-16 md:py-24 relative z-10">
+    <div class="max-w-4xl mx-auto text-center" id="quoteContainer">
+      <h2 class="quote-phrase" id="quotePhrase">
+        "{initialQuote.phrase}"
+      </h2>
+      <p class="quote-author text-center" id="quoteAuthor">
+        — {initialQuote.author}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
+
+  .banner-transition {
+    padding-top: 14rem;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .banner-transition {
+      padding-top: 22rem;
+      padding-bottom: 6rem;
+    }
+  }
+
+  .transition-content {
+    text-align: center;
+    max-width: 60rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .quote-phrase {
+    font-family: 'Fredericka the Great', serif;
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    font-weight: 400;
+    color: #000000;
+    line-height: 1.2;
+    margin: 0;
+    opacity: 0;
+    animation: fadeInPhrase 1.2s ease-out 0.3s forwards;
+    letter-spacing: 0.02em;
+  }
+
+  .quote-author {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: #666666; /* Gris como se solicitó */
+    opacity: 0;
+    animation: fadeInPhraseWithOpacity 1s ease-out 0.8s forwards;
+    margin-top: 1.5rem;
+  }
+
+  @keyframes fadeInPhraseWithOpacity {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 0.6; /* 60% de opacidad como se solicitó */
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInPhrase {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script define:vars={{ quotes }}>
+  const updateQuote = () => {
+    const phraseEl = document.getElementById('quotePhrase');
+    const authorEl = document.getElementById('quoteAuthor');
+    
+    if (phraseEl && authorEl && quotes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const selected = quotes[randomIndex];
+      
+      phraseEl.textContent = `"${selected.phrase}"`;
+      authorEl.textContent = `— ${selected.author}`;
+      
+      // Reiniciar animaciones si es necesario
+      phraseEl.style.animation = 'none';
+      authorEl.style.animation = 'none';
+      phraseEl.offsetHeight; /* trigger reflow */
+      phraseEl.style.animation = '';
+      authorEl.style.animation = '';
+    }
+  };
+
+  // Ejecutar en carga inicial y en cada transición de página de Astro
+  document.addEventListener('astro:page-load', updateQuote);
+  
+  // Respaldo para carga inicial sin ViewTransitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateQuote);
+  } else {
+    updateQuote();
+  }
+</script>

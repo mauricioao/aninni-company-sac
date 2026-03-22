@@ -82,12 +82,22 @@ export default function JsonLdGenerator(content: JSONLDProps, Astro: any) {
     "@type": "Organization",
     name: config.seo.author,
     url: trailingSlashChecker(Astro.url.origin),
-    sameAs: social.main.filter((item) => item.enable).map((item) => item.url),
+    sameAs: social.main.filter((item: any) => item.enable).map((item: any) => item.url),
     logo: {
       "@type": "ImageObject",
       url: absoluteUrl(config.site.logo, Astro),
     },
   };
+
+  if (config.settings?.contactInfo?.phone || config.settings?.contactInfo?.email) {
+    const extractText = (str: string) => str ? str.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') : undefined;
+    jsonLdData.publisher.contactPoint = removeEmptyKeys({
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      telephone: extractText(config.settings.contactInfo.phone),
+      email: extractText(config.settings.contactInfo.email),
+    });
+  }
 
   // Utility to remove empty or undefined keys
   return removeEmptyKeys(jsonLdData);

@@ -4,6 +4,7 @@ import { generatePaths } from "@/lib/utils/i18nUtils";
 import Clients from "@/components/sections/Clients.astro";
 import { getEntryCTM } from "@/lib/customContentLoader.astro";
 import BannerAgencyStartup from "@/components/sections/Banner.astro";
+import BannerTransition from "@/components/sections/BannerTransition.astro";
 import FeaturedCarousel from "@/components/sections/FeaturedCarousel.astro";
 import WelcomeModal from "@/components/WelcomeModal.astro";
 
@@ -22,9 +23,9 @@ const page = await getEntryCTM("homepage", "-index", Astro.currentLocale);
   <WelcomeModal />
 
   <BannerAgencyStartup />
-  <Clients />
+  <BannerTransition />
   <FeaturedCarousel />
-  <!-- <ServicesSection /> -->
+  <Clients />
   <ParallaxBanner src={bannerImage} />
   <!-- <PortfolioSection /> -->
   <!-- <PricingSection /> -->

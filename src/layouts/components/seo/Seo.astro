@@ -67,6 +67,14 @@ if (
 {author && <meta name="author" content={removeWhitespace(author)} />}
 {robots && <meta name="robots" content={removeWhitespace(robots)} />}
 {
+  config.seo.googleSiteVerification && (
+    <meta
+      name="google-site-verification"
+      content={config.seo.googleSiteVerification}
+    />
+  )
+}
+{
   resolvedCanonical && (
     <link rel="canonical" href={resolvedCanonical} item-prop="url" />
   )

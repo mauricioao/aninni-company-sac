@@ -1,10 +1,10 @@
 # Site Configuration
 [site]
   title            = "Aninni Company SAC" # Shared title for SEO and OpenGraph
-  description      = "Aninni Company Website" # Shared description for SEO and OpenGraph
+  description      = "Especialistas en Logística Integral. Soluciones de agencia de aduanas, carga internacional terrestre, marítima y aérea." # Shared description for SEO and OpenGraph
   tagline          = "Agencia de Logística"
-  taglineSeparator = "" # default is " - "
-  baseUrl          = "https://folex-lite-astro.vercel.app/" # Base URL for the site and used in OpenGraph meta tags.
+  taglineSeparator = " - "
+  baseUrl          = "https://aninni.com/" # Base URL for the site and used in OpenGraph meta tags.
   logo             = "/images/logos/LOGO ANINNI COMPANY01_SINFONDO.png" # Path to the site's logo
   logoAlternate    = "/images/logos/LOGO ANINNI COMPANY01_LIGHT.png" # Path to the site's logo" # Path to the site's alternate logo
   logoText         = "" # Text displayed next to the logo
@@ -25,10 +25,16 @@
 # Specific SEO configurations that complement the general site settings.
 # -----------------------------------------------------------------------------------------------------------------------------------
 [seo]
-  author = "mauricioa"
+  author = "Aninni Company SAC"
   keywords = [
-    "logistics agency",
+    "agencia de aduanas",
+    "logística integral",
+    "carga internacional",
+    "transporte terrestre",
+    "freight forwarder",
+    "Aninni Company SAC"
   ]
+  googleSiteVerification = "" # Add your Google Search Console verification code here
   robots = "index, follow" # Instructs search engines on how to crawl and index the pages.
 
   [seo.robotsTxt]
@@ -113,7 +119,7 @@
   image       = "/images/og-image.jpg" # Image used in OpenGraph previews
   ogLocale    = "es_PE" # Locale setting for OpenGraph
   ogType      = "website" # Type of content for OpenGraph protocol
-  twitter     = "" # Twitter handle for Twitter Card meta tags
+  twitter     = "@AninniCompany" # Twitter handle for Twitter Card meta tags
   twitterCard = "summary_large_image" # Type of Twitter Card to use in social sharing
 
 # [head] (Add custom scripts, stylesheets, and meta tags to be rendered in the <head> section of the page)
