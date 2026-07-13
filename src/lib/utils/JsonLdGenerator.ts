@@ -53,15 +53,13 @@ export default function JsonLdGenerator(content: JSONLDProps, Astro: any) {
       }
   }
 
-  // Add site metadata to `isPartOf` of jsonLdData
-  const siteTitle =
-    config.site.title +
-    (config.site.tagline &&
-      (config.site.taglineSeparator || " - ") + config.site.tagline);
+  // Add site metadata to `isPartOf` of jsonLdData.
+  // Use the search-engine brand, decoupled from the visible `config.site.title`.
+  const seoBrand = config.site.seoBrand || config.site.title;
 
   jsonLdData["isPartOf"] = {
     "@type": "WebSite",
-    name: siteTitle,
+    name: seoBrand,
     description: config.site.description,
     url: trailingSlashChecker(Astro.url.origin),
   };
@@ -77,10 +75,11 @@ export default function JsonLdGenerator(content: JSONLDProps, Astro: any) {
       }));
   }
 
-  // Add `publisher` to jsonLdData
+  // Add `publisher` to jsonLdData.
+  // Use the search-engine brand for the Organization name (crawler-facing).
   jsonLdData.publisher = {
     "@type": "Organization",
-    name: config.seo.author,
+    name: seoBrand,
     url: trailingSlashChecker(Astro.url.origin),
     sameAs: social.main.filter((item: any) => item.enable).map((item: any) => item.url),
     logo: {

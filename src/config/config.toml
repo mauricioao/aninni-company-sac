@@ -1,8 +1,9 @@
 # Site Configuration
 [site]
-  title            = "Aninni Company SAC" # Shared title for SEO and OpenGraph
+  title            = "Aninni Company SAC" # Visible brand shown in header, footer, logo and on-page UI
+  seoBrand         = "ANINNI Logistics" # Search-engine-facing brand for <title>, OpenGraph, Twitter and JSON-LD. Decoupled from the visible `title`.
   description      = "Especialistas en Logística Integral. Soluciones de agencia de aduanas, carga internacional terrestre, marítima y aérea." # Shared description for SEO and OpenGraph
-  tagline          = "Agencia de Logística"
+  tagline          = ""
   taglineSeparator = " - "
   baseUrl          = "https://aninni.com/" # Base URL for the site and used in OpenGraph meta tags.
   logo             = "/images/logos/LOGO ANINNI COMPANY01_SINFONDO.png" # Path to the site's logo

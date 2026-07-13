@@ -18,16 +18,22 @@ const {
   ogLocale = config.opengraph.ogLocale,
 } = Astro.props.content;
 
-// Resolved title and description
-let resolvedTitle = plainify(metaTitle ?? title ?? config.site.title);
+// Resolve the search-engine brand (decoupled from the visible `config.site.title`).
+const seoBrand = config.site.seoBrand || config.site.title;
+
+// A page-specific title (if any). When absent, SEO surfaces use the SEO brand alone.
+const pageTitle = metaTitle ?? title;
+
+// Resolved title and description. OpenGraph/Twitter fall back to the SEO brand, not the visible title.
+let resolvedTitle = plainify(pageTitle ?? seoBrand);
 let resolvedDescription = plainify(
   metaDescription ?? description ?? config.site.description,
 );
 
-// Add tagline if not disabled
-if (!disableTagline && config.site.tagline) {
+// Append the SEO brand suffix only when a page-specific title exists.
+if (!disableTagline && seoBrand && pageTitle) {
   const separator = config.site.taglineSeparator || " - ";
-  resolvedTitle += separator + config.site.tagline;
+  resolvedTitle += separator + seoBrand;
 }
 
 // Clean up whitespace
@@ -43,11 +49,8 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site);
 }
 {resolvedTitle && <meta property="og:title" content={resolvedTitle} />}
 {
-  config.site.title && (
-    <meta
-      property="og:site_name"
-      content={removeWhitespace(config.site.title)}
-    />
+  seoBrand && (
+    <meta property="og:site_name" content={removeWhitespace(seoBrand)} />
   )
 }
 {

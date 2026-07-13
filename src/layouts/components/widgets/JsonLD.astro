@@ -7,8 +7,14 @@ import { parseTomlToJson } from "@/lib/utils/tomlUtils";
 const config = parseTomlToJson();
 const { content } = Astro.props;
 
+// Resolve the search-engine brand (decoupled from the visible `config.site.title`).
+const seoBrand = config.site.seoBrand || config.site.title;
+
+// A page-specific title (if any). When absent, JSON-LD uses the SEO brand alone.
+const pageTitle = content?.metaTitle ?? content?.title;
+
 let {
-  title = config.site.title,
+  title = seoBrand,
   metaTitle = title,
   description = config.site.description,
   metaDescription = description,
@@ -27,9 +33,9 @@ const alternateLangs = config.settings.multilingual.enable
   : [];
 
 title =
-  !disableTagline && metaTitle
-    ? `${metaTitle}${config.site.tagline ? taglineSeparator + config.site.tagline : ""}`
-    : config.site.title;
+  !disableTagline && pageTitle
+    ? `${pageTitle}${taglineSeparator}${seoBrand}`
+    : seoBrand;
 
 description = metaDescription ? metaDescription : description;
 canonical = canonical ? canonical : Astro.url.href;
